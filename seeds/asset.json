@@ -1,0 +1,14 @@
+{ 
+    "model": "asset",
+    "documents": [
+        {
+          "name": "My Asset",
+          "width": 300,
+          "height": 150,
+          "data": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Doge_Giovanni_Delfin.jpg/256px-Doge_Giovanni_Delfin.jpg",
+          "tags": [
+            "one_tag"
+          ]
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{ 
+    "model": "mapstyle",
+    "documents": [
+      {
+       "name": "pink_fill",
+       "data": {
+          "type": "fill",
+          "paint": {
+            "fill-color": "#ff69b4",
+            "fill-opacity": 0.5
+          }
+        } 
+      },
+      {
+        "name": "pink_line",
+        "data": {
+          "type": "line",
+          "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          "paint": {
+            "line-color": "#ff69b4",
+            "line-width": 1
+          }
+        }
+      },
+      {
+        "name": "blue_line",
+        "data": {
+          "type": "line",
+          "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          "paint": {
+            "line-color": "#91FFF5",
+            "line-width": 1
+          }
+        }
+      }
+    ]
+}

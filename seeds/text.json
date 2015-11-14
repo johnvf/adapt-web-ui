@@ -1,0 +1,28 @@
+{ 
+    "model": "text",
+    "documents": [
+        {
+          "name": "myText",
+          "data": "Lorem ipsum dolor ...",
+          "tags": [
+            "one_tag",
+            "another_tag",
+            "last_tag"
+          ]
+        },
+        {
+          "name": "myFoo",
+          "data": "Lorem ipsum dolor ...sdasdsa",
+          "tags": [
+            "one_tag"
+          ]
+        },
+        {
+          "name": "myBar",
+          "data": "asdfdsafdsafsadgsdg",
+          "tags": [
+            "last_tag"
+          ]
+        }
+    ]
+}

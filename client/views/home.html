@@ -1,0 +1,51 @@
+<a ui-sref="home">Home page</a> /
+<a ui-sref="second">Second page</a> /
+<a ui-sref="map({map_id: 'cdc0d47d'})">Map page</a> /
+<a ui-sref="toolbox">Toolbox</a>
+
+<hr />
+
+<h1>I'm the homepage view</h1>
+
+You can edit me if you like.
+
+<hr />
+
+Here is a var from the Auth service:<br />
+<strong>{{auth.getValue()}}</strong>
+
+<br /><br />
+
+<button ng-click="auth.setValue('Something else');">Click to change service var value</button>
+
+<hr />
+
+<h3>An example directive</h3>
+
+<example-directive></example-directive>
+
+<hr>
+
+<h2>Passport Authentication and Logging in</h2>
+
+If you're using the API you can sign up and log in to the backend as well.
+
+<h3>Sign up</h3>
+<form method="post" ng-submit="userSignup()">
+  <input type="text" name="email" ng-model="email" />
+  <input type="text" name="password" ng-model="password" />
+  <input type="submit" value="Sign up" />
+</form>
+
+<h3>Log in</h3>
+<form method="post" ng-submit="userLogin()">
+  <input type="text" name="email" ng-model="email" />
+  <input type="text" name="password" ng-model="password" />
+  <input type="submit" value="Log in" />
+</form>
+
+<hr>
+
+This should give a 401 when not logged in, else it will return all users in the db<br />
+
+<a href="/api/users" target="_blank">API Users Call</a>

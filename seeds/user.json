@@ -1,0 +1,9 @@
+{ 
+    "model": "user",
+    "documents": [
+      {
+        "email": "Foo",
+        "password": "Bar"
+      }
+    ]
+}
