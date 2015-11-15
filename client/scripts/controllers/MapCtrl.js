@@ -107,7 +107,7 @@ exports.controller = function($scope, $stateParams, MapService, MapStyleService)
     if( !sources[layer.source] ){
       map.addSource( layer.source , {
         type: 'vector',
-        url:  layer.source //maps[0].source
+        url:  "mapbox://"+layer.source //maps[0].source
       });
       sources[layer.source] = true
     }
