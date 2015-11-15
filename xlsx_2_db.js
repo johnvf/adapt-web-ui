@@ -10,7 +10,7 @@ var models = ['map', 'mapstyle']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
-var root = path.split("/").slice(0,-2).join("/")
+var root = path.split("/").slice(0,-1).join("/")
 
 function dump_xlsx( path, callback ){
     console.log("dump_xlsx");
