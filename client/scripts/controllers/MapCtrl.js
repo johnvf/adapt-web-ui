@@ -18,7 +18,7 @@ exports.controller = function($scope, $stateParams, MapService, MapStyleService)
 
   var tags = []//window.active_tags
 
-  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obnZmIiwiYSI6IjFkZGY0OTk4Mjg5MDU0ZjNiYmU4YWFjODg2YzQ0ZTk2In0.cUp8RaZxpmq7A7KGVNucKQ';
+  mapboxgl.accessToken = 'pk.eyJ1IjoidXJiYW5iaW9maWx0ZXJkZXYiLCJhIjoiY2lnenZwdnNzMHdibnc3bTVrOWYzc3JraCJ9.eOfaXgitCGm4aqppPt6oHw';
 
   var map = new mapboxgl.Map({
       container: 'map', // container id
