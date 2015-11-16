@@ -2,9 +2,7 @@ var mongoose = require('mongoose');
 
 var MapSchema = mongoose.Schema({
     name: String,
-    type: String,
-    width: Number,
-    height: Number,
+    sources: {},
     layers: {},
     tags: [ String ]
 });

@@ -4,7 +4,7 @@ var seeder = require('mongoose-seed');
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
-var models = ['asset', 'map', 'mapstyle', 'tabular', 'tag', 'text', 'user']
+var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
 
 function load_data( callback ){
     
