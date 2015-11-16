@@ -9,7 +9,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     concatCss = require('gulp-concat-css'),
     rename = require('gulp-rename'),
-    sass = require('gulp-sass'),
+    less = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
     refresh = require('gulp-livereload'),
     buffer = require('vinyl-buffer'),
@@ -41,22 +41,21 @@ gulp.task('lint', function() {
 
 // Styles task
 gulp.task('styles', function() {
-  gulp.src('./client/styles/main.scss')
-  // The onerror handler prevents Gulp from crashing when you make a mistake in your SASS
-  .pipe(sass({onError: function(e) { console.log(e); } }))
+  gulp.src('./client/less/main.less')
+  .pipe(less({}))
   // Optionally add autoprefixer
   .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
   // These last two should look familiar now :)
   // Concatenate imported external CSS
   .pipe( concatCss('/main.css') )
   .pipe(gulp.dest('./public/css/'))
-
 });
 
 gulp.task('browserify', function() {
-  return gulp.src('./client/scripts/main.js')
+  return gulp.src('./client/js/App.js')
   .pipe(browserify({
-    debug: true
+    debug: true,
+    transform: 'reactify'
   }))
   .pipe(sourcemaps.init({loadMaps: true}))
   .pipe(concat('main.js'))
@@ -67,17 +66,18 @@ gulp.task('browserify', function() {
   // isWatching = true
 });
 
-// Views task
-gulp.task('views', function() {
-  // Get our index.html
-  gulp.src('./client/index.html')
-  // And put it in the public folder
-  .pipe(gulp.dest('./public/'));
 
-  // Any other view files from client/views
-  gulp.src('./client/views/**/*')
-  // Will be put in the public/views folder
-  .pipe(gulp.dest('./public/views/'));
+gulp.task('copy', function() {
+  gulp.src('./client/index.html')
+    .pipe(gulp.dest('./public'));
+  gulp.src('./client/lib/**/*.*')
+    .pipe(gulp.dest('./public/js'));
+  gulp.src('./client/img/**/*.*')
+    .pipe(gulp.dest('./public/img'));
+  gulp.src('./client/fonts/**/*.*')
+    .pipe(gulp.dest('./public/fonts'));    
+  gulp.src('./node_modules/bootstrap/fonts/**/*.*')
+    .pipe(gulp.dest('./public/fonts'));
 });
 
 gulp.task('watch', ['serve', 'lint'], function() {
@@ -86,19 +86,14 @@ gulp.task('watch', ['serve', 'lint'], function() {
   refresh.listen();
 
   // Watch our scripts, and when they change run lint and browserify
-  gulp.watch(['./client/scripts/*.js', './client/scripts/**/*.js'],[
+  gulp.watch(['./client/js/*.js', './client/js/**/*.js'],[
     'lint',
     'browserify'
   ]);
 
   // Watch our sass files
-  gulp.watch(['./client/styles/**/*.scss'], [
+  gulp.watch(['./client/less/**/*.less'], [
     'styles'
-  ]);
-
-  // Watch view files
-  gulp.watch(['./client/**/*.html'], [
-    'views'
   ]);
 
   gulp.watch('./public/**').on('change', refresh.changed);
@@ -113,9 +108,9 @@ gulp.on('stop', function() {
 });
 
 // Dev task
-gulp.task('dev', ['views', 'styles', 'lint', 'browserify', 'watch'], function() {});
+gulp.task('dev', ['styles', 'lint', 'browserify', 'copy' , 'watch'], function() {});
 
 // Build task
-gulp.task('build', ['views', 'styles', 'lint', 'browserify'], function() {});
+gulp.task('build', ['styles', 'lint', 'browserify', 'copy'], function() {});
 
 gulp.task('default', ['dev']);
