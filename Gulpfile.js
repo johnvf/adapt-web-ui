@@ -92,7 +92,7 @@ gulp.task('watch', ['serve', 'lint'], function() {
   ]);
 
   // Watch our sass files
-  gulp.watch(['./client/styles/**/*.scss'], [
+  gulp.watch(['./client/less/**/*.less'], [
     'styles'
   ]);
 

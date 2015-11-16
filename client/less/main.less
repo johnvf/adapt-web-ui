@@ -11,7 +11,14 @@
 @brand-warning:         #F36B4B; // RED
 @brand-danger:          #101C29; // DARK BLUE
 
-@background:            #6D7B84;
+@background:            #ECECEC;
+
+/*
+ * Layout Variables
+ */
+@toolbar-width: 55px;
+@sidebar-width: 120px;
+
 /*
  * Only include styles confined to app.js here.
  */
@@ -19,7 +26,7 @@
 body {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
-  background-color: darken(@background, 20%);
+  background-color: @background;
   color: white;
 }
 
@@ -30,60 +37,9 @@ body {
   }
 }
 
-img.bg {
-    min-height: 100%;
-    min-width: 1024px;
-    width: 100%;
-    height: auto;
-    z-index: -10;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
 .centered {
-  margin-top: 120px;
-  padding-top: 20px;
+  margin-left: @toolbar-width;
   max-width: 100%;
-}
-
-.login-fields{
-  max-width: 40%;
-  margin-left: 30%;
-}
-
-.btn-login {
-    color: #ffffff;
-    background-color: rgba(224, 200, 255, 0.5);
-    border-color: none;
-    border-radius: 30px;
-    padding: 12px 0px 12px 0px;
-    margin: 30px 16px;    
-}
-
-.form-control {
-  border-radius: 30px;
-  padding: 25px 10px;
-  margin: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.form-control, input {
-  font-weight: 300;
-  color: black;
-  font-size: larger;
-  letter-spacing: 1px;
-  text-align: center;
-}
-
-
-.form-signin {
-  text-align: center;
-  padding-top: 50px;
-}
-
-.form-signin-heading {
-  padding-bottom: 50px;
 }
 
 

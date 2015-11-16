@@ -22,61 +22,82 @@ var Sidebar = React.createClass({
 
     return (
       <div id="sidebar-wrapper">
-          <ul className="sidebar-nav">
-              <li className="sidebar-brand">
-                  <a href="#">
-                      Start Bootstrap
-                  </a>
+        <ul className="toolbar-nav">
+              <li className="brand"> 
+                <Link to={ "/" }></Link>
               </li>
               <li>
-                  <a href="#">Dashboard</a>
+                <Link to={ "/toolbox" }></Link>
               </li>
               <li>
-                  <a href="#">Shortcuts</a>
-              </li>
-              <li>
-                  <a href="#">Overview</a>
-              </li>
-              <li>
-                  <a href="#">Events</a>
-              </li>
-              <li>
-                  <a href="#">About</a>
-              </li>
-              <li>
-                  <a href="#">Services</a>
-              </li>
-              <li>
-                  <a href="#">Contact</a>
+                <Link to={ "/map" }></Link>
               </li>
           </ul>          
-          <ul className="sidebar-nav bottom">
+          <ul className="toolbar-nav bottom">
               <li>
-                  <a href="#">Dashboard</a>
+                <Link to={ "/about" }></Link>
               </li>
               <li>
-                  <a href="#">Shortcuts</a>
-              </li>
-              <li>
-                  <a href="#">Overview</a>
-              </li>
-              <li>
-                  <a href="#">Events</a>
-              </li>
-              <li>
-                  <a href="#">About</a>
-              </li>
-              <li>
-                  <a href="#">Services</a>
-              </li>
-              <li>
-                  <a href="#">Contact</a>
+                <Link to={ "/share" }></Link>
               </li>
           </ul>
+
       </div>
     )
   }
 
 });
+
+          // <ul className="sidebar-nav">
+          //     <li className="sidebar-brand">
+          //         <a href="#">
+          //             Start Bootstrap
+          //         </a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Dashboard</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Shortcuts</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Overview</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Events</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">About</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Services</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Contact</a>
+          //     </li>
+          // </ul>          
+          // <ul className="sidebar-nav bottom">
+          //     <li>
+          //         <a href="#">Dashboard</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Shortcuts</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Overview</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Events</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">About</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Services</a>
+          //     </li>
+          //     <li>
+          //         <a href="#">Contact</a>
+          //     </li>
+          // </ul>
 
 module.exports = Sidebar;

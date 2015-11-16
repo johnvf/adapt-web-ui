@@ -6,10 +6,7 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var CHANGE_EVENT = 'change';
 
-var _projects;
-
-var _reports = {};
-var _reportLayouts = {};
+var _maps;
 
 var ProjectStore = assign({}, EventEmitter.prototype, {
 
@@ -21,35 +18,13 @@ var ProjectStore = assign({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  getProjects: function(){
-    if( _projects ){
-      console.log("projects already loaded, using")
-      return _projects;
+  getMaps: function(){
+    if( _maps ){
+      return _maps;
     }
     else{
-      console.log("projects not loaded, getting from server")
-      WebAPIUtils.getProjects( )
-    }
-    
-  },
-
-  getReport: function( project_id, report_id ){
-    if( _reports[report_id]){
-      console.log("report already loaded, using")
-      return _reports[ report_id ];
-    }
-    else{
-      console.log("report not loaded, getting from server")
-      WebAPIUtils.getReport(project_id , report_id)
-    }
-  },
-
-  getReportLayouts: function( project_id, report_id ){
-    if( _reportLayouts[ report_id ] ){
-      return _reportLayouts[ report_id ];
-    }
-    else{
-      WebAPIUtils.getReportLayouts(project_id , report_id)
+      WebAPIUtils.getMaps( )
+      return _maps;
     }
     
   }

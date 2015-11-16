@@ -1,59 +1,116 @@
-@navbar-default-bg: @brand-primary;
+// External variables
+// @toolbar-width
+// @sidebar-width
+// @background
+
+@toolbar-background: darken(@background,10%);
 
 /* Sidebar Styles */
 
+.toolbar-nav {
+  position: absolute;
+  top: 0;
+  width: @toolbar-width;
+  margin: 0;
+  padding: 8px;
+  height: 100%;
+  list-style: none;
+  background: @toolbar-background;
+}
+
+.toolbar-nav.bottom {
+  top: inherit;
+  bottom: 0px;
+  height: inherit;
+}
+
+.toolbar-nav li { 
+    height: auto;
+}
+
 .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav.bottom {
+  top: inherit;
+  bottom: 0px;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
+  text-indent: 20px;
+  line-height: 40px;
 }
 
 .sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
+  display: block;
+  text-decoration: none;
+  color: #999999;
 }
 
 .sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.2);
 }
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
 }
 
+
 .sidebar-nav > .sidebar-brand a {
-    color: #999999;
+  color: #999999;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
+  color: #fff;
+  background: none;
 }
 
-.sidebar-nav.bottom {
-    position: absolute;
-    top: inherit;
-    bottom: 0px;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+/* Sidebar Icons */
+
+.toolbar-nav [href] {
+  float: left;
+  width: 38px;
+  height: 38px;
+  background-size: 38px auto;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+}
+
+.toolbar-nav  > .brand {
+  margin-bottom: 100px;
+}
+
+.toolbar-nav [href='/'] {
+  background-image: url("/img/sidenav/home.png");
+}
+
+.toolbar-nav [href='/toolbox'] {
+  background-image: url("/img/sidenav/toolbox.png");
+}
+
+.toolbar-nav [href='/map'] {
+  background-image: url("/img/sidenav/map.png");
+}
+
+.toolbar-nav [href='/about'] {
+  background-image: url("/img/sidenav/about.png");
+}
+
+.toolbar-nav [href='/share'] {
+  background-image: url("/img/sidenav/share.png");
 }

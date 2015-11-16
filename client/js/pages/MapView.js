@@ -7,7 +7,7 @@ var MapStore = require('../stores/MapStore')
 
 function getStateFromStores() {
   return {
-    map: MapStore.getMap(),
+    maps: MapStore.getMaps(),
     loaded: false
   };
 }
@@ -34,7 +34,7 @@ var Report = React.createClass({
 
     var content,
         loaded = this.state.loaded,
-        map = this.state.map;
+        maps = this.state.maps;
 
     if ( this.state.map ){
         content = (
