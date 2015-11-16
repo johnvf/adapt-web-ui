@@ -2,35 +2,116 @@
     "model": "map",
     "documents": [
         {
-          "name": "myMap1",
+          "name": "My Map 1",
+          "sources": {
+            "city_oakland_public_2015":{
+              "type": "vector",
+              "url": "mapbox://urbanbiofilterdev.miw1att9"
+            }
+          },
           "layers":  [
             {
-              "source": "mapbox://johnvf.cdc0d47d",
-              "source_layer": "oakland_public_update_2015",
-              "style": "pink_fill"
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "type": "fill",
+              "paint": {
+                "fill-color": "#ff69b4",
+                "fill-opacity": 0.5
+              }
             },
             {
-              "source": "mapbox://johnvf.cdc0d47d",
-              "source_layer": "oakland_public_update_2015",
-              "style": "pink_line"
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "type": "line",
+              "layout": {
+                "line-join": "round",
+                "line-cap": "round"
+              },
+              "paint": {
+                "line-color": "#ff69b4",
+                "line-width": 1
+              }
             }
-          ],
-          "tags": [
-            "another_tag","first_tag"
           ]
         },
         {
-          "name": "myMap",
+          "name": "My Map 2",
+          "sources": {
+            "city_oakland_public_2015":{
+              "type": "vector",
+              "url": "mapbox://urbanbiofilterdev.miw1att9"
+            }
+          },
           "layers":  [
             {
-              "source": "mapbox://johnvf.877bd2fa",
-              "source_layer": "StreetStructures",
-              "style": "blue_line"
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "filter": ["==", "OWNER_NAME", "OAKLAND UNIFIED SCHOOL DISTRICT"],
+              "type": "fill",
+              "paint": {
+                "fill-color": "#12a5d7",
+                "fill-opacity": 0.5
+              }
+            },
+            {
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "filter": ["==", "OWNER_NAME", "CITY OF OAKLAND"],
+              "type": "fill",
+              "paint": {
+                "fill-color": "#cd3d00",
+                "fill-opacity": 0.5
+              }
             }
-          ],
-          "tags": [
-            "another_tag",
-            "last_tag"
+          ]
+        },
+        {
+          "name": "My Map 3",
+          "sources": {
+            "city_oakland_public_2015":{
+              "type": "vector",
+              "url": "mapbox://urbanbiofilterdev.miw1att9"
+            }
+          },
+          "layers":  [
+            {
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "filter": [
+                "all",
+                [">", "SHAPE_AREA", 0],
+                ["<=","SHAPE_AREA", 30000]
+              ],
+              "type": "fill",
+              "paint": {
+                "fill-color": "#12a5d7",
+                "fill-opacity": 0.9
+              }
+            },
+            {
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "filter": [
+                "all",
+                [">", "SHAPE_AREA", 30000],
+                ["<=","SHAPE_AREA", 60000]
+              ],
+              "type": "fill",
+              "paint": {
+                "fill-color": "#12a5d7",
+                "fill-opacity": 0.5
+              }
+            },
+            {
+              "source": "city_oakland_public_2015",
+              "source-layer": "city_oakland_public_2015",
+              "filter": [">", "SHAPE_AREA", 60000],
+              "type": "fill",
+              "paint": {
+                "fill-color": "#12a5d7",
+                "fill-opacity": 0.2
+              }
+            }
           ]
         }
     ]

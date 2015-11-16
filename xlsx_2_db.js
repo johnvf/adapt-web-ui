@@ -5,8 +5,8 @@ var fs=require('fs'),
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
-// var models = ['asset', 'map', 'mapstyle', 'tabular', 'tag', 'text', 'user']
-var models = ['map', 'mapstyle']
+// var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
+var models = ['map']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
@@ -34,16 +34,10 @@ function dump_xlsx( path, callback ){
                 // Dump content
                 break;
 
-            case "Shapefiles":
-                var required_fields = ["map_layer_name", "mapbox_id", "style_name", "tags"] 
+            case "Maps":
+                var required_fields = ["path", "tags"] 
                 sheetdata.model = "map" 
                 sheetdata.documents = make_maps( dump_data( worksheet, required_fields ) )
-                break;
-
-            case "Mapstyles":
-                var required_fields = ["style_name", "path"] 
-                sheetdata.model = "mapstyle" 
-                sheetdata.documents = make_mapstyles( dump_data( worksheet, required_fields ) )
                 break;
 
             default:
@@ -81,58 +75,22 @@ function dump_data( worksheet, required_fields ){
 
 function make_maps( dump ){
 
-    var maps = {}
+    var maps = []
 
-    dump.forEach( function( layer ){
-        if(!maps[layer.map_layer_name]){
+    dump.forEach( function( item ){
 
-            maps[layer.map_layer_name] = { 
-                name: layer.map_layer_name,
-                layers: [ 
-                    {
-                      source: layer.mapbox_id,
-                      source_layer: layer.source_layer,
-                      style: layer.style_name
-                    }
-                ],
-                tags: get_tags(layer.tags)
-            }
-        }
-        else{
-            maps[layer.map_layer_name].layers.push({
-                source: layer.mapbox_id,
-                source_layer: layer.source_layer,
-                style: layer.style_name
-            });
-        }
-    });
+        var filepath = root + item.path
 
-    return Object.keys(maps).map( function(name){ return maps[name]})
-}
-
-function make_mapstyles( dump ){
-
-    var mapstyles = []
-
-    dump.forEach( function( style ){
-
-        var styleFile = root + style.path
-
-        fs.readFile( styleFile, function (err, data) {
+        fs.readFile( filepath, function (err, data) {
             if (err) throw err;
-
-            mapstyles.push({
-                name: style.style_name,
-                data: JSON.parse(data)
-            });
-
+            var map = JSON.parse(data)
+            map.tags = get_tags(item.tags)
+            maps.push(map)
         });
 
-
-
     });
 
-    return mapstyles
+    return maps
 }
 
 function get_tags( tagString ){
@@ -158,11 +116,4 @@ function seed_db( data ){
     }); 
 }
 
-if (!module.parent) {
-    // console.log(path)
-    dump_xlsx(path,  seed_db )
-} else {
-    // EXPORT SOME METHODS
-}
-
-// load_data( seed_db );
+dump_xlsx(path,  seed_db )
