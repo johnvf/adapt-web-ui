@@ -25,7 +25,7 @@ module.exports = {
           .end(function(err, res){
 
           if (err == null) {
-            ServerActions.receiveMaps(JSON.parse(res.text)); 
+            ServerActions.receiveMaps(JSON.parse(res.text).payload); 
           } else {
             handleError(res.text);
           }

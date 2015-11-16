@@ -6,7 +6,8 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var CHANGE_EVENT = 'change';
 
-var _maps;
+var _map_list;
+var _loading = true;
 
 var ProjectStore = assign({}, EventEmitter.prototype, {
 
@@ -19,14 +20,19 @@ var ProjectStore = assign({}, EventEmitter.prototype, {
   },
 
   getMaps: function(){
-    if( _maps ){
-      return _maps;
+    if( _map_list ){
+      return _map_list;
     }
     else{
       WebAPIUtils.getMaps( )
-      return _maps;
+      _loading = true;
+      return _map_list
     }
     
+  },
+
+  isLoaded: function(){
+    return !_loading
   }
 
 });
@@ -36,32 +42,12 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "LOG_OUT":
-      _projects = null;
-      _reports = {};
+    case "RECEIVE_MAPS":
+      _map_list = action.map_list
+      _loading = false
       ProjectStore.emitChange();
       break;
 
-    case "RECEIVE_PROJECTS":
-      _projects = action.projects
-      ProjectStore.emitChange();
-      break;
-
-
-    case "RECEIVE_REPORT":
-      _reports[ action.report_id ] = action.report
-      ProjectStore.emitChange();
-      break;
-
-    case "RECEIVE_REPORT_LAYOUTS":
-      _reportLayouts[ action.report_id ] = action.reportLayouts
-      ProjectStore.emitChange();
-      break;
-
-    case "SAVE_REPORT_LAYOUTS":
-      _reportLayouts[ action.report_id ] = action.reportLayouts
-      ProjectStore.emitChange();
-      break;
 
     default:
       // do nothing

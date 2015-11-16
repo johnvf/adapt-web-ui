@@ -5,10 +5,12 @@ var Loader = require('react-loader');
 var ViewActions = require('../actions/ViewActions');
 var MapStore = require('../stores/MapStore')
 
+var Map = require('../components/Map')
+
 function getStateFromStores() {
   return {
-    maps: MapStore.getMaps(),
-    loaded: false
+    map_list: MapStore.getMaps(),
+    loaded: MapStore.isLoaded()
   };
 }
 
@@ -34,12 +36,10 @@ var Report = React.createClass({
 
     var content,
         loaded = this.state.loaded,
-        maps = this.state.maps;
+        map_list = this.state.map_list;
 
-    if ( this.state.map ){
-        content = (
-          <Map  map={ map } />
-        );
+    if ( map_list ){
+        content = ( <Map map_list={ map_list } /> )
     }
 
     return (

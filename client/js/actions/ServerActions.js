@@ -2,10 +2,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {
 
-  receiveMaps: function( maps ) {
+  receiveMaps: function( map_list ) {
     AppDispatcher.handleServerAction({
       type: "RECEIVE_MAPS",
-      maps: maps
+      map_list: map_list
     });
   }
 
