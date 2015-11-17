@@ -5,6 +5,10 @@ var Loader = require('react-loader');
 var ViewActions = require('../actions/ViewActions');
 var MapStore = require('../stores/MapStore')
 
+var Grid = require('react-bootstrap/lib/Grid');
+var Row = require('react-bootstrap/lib/Row');
+var Col = require('react-bootstrap/lib/Col');
+
 var Map = require('../components/Map')
 
 function getStateFromStores() {
@@ -34,6 +38,7 @@ var Report = React.createClass({
 
     // var { project_id, report_id } = this.props.params;
 
+    //  FIXME: Integrate react-grid-layout instead
     var content,
         loaded = this.state.loaded,
         map_list = this.state.map_list;
@@ -45,9 +50,19 @@ var Report = React.createClass({
     return (
       
         <div>
-          <Loader loaded={loaded}>
-            {content}
-          </Loader>
+          <Grid>
+            <Row>
+              <Col md={9}>
+                <Loader loaded={loaded}>
+                  {content}
+                </Loader>
+              </Col>
+              <Col md={3}>
+                Text + Data
+              </Col>
+            </Row>
+
+          </Grid>
         </div>
       
     )

@@ -24,21 +24,21 @@ var Sidebar = React.createClass({
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
               <li className="brand"> 
-                <Link to={ "/" }></Link>
+                <Link to={ "/adapt" }></Link>
               </li>
               <li>
-                <Link to={ "/toolbox" }></Link>
+                <Link to={ "/adapt/toolbox" }></Link>
               </li>
               <li>
-                <Link to={ "/map" }></Link>
+                <Link to={ "/adapt/map" }></Link>
               </li>
           </ul>          
           <ul className="toolbar-nav bottom">
               <li>
-                <Link to={ "/about" }></Link>
+                <Link to={ "/adapt/about" }></Link>
               </li>
               <li>
-                <Link to={ "/share" }></Link>
+                <Link to={ "/adapt/share" }></Link>
               </li>
           </ul>
 

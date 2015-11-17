@@ -14,7 +14,10 @@ var Sidebar = require( './components/Sidebar')
 
 // Pages
 var Landing = require('./pages/Landing'),
-    MapView = require('./pages/MapView');
+    Home = require('./pages/Home'),
+    Toolbox = require('./pages/Toolbox'),
+    MapView = require('./pages/MapView'),
+    About = require('./pages/About');
 
 
 function getStateFromStores() {
@@ -56,9 +59,12 @@ const history = useBasename(createBrowserHistory)({
 // Essentially a mini-sitemap used to direct users to different pages
 React.render((
   <Router history={ history } >
-    <Route path="/" component={App}>
-      <IndexRoute component={Landing}/>
-      <Route path="/map" component={MapView}/>
+    <Route path="adapt" component={App}>
+      <IndexRoute component={Home}/>
+      <Route path="map" component={MapView}/>
+      <Route path="toolbox" component={Toolbox}/>
+      <Route path="about" component={About}/>
     </Route>
+    <Route path="/*" component={Landing}/>
   </Router>
 ), document.body);
