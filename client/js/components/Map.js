@@ -105,12 +105,11 @@ function addToMapUI( map, map_list_item , addCallback, removeCallback ){
 
 var Map = React.createClass({
 
-  componentDidMount: function(){
+  componentDidUpdate: function(){
     makeMap( this.props.map_list )
   },
 
   render: function() {
-
     return (
       <div>
         <ul id="map-ui"></ul>
