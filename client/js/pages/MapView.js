@@ -5,6 +5,7 @@ var Loader = require('react-loader');
 var ViewActions = require('../actions/ViewActions');
 var MapStore = require('../stores/MapStore')
 
+// var Well = require('react-bootstrap/lib/Well');
 var Grid = require('react-bootstrap/lib/Grid');
 var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');

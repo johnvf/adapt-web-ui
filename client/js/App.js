@@ -42,7 +42,7 @@ var App = React.createClass({
     return (
       <div className= "app-loggedin">
         <Sidebar/>
-        <div className="container-fluid centered">
+        <div className="container-fluid main centered">
           {this.props.children}
         </div>
       </div>
