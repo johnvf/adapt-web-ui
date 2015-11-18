@@ -6,9 +6,8 @@ var ViewActions = require('../actions/ViewActions');
 var MapStore = require('../stores/MapStore')
 
 // var Well = require('react-bootstrap/lib/Well');
-var Grid = require('react-bootstrap/lib/Grid');
-var Row = require('react-bootstrap/lib/Row');
-var Col = require('react-bootstrap/lib/Col');
+
+var Dashboard = require('../components/Dashboard');
 
 var Map = require('../components/Map')
 
@@ -40,32 +39,17 @@ var Report = React.createClass({
     // var { project_id, report_id } = this.props.params;
 
     //  FIXME: Integrate react-grid-layout instead
-    var content,
+    var content = [],
         loaded = this.state.loaded,
         map_list = this.state.map_list;
 
-    if ( map_list ){
-        content = ( <Map map_list={ map_list } /> )
-    }
+
+        content.push( <Map map_list={ map_list } /> )
+        content.push( <div> ADAPT OAKLAND AREA </div> )
+        content.push( <div> DATA AVAILABLE </div>  )
 
     return (
-      
-        <div>
-          <Grid>
-            <Row>
-              <Col md={9}>
-                <Loader loaded={loaded}>
-                  {content}
-                </Loader>
-              </Col>
-              <Col md={3}>
-                Text + Data
-              </Col>
-            </Row>
-
-          </Grid>
-        </div>
-      
+      <Dashboard content={ content }/>
     )
   }
 });
