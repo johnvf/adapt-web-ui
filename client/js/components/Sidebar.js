@@ -6,12 +6,48 @@ var NavItem = require('react-bootstrap/lib/NavItem');
 var NavDropdown = require('react-bootstrap/lib/NavDropdown');
 var NavBrand = require('react-bootstrap/lib/NavBrand');
 var MenuItem = require('react-bootstrap/lib/MenuItem');
+var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
+var Popover = require('react-bootstrap/lib/Popover');
+var Accordion = require('react-bootstrap/lib/Accordion');
+var Panel = require('react-bootstrap/lib/Panel');
 var Link = require('react-router').Link;
+var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore')
 
+
+function displayCase( snakeString ){
+  return snakeString.split("_").map(function(w){ return w[0].toUpperCase() + w.slice(1); }).join(" ")
+}
+
 var Sidebar = React.createClass({
 
+  mixins: [ History ],
+
+  getPopover: function(maps){
+    var self = this;
+    // loo00l .. maps.map(function(map...))
+    var Panels = maps.map(function(map, index){
+      return(
+        <Panel header={ displayCase(map) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/map/' + map) } >
+          Map Groups/Layers here...
+        </Panel>
+      )
+    })
+
+    return(
+      <Popover placement="right" width={400} positionLeft={70} positionTop={0} title="MAP HOME">
+        <Accordion>
+          { Panels }
+        </Accordion>
+      </Popover>
+    )
+  },
+
+  navigate: function(url){
+    this.history.pushState(null, url)
+  },
+  
   render: function() {
 
     var loggedIn = this.props.loggedIn;
@@ -19,6 +55,12 @@ var Sidebar = React.createClass({
 
     var navbarClassName;
     var brandClassName;
+
+    var maps = this.props.tags.map ? this.props.tags.map : []//["areas", "environmental_hazards", "design", "monitor"]
+
+    // TODO
+    // var map_groups = ["air", "water", "soil", "energy", "parallel_plans", "adaptation_strategies", "ecosystem_services", "areas"]
+    // var map_layers = [...]
 
     return (
       <div id="sidebar-wrapper">
@@ -30,7 +72,9 @@ var Sidebar = React.createClass({
                 <Link to={ "/adapt/toolbox" }></Link>
               </li>
               <li>
-                <Link to={ "/adapt/map" }></Link>
+                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(maps) }>
+                  <a id="map-icon"></a>
+                </OverlayTrigger>
               </li>
           </ul>          
           <ul className="toolbar-nav bottom">

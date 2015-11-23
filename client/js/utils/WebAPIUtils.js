@@ -18,9 +18,25 @@ function handleError( errText ){
 
 module.exports = {
 
+    getTags: function( ){
+        // If tags, concatenate and append to URL
+        request.get( "/api/tag" )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveTags(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
     getMaps: function( tags ){
         // If tags, concatenate and append to URL
-        request.get( "/api/map" )
+        var url = tags ?  "/api/map?filter[tags]="+tags : "/api/map"
+        request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
 

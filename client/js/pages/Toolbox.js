@@ -2,7 +2,7 @@ var React = require('react');
 
 var Loader = require('react-loader');
 
-var Landing = React.createClass({
+var Toolbox = React.createClass({
 
   /**
    * State Boilerplate 
@@ -27,4 +27,4 @@ var Landing = React.createClass({
   }
 });
 
-module.exports = Landing;
+module.exports = Toolbox;
