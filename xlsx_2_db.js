@@ -6,7 +6,7 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
 // var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
-var models = ['map']
+var models = ['map', 'tag']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
@@ -28,6 +28,9 @@ function dump_xlsx( path, callback ){
 
             case "Tags":
                 // Dump tags
+                var required_fields = ["text", "type"] 
+                sheetdata.model = "tag" 
+                sheetdata.documents = dump_data( worksheet, required_fields )
                 break;
 
             case "Content":

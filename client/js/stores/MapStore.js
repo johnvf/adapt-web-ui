@@ -6,10 +6,11 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var CHANGE_EVENT = 'change';
 
+var _mapLookup = {};
 var _map_list;
-var _loading = true;
+var _loading = false;
 
-var ProjectStore = assign({}, EventEmitter.prototype, {
+var MapStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -19,16 +20,18 @@ var ProjectStore = assign({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  getMaps: function(){
-    if( _map_list ){
-      return _map_list;
-    }
-    else{
-      WebAPIUtils.getMaps( )
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  getMaps: function( tags ){
+
+    if( _loading === false && _map_list === null ){
+      WebAPIUtils.getMaps( tags )
       _loading = true;
-      return _map_list
     }
     
+    return _map_list
   },
 
   isLoaded: function(){
@@ -37,15 +40,21 @@ var ProjectStore = assign({}, EventEmitter.prototype, {
 
 });
 
-ProjectStore.dispatchToken = AppDispatcher.register(function(payload) {
+MapStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.type) {
 
+    case "URL_CHANGED":
+      _map_list = null;
+      MapStore.emitChange();
+      break;
+
     case "RECEIVE_MAPS":
       _map_list = action.map_list
+      _mapLookup[action.tags] = action.map_list
       _loading = false
-      ProjectStore.emitChange();
+      MapStore.emitChange();
       break;
 
 
@@ -55,4 +64,4 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = ProjectStore;
+module.exports = MapStore;

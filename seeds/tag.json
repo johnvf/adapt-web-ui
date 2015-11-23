@@ -2,19 +2,19 @@
     "model": "tag",
     "documents": [
         {
-            "name": "vegetated_buffer",
+            "text": "vegetated_buffer",
             "type": "ecosystem_services"
         },
         {
-            "name": "one_tag",
+            "text": "one_tag",
             "type": "typologies"
         },
         {
-            "name": "another_tag",
+            "text": "another_tag",
             "type": "adaptation_strategies"
         },
         {
-            "name": "last_tag",
+            "text": "last_tag",
             "type": "ecosystem_services"
         }
     ]
