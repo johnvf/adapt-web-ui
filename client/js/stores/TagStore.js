@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
+var union = require('lodash-node/modern/array/union');
 
 var WebAPIUtils = require('../utils/WebAPIUtils');
 
@@ -93,6 +94,48 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       console.debug(_tags)
       console.debug(_active_tags)
       TagStore.emitChange();
+      break;
+
+    case "RECEIVE_MAPS":
+      var map_list = action.map_list
+      var _mapTagTree = []
+
+      map_list.forEach( function(layer){
+
+        var maps, map_groups;
+
+        layer.tags.forEach( function(tagText){
+
+          switch( _tagLookup[tagText].type ){
+
+            case "map":
+              maps.push( tagText )
+              break;
+
+            case "map_group":
+              map_groups.push( tagText )
+              break;
+          }
+        })
+
+        map_groups.forEach( function(map_group){
+          theMapGroup = { name: tagText , children: [] }
+          theMap.children.push( layer )
+        })
+
+        maps.forEach( function(tagText){
+          var theMap;
+          theMap = _mapTagTree.find(function(thisMap){ thisMap.name === tagText })
+          if (!theMap){
+            theMap = { name: tagText , children: [] }
+            _mapTagTree.push( theMap )
+          }
+        });
+
+      });
+
+      _loading = false
+      MapStore.emitChange();
       break;
 
     default:
