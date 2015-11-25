@@ -1,12 +1,13 @@
 var fs=require('fs'),
     seeder = require('mongoose-seed'),
-    XLSX = require('xlsx');
+    XLSX = require('xlsx'),
+    mammoth = require("mammoth");
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
 // var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
-var models = ['map', 'tag']
+var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
@@ -27,14 +28,33 @@ function dump_xlsx( path, callback ){
         switch(sheet_name) {
 
             case "Tags":
-                // Dump tags
                 var required_fields = ["text", "type"] 
                 sheetdata.model = "tag" 
                 sheetdata.documents = dump_data( worksheet, required_fields )
                 break;
 
-            case "Content":
-                // Dump content
+            case "Chart":
+                var required_fields = ["path", "tags"] 
+                sheetdata.model = "chart" 
+                sheetdata.documents = make_charts( dump_data( worksheet, required_fields ), callback )
+                break;
+
+            case "Table":
+                var required_fields = ["path", "tags"] 
+                sheetdata.model = "table" 
+                sheetdata.documents = make_tables( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Text":
+                var required_fields = ["path", "tags"] 
+                sheetdata.model = "text" 
+                sheetdata.documents = make_text( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Image":
+                var required_fields = ["path", "tags"] 
+                sheetdata.model = "image" 
+                sheetdata.documents = make_images( dump_data( worksheet, required_fields ) )
                 break;
 
             case "Maps":
@@ -51,7 +71,6 @@ function dump_xlsx( path, callback ){
             data.push( sheetdata );
         }
     });
-
     callback( data );
 }
 
@@ -76,9 +95,72 @@ function dump_data( worksheet, required_fields ){
     return validData
 }
 
+function make_charts( dump ){
+
+    var documents = []
+
+    dump.forEach( function( item ){
+    })
+
+    return documents
+}
+
+function make_tables( dump ){
+
+    var documents = []
+
+    dump.forEach( function( item ){
+    })
+
+    return documents
+}
+
+function make_text( dump ){
+
+    var documents = []
+
+    text_promises = dump.map( function( item ){
+        return new Promise( function(resolve, reject){
+            var filepath = root + item.path
+
+            mammoth.convertToMarkdown({path: filepath})            
+            .then(function(result){
+                var data = result.value; // The generated HTML 
+                var name = item.name
+                var tags = get_tags(item.tags)
+                resolve( { name: name, data: data, tags: tags } )
+            })
+            .catch(function(err) {
+                // log that I have an error, return the entire array;
+                console.log('Failed to import '+filepath);
+                // console.log('A promise failed to resolve', err);
+                resolve(undefined)
+            })
+        })
+    })
+
+    Promise.all( text_promises ).then(function(text_promises) {
+        // full array of resolved promises;
+        documents = text_promises.map( function(text){return text})
+        return documents.filter(function(n){ return n != undefined });
+    })
+    
+    
+}
+
+function make_images( dump ){
+
+    var documents = []
+
+    dump.forEach( function( item ){
+    })
+
+    return documents
+}
+
 function make_maps( dump ){
 
-    var maps = []
+    var documents = []
 
     dump.forEach( function( item ){
 
@@ -88,12 +170,12 @@ function make_maps( dump ){
             if (err) throw err;
             var map = JSON.parse(data)
             map.tags = get_tags(item.tags)
-            maps.push(map)
+            documents.push(map)
         });
 
     });
 
-    return maps
+    return documents
 }
 
 function get_tags( tagString ){
@@ -103,20 +185,20 @@ function get_tags( tagString ){
 function seed_db( data ){
     console.log("seed_db");
    // Connect to MongoDB via Mongoose 
-    seeder.connect( config.db, function() {
+    // seeder.connect( config.db, function() {
         
-        // Load Mongoose models 
-        var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
-        seeder.loadModels( modelFiles )
+    //     // Load Mongoose models 
+    //     var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
+    //     seeder.loadModels( modelFiles )
      
-        // Clear specified collections 
-        seeder.clearModels( models , function() {
+    //     // Clear specified collections 
+    //     seeder.clearModels( models , function() {
             
-            // console.log(JSON.stringify(data, null, 2))
-            // Callback to populate DB once collections have been cleared 
-            seeder.populateModels(data);
-        });
-    }); 
+    //         // console.log(JSON.stringify(data, null, 2))
+    //         // Callback to populate DB once collections have been cleared 
+    //         seeder.populateModels(data);
+    //     });
+    // }); 
 }
 
 dump_xlsx(path,  seed_db )

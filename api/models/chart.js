@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var TabularSchema = mongoose.Schema({
+var ChartSchema = mongoose.Schema({
     name: String,
     type: String,
     chart_type: { },
@@ -10,4 +10,4 @@ var TabularSchema = mongoose.Schema({
     tags: [ String ]
 });
 
-module.exports = mongoose.model('tabular', TabularSchema);
+module.exports = mongoose.model('chart', ChartSchema);
