@@ -13,67 +13,6 @@ var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
-function dump_xlsx( path, callback ){
-    console.log("dump_xlsx");
-    var data = []
-
-    var workbook = XLSX.readFile( path );
-
-    var sheet_name_list = workbook.SheetNames;
-    sheet_name_list.forEach(function(sheet_name) { /* iterate through sheets */
-
-        var worksheet = workbook.Sheets[sheet_name]
-            sheetdata = {};
-
-        switch(sheet_name) {
-
-            case "Tags":
-                var required_fields = ["text", "type"] 
-                sheetdata.model = "tag" 
-                sheetdata.documents = dump_data( worksheet, required_fields )
-                break;
-
-            case "Chart":
-                var required_fields = ["path", "tags"] 
-                sheetdata.model = "chart" 
-                sheetdata.documents = make_charts( dump_data( worksheet, required_fields ), callback )
-                break;
-
-            case "Table":
-                var required_fields = ["path", "tags"] 
-                sheetdata.model = "table" 
-                sheetdata.documents = make_tables( dump_data( worksheet, required_fields ) )
-                break;
-
-            case "Text":
-                var required_fields = ["path", "tags"] 
-                sheetdata.model = "text" 
-                sheetdata.documents = make_text( dump_data( worksheet, required_fields ) )
-                break;
-
-            case "Image":
-                var required_fields = ["path", "tags"] 
-                sheetdata.model = "image" 
-                sheetdata.documents = make_images( dump_data( worksheet, required_fields ) )
-                break;
-
-            case "Maps":
-                var required_fields = ["path", "tags"] 
-                sheetdata.model = "map" 
-                sheetdata.documents = make_maps( dump_data( worksheet, required_fields ) )
-                break;
-
-            default:
-                // Do nothing
-        }
-
-        if( Object.keys(sheetdata).length > 0 ){
-            data.push( sheetdata );
-        }
-    });
-    callback( data );
-}
-
 function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
     
@@ -95,6 +34,10 @@ function dump_data( worksheet, required_fields ){
     return validData
 }
 
+function make_tags( dump ){
+    seed_db( "tag", dump )
+}
+
 function make_charts( dump ){
 
     var documents = []
@@ -102,7 +45,7 @@ function make_charts( dump ){
     dump.forEach( function( item ){
     })
 
-    return documents
+    // seed_db( "chart", documents )
 }
 
 function make_tables( dump ){
@@ -112,7 +55,7 @@ function make_tables( dump ){
     dump.forEach( function( item ){
     })
 
-    return documents
+    // seed_db( "table", documents )
 }
 
 function make_text( dump ){
@@ -142,7 +85,9 @@ function make_text( dump ){
     Promise.all( text_promises ).then(function(text_promises) {
         // full array of resolved promises;
         documents = text_promises.map( function(text){return text})
-        return documents.filter(function(n){ return n != undefined });
+            .filter(function(n){ return n != undefined });
+
+        seed_db( "text", documents )
     })
     
     
@@ -155,7 +100,7 @@ function make_images( dump ){
     dump.forEach( function( item ){
     })
 
-    return documents
+    // seed_db( "image", documents )
 }
 
 function make_maps( dump ){
@@ -165,40 +110,108 @@ function make_maps( dump ){
     dump.forEach( function( item ){
 
         var filepath = root + item.path
-
-        fs.readFile( filepath, function (err, data) {
-            if (err) throw err;
-            var map = JSON.parse(data)
+        // fs.readFile( filepath, function (err, data) {
+        //     if (err) throw err;
+        //     var map = JSON.parse(data)
+        //     map.tags = get_tags(item.tags)
+        //     documents.push(map)
+        // });
+        var map = JSON.parse( fs.readFileSync( filepath ) );
             map.tags = get_tags(item.tags)
             documents.push(map)
-        });
-
     });
-
-    return documents
+    seed_db( "map", documents )
 }
 
 function get_tags( tagString ){
     return tagString.split(",").map( function(tag){ return tag.trim()})
 }
 
-function seed_db( data ){
-    console.log("seed_db");
-   // Connect to MongoDB via Mongoose 
-    // seeder.connect( config.db, function() {
-        
-    //     // Load Mongoose models 
-    //     var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
-    //     seeder.loadModels( modelFiles )
-     
-    //     // Clear specified collections 
-    //     seeder.clearModels( models , function() {
-            
-    //         // console.log(JSON.stringify(data, null, 2))
-    //         // Callback to populate DB once collections have been cleared 
-    //         seeder.populateModels(data);
-    //     });
-    // }); 
+function seed_from_xlsx( path ){
+    console.log("dump_xlsx");
+    var data = []
+
+    var workbook = XLSX.readFile( path );
+
+    var sheet_name_list = workbook.SheetNames;
+    sheet_name_list.forEach(function(sheet_name) { /* iterate through sheets */
+
+        var worksheet = workbook.Sheets[sheet_name]
+            sheetdata = {};
+
+        switch(sheet_name) {
+
+            case "Tags":
+                var required_fields = ["text", "type"] 
+                make_tags( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Chart":
+                var required_fields = ["path", "tags"] 
+                make_charts( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Table":
+                var required_fields = ["path", "tags"] 
+                make_tables( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Text":
+                var required_fields = ["path", "tags"] 
+                make_text( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Image":
+                var required_fields = ["path", "tags"] 
+                make_images( dump_data( worksheet, required_fields ) )
+                break;
+
+            case "Maps":
+                var required_fields = ["path", "tags"] 
+                make_maps( dump_data( worksheet, required_fields ) )
+                break;
+
+            default:
+                // Do nothing
+        }
+    });
 }
 
-dump_xlsx(path,  seed_db )
+function dump_db( callback ){
+    console.log("dump_db");
+
+   // Connect to MongoDB via Mongoose 
+    seeder.connect( config.db, function() {
+        // Load Mongoose models 
+        var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
+        seeder.loadModels( modelFiles )
+     
+        // Clear specified collections 
+        seeder.clearModels( models , function() {
+            callback();
+        });
+    }); 
+}
+
+function seed_db( model, documents ){
+    console.log("seeding "+model);
+
+    // Format the data for the seeder
+    var data = []
+
+    var sheetdata = {}
+        sheetdata.model = model
+        sheetdata.documents = documents
+        
+    if( Object.keys(sheetdata).length > 0 ){
+        data.push( sheetdata );
+    }
+
+    // Load Mongoose models 
+    var modelFile = './api/models/'+model+".js"
+    // seeder.loadModels( modelFile )
+
+    seeder.populateModels(data);
+}
+
+dump_db( seed_from_xlsx.bind(null, path ) );
