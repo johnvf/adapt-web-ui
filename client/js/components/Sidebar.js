@@ -14,6 +14,7 @@ var Link = require('react-router').Link;
 var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore')
+var Icon = require('../lib_components/Icon')
 
 
 function displayCase( snakeString ){
@@ -66,23 +67,31 @@ var Sidebar = React.createClass({
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
               <li className="brand"> 
-                <Link to={ "/adapt" }></Link>
+                <Link to={"/adapt"}>
+                  <Icon symbolID="icon-icon_logo"/>
+                </Link>
               </li>
               <li>
-                <Link to={ "/adapt/toolbox" }></Link>
+                <Link to={ "/adapt/toolbox" }>
+                  <Icon symbolID="icon-icon_toolbox"/>
+                </Link>
               </li>
               <li>
                 <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(maps) }>
-                  <a id="map-icon"></a>
+                  <a><Icon symbolID="icon-icon_map"/></a>
                 </OverlayTrigger>
               </li>
           </ul>          
           <ul className="toolbar-nav bottom">
               <li>
-                <Link to={ "/adapt/about" }></Link>
+                <Link to={ "/adapt/about" }>
+                  <Icon symbolID="icon-icon_about"/>
+                </Link>
               </li>
               <li>
-                <Link to={ "/adapt/share" }></Link>
+                <Link to={ "/adapt/share" }>
+                  <Icon symbolID="icon-icon_share"/>
+                </Link>
               </li>
           </ul>
 
