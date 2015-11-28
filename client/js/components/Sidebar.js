@@ -27,10 +27,25 @@ var Sidebar = React.createClass({
   getPopover: function(maps){
     var self = this;
     // loo00l .. maps.map(function(map...))
-    var Panels = maps.map(function(map, index){
+    var MapPanels = maps.map(function(map, index){
+      var GroupPanels = map.groups.map(function(group, index){
+
+        var LayerItems = group.layers.map(function(layer, index){
+          return(
+            <li>{ layer.text }</li>
+            )
+        });
+
+        return (
+          <Panel header={ displayCase(group.text) }>
+            {LayerItems}
+          </Panel>
+          )
+      });
+
       return(
-        <Panel header={ displayCase(map) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/map/' + map) } >
-          Map Groups/Layers here...
+        <Panel header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/map/' + map.tag.text) } >
+          { GroupPanels }
         </Panel>
       )
     })
@@ -38,7 +53,7 @@ var Sidebar = React.createClass({
     return(
       <Popover placement="right" width={400} positionLeft={70} positionTop={0} title="MAP HOME">
         <Accordion>
-          { Panels }
+          { MapPanels }
         </Accordion>
       </Popover>
     )
@@ -47,7 +62,7 @@ var Sidebar = React.createClass({
   navigate: function(url){
     this.history.pushState(null, url)
   },
-  
+
   render: function() {
 
     var loggedIn = this.props.loggedIn;
@@ -56,27 +71,23 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var maps = this.props.tags.map ? this.props.tags.map : []//["areas", "environmental_hazards", "design", "monitor"]
-
-    // TODO
-    // var map_groups = ["air", "water", "soil", "energy", "parallel_plans", "adaptation_strategies", "ecosystem_services", "areas"]
-    // var map_layers = [...]
+    var mapsTree = this.props.mapTagTree;
 
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand"> 
+              <li className="brand">
                 <Link to={ "/adapt" }></Link>
               </li>
               <li>
                 <Link to={ "/adapt/toolbox" }></Link>
               </li>
               <li>
-                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(maps) }>
+                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(mapsTree) }>
                   <a id="map-icon"></a>
                 </OverlayTrigger>
               </li>
-          </ul>          
+          </ul>
           <ul className="toolbar-nav bottom">
               <li>
                 <Link to={ "/adapt/about" }></Link>
@@ -119,7 +130,7 @@ var Sidebar = React.createClass({
           //     <li>
           //         <a href="#">Contact</a>
           //     </li>
-          // </ul>          
+          // </ul>
           // <ul className="sidebar-nav bottom">
           //     <li>
           //         <a href="#">Dashboard</a>

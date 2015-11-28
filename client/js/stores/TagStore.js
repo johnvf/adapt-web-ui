@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
-var union = require('lodash-node/modern/array/union');
+var _ = require('lodash');
 
 var WebAPIUtils = require('../utils/WebAPIUtils');
 
@@ -10,6 +10,7 @@ var CHANGE_EVENT = 'change';
 var _tags = {},
     _tagLookup = {},
     _active_tags = {},
+    _mapTagTree = [],
     _URLTags = [];
 
 window.onpopstate = function(event) {
@@ -43,7 +44,7 @@ var TagStore = assign({}, EventEmitter.prototype, {
   },
 
   receiveTags: function(tags){
-    // Categorize tags by type for UI, 
+    // Categorize tags by type for UI,
     // hold onto a lookup of them for future reference.
     tags.forEach(function(tag){
       _tags[tag.type] ? _tags[tag.type].push(tag.text) : _tags[tag.type] = [tag.text]
@@ -63,6 +64,10 @@ var TagStore = assign({}, EventEmitter.prototype, {
 
   getURLTags: function(){
     return _URLTags
+  },
+
+  getMapTagTree: function(){
+    return _mapTagTree;
   }
 
 });
@@ -97,45 +102,36 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case "RECEIVE_MAPS":
-      var map_list = action.map_list
-      var _mapTagTree = []
+      var map_list = action.map_list;
 
       map_list.forEach( function(layer){
 
-        var maps, map_groups;
-
-        layer.tags.forEach( function(tagText){
-
-          switch( _tagLookup[tagText].type ){
-
-            case "map":
-              maps.push( tagText )
-              break;
-
-            case "map_group":
-              map_groups.push( tagText )
-              break;
+        var layerTags = layer.tags.map(function(tagText){ return _tagLookup[tagText]; });
+        layerTags = layerTags.filter(function (t){ return t; });
+        var mapTag = layerTags.filter(function(tag){ return tag.type == "map";})[0];
+        var groupTag = layerTags.filter(function(tag){ return tag.type == "map_group";})[0];
+        var layerTag = layerTags.filter(function(tag){ return tag.type == "map_layer";})[0];
+        if( mapTag && groupTag && layerTag ){
+          // add these items to the map tag tree structure
+          var mapObject = _mapTagTree.filter(function(mapObj){ return mapObj.tag.text === mapTag.text; })[0];
+          if( !mapObject ){
+            mapObject = { text: mapTag.text, tag: mapTag, groups: [] };
+            _mapTagTree.push(mapObject);
           }
-        })
-
-        map_groups.forEach( function(map_group){
-          theMapGroup = { name: tagText , children: [] }
-          theMap.children.push( layer )
-        })
-
-        maps.forEach( function(tagText){
-          var theMap;
-          theMap = _mapTagTree.find(function(thisMap){ thisMap.name === tagText })
-          if (!theMap){
-            theMap = { name: tagText , children: [] }
-            _mapTagTree.push( theMap )
+          var groupObject = mapObject.groups.filter(function(g){return g.tag.text === groupTag.text; })[0];
+          if( !groupObject ){
+            groupObject = { text: groupTag.text, tag: groupTag, layers: [] };
+            mapObject.groups.push(groupObject);
           }
-        });
-
+          var layerObject = { text: layer.name, tag: layerTag, map_item: layer };
+          groupObject.layers.push(layerObject);
+        } else {
+          console.log("insufficient tags:", layer.name, layer.tags);
+        }
       });
-
+      console.log("built mapTagTree", _mapTagTree);
       _loading = false
-      MapStore.emitChange();
+      TagStore.emitChange();
       break;
 
     default:
