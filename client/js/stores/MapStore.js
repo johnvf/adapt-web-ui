@@ -26,11 +26,11 @@ var MapStore = assign({}, EventEmitter.prototype, {
 
   getMaps: function( tags ){
 
-    if( _loading === false && _map_list === null ){
+    if( _loading === false && _map_list === undefined ){
       WebAPIUtils.getMaps( tags )
       _loading = true;
     }
-    
+
     return _map_list
   },
 
