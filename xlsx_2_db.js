@@ -13,6 +13,7 @@ var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
+// Dumps items in main spreadsheet, skips incomplete entries
 function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
     
@@ -34,10 +35,19 @@ function dump_data( worksheet, required_fields ){
     return validData
 }
 
+// Tags go straight in
 function make_tags( dump ){
     seed_db( "tag", dump )
 }
 
+// .XLSX table data w/ c3.js configuration
+//
+// First, traverse paths to .gsheet files:
+// these are just JSON objects that contain the google Drive ID.
+// OPTIONS:
+// 1. Use the google drive API to pull each sheet down as an .XLSX.
+// Then, use node XLSX to dump the chart data out directly
+// 2. Use the existing google sheets API code to read the data directly
 function make_charts( dump ){
 
     var documents = []
@@ -48,6 +58,7 @@ function make_charts( dump ){
     // seed_db( "chart", documents )
 }
 
+// .XLSX table data - see make_charts for more info
 function make_tables( dump ){
 
     var documents = []
@@ -58,6 +69,8 @@ function make_tables( dump ){
     // seed_db( "table", documents )
 }
 
+// Report text from .docx to Markdown or HTML
+// Mammoth is async, so promises are used here
 function make_text( dump ){
 
     var documents = []
@@ -75,7 +88,7 @@ function make_text( dump ){
             })
             .catch(function(err) {
                 // log that I have an error, return the entire array;
-                console.log('Failed to import '+filepath);
+                console.error('ERROR: Failed to import '+filepath);
                 // console.log('A promise failed to resolve', err);
                 resolve(undefined)
             })
@@ -93,16 +106,20 @@ function make_text( dump ){
     
 }
 
+// Programmatically upload images,
+// store URL in DB w/ name + tags
 function make_images( dump ){
 
     var documents = []
 
     dump.forEach( function( item ){
+
     })
 
     // seed_db( "image", documents )
 }
 
+// Map JSON for mapbox.gl
 function make_maps( dump ){
 
     var documents = []
@@ -110,12 +127,6 @@ function make_maps( dump ){
     dump.forEach( function( item ){
 
         var filepath = root + item.path
-        // fs.readFile( filepath, function (err, data) {
-        //     if (err) throw err;
-        //     var map = JSON.parse(data)
-        //     map.tags = get_tags(item.tags)
-        //     documents.push(map)
-        // });
         var map = JSON.parse( fs.readFileSync( filepath ) );
             map.tags = get_tags(item.tags)
             documents.push(map)
@@ -123,10 +134,12 @@ function make_maps( dump ){
     seed_db( "map", documents )
 }
 
+// Split and clean up tags
 function get_tags( tagString ){
     return tagString.split(",").map( function(tag){ return tag.trim()})
 }
 
+// Iterate over Workbook sheets, import data to MongoDB
 function seed_from_xlsx( path ){
     console.log("dump_xlsx");
     var data = []
@@ -177,6 +190,7 @@ function seed_from_xlsx( path ){
     });
 }
 
+// Opens a connection to mongo, dumps the database, loads models
 function dump_db( callback ){
     console.log("dump_db");
 
@@ -193,6 +207,8 @@ function dump_db( callback ){
     }); 
 }
 
+// Loads data for a specific model into the db
+// Seeder is available since it was defined in dump_db
 function seed_db( model, documents ){
     console.log("seeding "+model);
 
@@ -214,4 +230,5 @@ function seed_db( model, documents ){
     seeder.populateModels(data);
 }
 
+// Dump the database and reload all the data
 dump_db( seed_from_xlsx.bind(null, path ) );

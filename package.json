@@ -44,6 +44,7 @@
     "gulp-uglify": "^1.4.2",
     "gulp-util": "^3.0.7",
     "history": "^1.13.1",
+    "marked": "^0.3.5",
     "lodash": "^2.4.1",
     "mammoth": "^0.3.27",
     "mapbox-gl": "^0.11.2",
