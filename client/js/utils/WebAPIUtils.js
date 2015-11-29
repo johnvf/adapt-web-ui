@@ -13,19 +13,19 @@ function handleError( errText ){
       alert('Oh no! error ' + errText);
       // do nothing
   }
-  
+
 }
 
 module.exports = {
 
     getTags: function( ){
         // If tags, concatenate and append to URL
-        request.get( "/api/tag" )
+        request.get( "/api/tag?limit=1000" )
           .set('Accept', 'application/json')
           .end(function(err, res){
 
           if (err == null) {
-            ServerActions.receiveTags(JSON.parse(res.text).payload); 
+            ServerActions.receiveTags(JSON.parse(res.text).payload);
           } else {
             handleError(res.text);
           }
@@ -41,7 +41,7 @@ module.exports = {
           .end(function(err, res){
 
           if (err == null) {
-            ServerActions.receiveMaps(JSON.parse(res.text).payload); 
+            ServerActions.receiveMaps(JSON.parse(res.text).payload);
           } else {
             handleError(res.text);
           }

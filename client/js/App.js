@@ -12,6 +12,7 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 var useBasename = require('history/lib/useBasename')
 
 var TagStore = require('./stores/TagStore')
+var MapStore = require('./stores/MapStore')
 var Sidebar = require( './components/Sidebar')
 
 // Pages
@@ -25,6 +26,8 @@ var Landing = require('./pages/Landing'),
 function getStateFromStores() {
   return {
     tags: TagStore.getTags(),
+    maps: MapStore.getMaps(),
+    mapTagTree: TagStore.getMapTagTree(),
     active_tags: TagStore.getActiveTags()
   };
 }
@@ -33,14 +36,14 @@ function getStateFromStores() {
 var App = React.createClass({
 
   /**
-   * State Boilerplate 
+   * State Boilerplate
    */
-  getInitialState: function() {  
+  getInitialState: function() {
     return getStateFromStores();
   },
 
   componentDidMount: function() {
-    TagStore.addChangeListener(this._onChange);  
+    TagStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -48,17 +51,18 @@ var App = React.createClass({
   },
 
 
-  _onChange: function() {  
+  _onChange: function() {
     this.setState(getStateFromStores())
   },
 
   render: function () {
     var tags = this.state.tags;
-    var active_tags = this.state.active_tags
+    var active_tags = this.state.active_tags;
+    var mapTagTree = this.state.mapTagTree;
 
     return (
       <div className= "app-loggedin">
-        <Sidebar tags={tags} active_tags={active_tags} />
+        <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} />
         <div className="container-fluid main centered">
           {this.props.children}
         </div>

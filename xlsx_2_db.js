@@ -16,9 +16,9 @@ var root = path.split("/").slice(0,-1).join("/")
 // Dumps items in main spreadsheet, skips incomplete entries
 function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
-    
+
     var validData = [];
-    dump.forEach(function( item, index ){
+    dump.forEach(function( item ){
         var valid = true
         // Discard invalid documents using required_fields
         required_fields.forEach( function(key){
@@ -125,7 +125,6 @@ function make_maps( dump ){
     var documents = []
 
     dump.forEach( function( item ){
-
         var filepath = root + item.path
         var map = JSON.parse( fs.readFileSync( filepath ) );
             map.tags = get_tags(item.tags)
@@ -199,12 +198,12 @@ function dump_db( callback ){
         // Load Mongoose models 
         var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
         seeder.loadModels( modelFiles )
-     
-        // Clear specified collections 
+
+        // Clear specified collections
         seeder.clearModels( models , function() {
             callback();
         });
-    }); 
+    });
 }
 
 // Loads data for a specific model into the db
