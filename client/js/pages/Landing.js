@@ -2,6 +2,8 @@ var React = require('react');
 
 var Loader = require('react-loader');
 
+var Icon = require('../lib_components/Icon');
+
 var Landing = React.createClass({
 
   /**
@@ -14,7 +16,7 @@ var Landing = React.createClass({
     return (
       <div className="row banner" >
         <a href ='/adapt'>
-          <img alt="adaptOAKLAND" title="adaptOAKLAND" id="intro-globe" src="http://adaptoakland.org/wp-content/uploads/2013/04/adaptOAKLAND-logo-large.png"/>
+          <Icon className ="landing_icon" symbolID="icon-icon_logo"/>
           <h1>ADAPT</h1>
           <h3>AN ECOSYSTEM SERVICES MODEL</h3>
         </a>

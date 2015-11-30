@@ -13,8 +13,8 @@ var Panel = require('react-bootstrap/lib/Panel');
 var Link = require('react-router').Link;
 var History = require('react-router').History;
 
-var MapStore = require('../stores/MapStore')
-var Icon = require('../lib_components/Icon')
+var MapStore = require('../stores/MapStore');
+var Icon = require('../lib_components/Icon');
 
 
 function displayCase( snakeString ){
