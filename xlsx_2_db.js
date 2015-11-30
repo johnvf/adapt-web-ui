@@ -1,10 +1,14 @@
 var fs=require('fs'),
     seeder = require('mongoose-seed'),
     XLSX = require('xlsx'),
-    mammoth = require("mammoth");
+    mammoth = require("mammoth"),
+    driveClient = require("./modules/drive-client");
 
+// FIXME: Need to replace FRICKLE boiler plate ENV configuration with 'dotenv' + .env file
+require('dotenv').load();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
+
 
 // var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
 var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
@@ -42,31 +46,28 @@ function make_tags( dump ){
 
 // .XLSX table data w/ c3.js configuration
 //
-// First, traverse paths to .gsheet files:
-// these are just JSON objects that contain the google Drive ID.
-// OPTIONS:
-// 1. Use the google drive API to pull each sheet down as an .XLSX.
-// Then, use node XLSX to dump the chart data out directly
-// 2. Use the existing google sheets API code to read the data directly
+// Use the existing google sheets API code to read the data directly
 function make_charts( dump ){
 
-    var documents = []
+    var documents = driveClient.getSheetData( dump.map(function(item){
+        // Do any necessary cleanup of the data here
+        // console.log(item);
+        // return nil
+        return item
+    }))
 
-    dump.forEach( function( item ){
-    })
-
-    // seed_db( "chart", documents )
+    seed_db( "chart", documents )
 }
 
 // .XLSX table data - see make_charts for more info
 function make_tables( dump ){
 
-    var documents = []
+    var documents = driveClient.getSheetData( dump.map(function(item){
+        // Do any necessary cleanup of the data here
+        return item
+    }))
 
-    dump.forEach( function( item ){
-    })
-
-    // seed_db( "table", documents )
+    seed_db( "table", documents )
 }
 
 // Report text from .docx to Markdown or HTML
@@ -140,58 +141,64 @@ function get_tags( tagString ){
 
 // Iterate over Workbook sheets, import data to MongoDB
 function seed_from_xlsx( path ){
-    console.log("dump_xlsx");
+    console.log("Dumping XLSX");
     var data = []
 
     var workbook = XLSX.readFile( path );
 
     var sheet_name_list = workbook.SheetNames;
     sheet_name_list.forEach(function(sheet_name) { /* iterate through sheets */
+        try {
 
-        var worksheet = workbook.Sheets[sheet_name]
-            sheetdata = {};
+            var worksheet = workbook.Sheets[sheet_name]
+                sheetdata = {};
 
-        switch(sheet_name) {
+            switch(sheet_name) {
 
-            case "Tags":
-                var required_fields = ["text", "type"] 
-                make_tags( dump_data( worksheet, required_fields ) )
-                break;
+                case "Tags":
+                    var required_fields = ["text", "type"] 
+                    make_tags( dump_data( worksheet, required_fields ) )
+                    break;
 
-            case "Chart":
-                var required_fields = ["path", "tags"] 
-                make_charts( dump_data( worksheet, required_fields ) )
-                break;
+                case "Chart":
+                    var required_fields = ["name", "c3 config path", "workbook id", "sheet", "range"] 
+                    make_charts( dump_data( worksheet, required_fields ) )
+                    break;
 
-            case "Table":
-                var required_fields = ["path", "tags"] 
-                make_tables( dump_data( worksheet, required_fields ) )
-                break;
+                case "Table":
+                    var required_fields = ["path", "tags"] 
+                    make_tables( dump_data( worksheet, required_fields ) )
+                    break;
 
-            case "Text":
-                var required_fields = ["path", "tags"] 
-                make_text( dump_data( worksheet, required_fields ) )
-                break;
+                case "Text":
+                    var required_fields = ["path", "tags"] 
+                    make_text( dump_data( worksheet, required_fields ) )
+                    break;
 
-            case "Image":
-                var required_fields = ["path", "tags"] 
-                make_images( dump_data( worksheet, required_fields ) )
-                break;
+                // case "Image":
+                //     var required_fields = ["path", "tags"] 
+                //     make_images( dump_data( worksheet, required_fields ) )
+                //     break;
 
-            case "Maps":
-                var required_fields = ["path", "tags"] 
-                make_maps( dump_data( worksheet, required_fields ) )
-                break;
+                case "Maps":
+                    var required_fields = ["path", "tags"] 
+                    make_maps( dump_data( worksheet, required_fields ) )
+                    break;
 
-            default:
-                // Do nothing
+                default:
+                    // Do nothing
+            };
+
+        }
+        catch(err){
+            console.log( err)
         }
     });
 }
 
 // Opens a connection to mongo, dumps the database, loads models
 function dump_db( callback ){
-    console.log("dump_db");
+    console.log("Dump DB");
 
    // Connect to MongoDB via Mongoose 
     seeder.connect( config.db, function() {
@@ -209,7 +216,7 @@ function dump_db( callback ){
 // Loads data for a specific model into the db
 // Seeder is available since it was defined in dump_db
 function seed_db( model, documents ){
-    console.log("seeding "+model);
+    console.log("Seeding "+model);
 
     // Format the data for the seeder
     var data = []
