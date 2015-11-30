@@ -48,26 +48,30 @@ function make_tags( dump ){
 //
 // Use the existing google sheets API code to read the data directly
 function make_charts( dump ){
+    // Tack on c3 config info
+    // Then load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
 
-    var documents = driveClient.getSheetData( dump.map(function(item){
-        // Do any necessary cleanup of the data here
-        // console.log(item);
-        // return nil
+        var filepath = root + item["c3 config path"]
+            item.config = JSON.parse( fs.readFileSync( filepath ) );
+            item.tags = get_tags(item.tags)
         return item
-    }))
-
-    seed_db( "chart", documents )
+    }), 
+    function(documents){ 
+        seed_db( "chart", documents ) 
+    });
 }
 
 // .XLSX table data - see make_charts for more info
 function make_tables( dump ){
-
-    var documents = driveClient.getSheetData( dump.map(function(item){
-        // Do any necessary cleanup of the data here
+    // Load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+        item.tags = get_tags(item.tags)
         return item
-    }))
-
-    seed_db( "table", documents )
+    }), 
+    function(documents){ 
+        seed_db( "table", documents ) 
+    });   
 }
 
 // Report text from .docx to Markdown or HTML
@@ -161,12 +165,12 @@ function seed_from_xlsx( path ){
                     break;
 
                 case "Chart":
-                    var required_fields = ["name", "c3 config path", "workbook id", "sheet", "range"] 
+                    var required_fields = ["name", "c3 config path", "key", "sheet", "range", "tags"] 
                     make_charts( dump_data( worksheet, required_fields ) )
                     break;
 
                 case "Table":
-                    var required_fields = ["path", "tags"] 
+                    var required_fields = ["name", "key", "sheet", "range", "tags"]
                     make_tables( dump_data( worksheet, required_fields ) )
                     break;
 
