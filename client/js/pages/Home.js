@@ -17,13 +17,13 @@ var Home = React.createClass({
       
         <div className="container-fluid bg-green" >
           <Loader loaded={true}>
-            <div className="row">
+            <div className="row home">
               <div className="col-md-3"></div>            
               <div className="col-md-3"></div>
-              <div className="col-md-3">
-                <h1 className="left">ADAPT</h1>
-                <h3 className="left">AN ECOSYSTEM SERVICES MODEL</h3>               
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p> 
+              <div className="col-md-3 home-description">
+                <h1 className="left">ADAPT:</h1>
+                <h3 className="left light-text">AN ECOSYSTEM SERVICES MODEL</h3>               
+                <p className="text-descript">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p> 
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p>               
                 </div>
               <div className="col-md-3">
@@ -31,14 +31,14 @@ var Home = React.createClass({
                   <div className= "home-heading">
                     <Icon className ="options-icon" symbolID="icon-icon_toolbox"/>
                     <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p> 
+                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. </p> 
                   </div>
                 </div>
                 <div className="row bg-light home-options">
                   <div className= "home-heading">
                     <Icon className ="options-icon"  symbolID="icon-icon_map"/>
                     <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p> 
+                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p> 
                   </div>
                 </div>
               </div>

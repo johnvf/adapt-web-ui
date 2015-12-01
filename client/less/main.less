@@ -21,7 +21,7 @@
 @toolbar-width: 55px;
 @sidebar-width: 120px;
 
-
+@text-color: #9D9D9D;
 
 
 
@@ -34,7 +34,7 @@ body {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
   background-color: @background;
-  color: #9D9D9D;
+  color: @text-color;
 }
 
 
@@ -72,6 +72,15 @@ p {
 
 }
 
+
+.light-text{
+  color: lighten(@text-color, 30%);  
+}
+.dark-text {
+  color: darken(@text-color, 30%);   
+}
+
+
 /*
  * Backgrounds
  */
@@ -84,6 +93,15 @@ p {
     text-align: center;
     padding-top: 100px;
     margin-left: -15px;
+}
+
+.bg-toolbox {
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    text-align: center;
+    padding: 30px; 
 }
 
 
