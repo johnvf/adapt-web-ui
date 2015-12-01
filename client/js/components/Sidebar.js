@@ -88,7 +88,7 @@ var Sidebar = React.createClass({
                 </Link>
               </li>
               <li>
-                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(maps) }>
+                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(mapsTree) }>
                   <a><Icon symbolID="icon-icon_map"/></a>
                 </OverlayTrigger>
               </li>
