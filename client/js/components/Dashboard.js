@@ -13,6 +13,7 @@ var Dashboard = React.createClass({
   getDefaultProps: function() {
     return {
       className: "layout",
+      view: "map",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
       rowHeight: 30,
       verticalCompact: false
@@ -20,8 +21,7 @@ var Dashboard = React.createClass({
   },
 
   getInitialState: function(){
-    var layouts = this.generateLayout("map");
-    return { layoutChangeCallbacks: [] , layouts: layouts }
+    return { layoutChangeCallbacks: [] , layouts: this.generateLayout( this.props.view )}
   },
 
   generateLayout: function ( view ) {
@@ -29,19 +29,19 @@ var Dashboard = React.createClass({
         case "map":
           return ({
             lg: [
-              { "w": 9, "h": 22, "x": 0, "y": 4, "i": "0" },
-              { "w": 3, "h": 11, "x": 9, "y": 4, "i": "1" },
-              { "w": 3, "h": 11, "x": 9, "y": 15, "i": "2" }
+              { "w": 9, "h": 22, "x": 0, "y": 3, "i": "0" },
+              { "w": 3, "h": 11, "x": 9, "y": 3, "i": "1" },
+              { "w": 3, "h": 11, "x": 9, "y": 14, "i": "2" }
             ],
             md: [
-              { "w": 8, "h": 22, "x": 0, "y": 4, "i": "0" },
-              { "w": 2, "h": 11, "x": 8, "y": 4, "i": "1" },
-              { "w": 2, "h": 11, "x": 8, "y": 15, "i": "2" }
+              { "w": 8, "h": 22, "x": 0, "y": 3, "i": "0" },
+              { "w": 2, "h": 11, "x": 8, "y": 3, "i": "1" },
+              { "w": 2, "h": 11, "x": 8, "y": 14, "i": "2" }
             ],
             sm: [
-              { "w": 4, "h": 22, "x": 0, "y": 4, "i": "0" },
-              { "w": 2, "h": 11, "x": 4, "y": 4, "i": "1" },
-              { "w": 2, "h": 11, "x": 4, "y": 15, "i": "2" }
+              { "w": 4, "h": 22, "x": 0, "y": 3, "i": "0" },
+              { "w": 2, "h": 11, "x": 4, "y": 3, "i": "1" },
+              { "w": 2, "h": 11, "x": 4, "y": 14, "i": "2" }
             ]
           });
           break
@@ -49,9 +49,19 @@ var Dashboard = React.createClass({
         case "data":
           return ({
             lg: [
-              { "w": 9, "h": 22, "x": 0, "y": 4, "i": "0" },
-              { "w": 3, "h": 11, "x": 9, "y": 4, "i": "1" },
-              { "w": 3, "h": 11, "x": 9, "y": 15, "i": "2" }
+              {"w": 3, "h": 14, "x": 0, "y": 3, "i": "0" },
+              {"w": 9, "h": 22, "x": 3, "y": 3, "i": "1" },
+              {"w": 3, "h": 8, "x": 0, "y": 17, "i": "2" }
+            ],
+            md: [
+              {"w": 2, "h": 14, "x": 0, "y": 3, "i": "0" },
+              {"w": 8, "h": 22, "x": 3, "y": 3, "i": "1" },
+              {"w": 2, "h": 8, "x": 0, "y": 17, "i": "2" }
+            ],
+            sm: [
+              {"w": 2, "h": 14, "x": 0, "y": 3, "i": "0" },
+              {"w": 4, "h": 22, "x": 3, "y": 3, "i": "1" },
+              {"w": 2, "h": 8, "x": 0, "y": 17, "i": "2" }
             ]
           });
           break
@@ -74,6 +84,10 @@ var Dashboard = React.createClass({
     this.state.layoutChangeCallbacks.forEach( function(callback){
       callback();
     })
+  },
+
+  componentWillReceiveProps: function(nextprops){
+    this.setState({layouts: this.generateLayout( nextprops.view )})
   },
 
   getWidgets: function( content ){

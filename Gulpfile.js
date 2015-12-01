@@ -41,14 +41,14 @@ gulp.task('lint', function() {
 
 // Styles task
 gulp.task('styles', function() {
-  gulp.src('./client/less/main.less')
+  gulp.src('client/less/main.less')
   .pipe(less({}))
   // Optionally add autoprefixer
   .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
   // These last two should look familiar now :)
   // Concatenate imported external CSS
-  .pipe( concatCss('/main.css') )
-  .pipe(gulp.dest('./public/css/'))
+  .pipe( concatCss('main.css') )
+  .pipe(gulp.dest('public/css/'))
 });
 
 gulp.task('browserify', function() {
