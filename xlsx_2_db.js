@@ -1,60 +1,23 @@
 var fs=require('fs'),
     seeder = require('mongoose-seed'),
-    XLSX = require('xlsx');
+    XLSX = require('xlsx'),
+    mammoth = require("mammoth"),
+    driveClient = require("./modules/drive-client");
 
+// FIXME: Need to replace FRICKLE boiler plate ENV configuration with 'dotenv' + .env file
+require('dotenv').load();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
+
 // var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
-var models = ['map', 'tag']
+var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
-function dump_xlsx( path, callback ){
-    console.log("dump_xlsx");
-    var data = []
-
-    var workbook = XLSX.readFile( path );
-
-    var sheet_name_list = workbook.SheetNames;
-    sheet_name_list.forEach(function(sheet_name) { /* iterate through sheets */
-
-        var worksheet = workbook.Sheets[sheet_name]
-            sheetdata = {};
-
-        switch(sheet_name) {
-
-            case "Tags":
-                // Dump tags
-                var required_fields = ["text", "type"]
-                sheetdata.model = "tag"
-                sheetdata.documents = dump_data( worksheet, required_fields )
-                break;
-
-            case "Content":
-                // Dump content
-                break;
-
-            case "Maps":
-                var required_fields = ["path", "tags"]
-                sheetdata.model = "map"
-                sheetdata.documents = make_maps( dump_data( worksheet, required_fields ) )
-                break;
-
-            default:
-                // Do nothing
-        }
-
-        if( Object.keys(sheetdata).length > 0 ){
-            data.push( sheetdata );
-        }
-    });
-
-    callback( data );
-}
-
+// Dumps items in main spreadsheet, skips incomplete entries
 function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
 
@@ -76,41 +39,206 @@ function dump_data( worksheet, required_fields ){
     return validData
 }
 
-function make_maps( dump ){
-    // reads map JSONs from the file system
-    var maps = []
-    dump.forEach( function( item ){
-        var filepath = root + item.path
-        fs.readFile( filepath, function (err, data) {
-            if (err) throw err;
-            var map = JSON.parse(data)
-            map.tags = get_tags(item.tags)
-            maps.push(map)
-        });
-    });
-
-    return maps
+// Tags go straight in
+function make_tags( dump ){
+    seed_db( "tag", dump )
 }
 
+// .XLSX table data w/ c3.js configuration
+//
+// Use the existing google sheets API code to read the data directly
+function make_charts( dump ){
+    // Tack on c3 config info
+    // Then load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+
+        var filepath = root + item["c3 config path"]
+            item.config = JSON.parse( fs.readFileSync( filepath ) );
+            item.tags = get_tags(item.tags)
+        return item
+    }), 
+    function(documents){ 
+        seed_db( "chart", documents ) 
+    });
+}
+
+// .XLSX table data - see make_charts for more info
+function make_tables( dump ){
+    // Load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+        item.tags = get_tags(item.tags)
+        return item
+    }), 
+    function(documents){ 
+        seed_db( "table", documents ) 
+    });   
+}
+
+// Report text from .docx to Markdown or HTML
+// Mammoth is async, so promises are used here
+function make_text( dump ){
+
+    var documents = []
+
+    text_promises = dump.map( function( item ){
+        return new Promise( function(resolve, reject){
+            var filepath = root + item.path
+
+            mammoth.convertToMarkdown({path: filepath})            
+            .then(function(result){
+                var data = result.value; // The generated HTML 
+                var name = item.name
+                var tags = get_tags(item.tags)
+                resolve( { name: name, data: data, tags: tags } )
+            })
+            .catch(function(err) {
+                // log that I have an error, return the entire array;
+                console.error('ERROR: Failed to import '+filepath);
+                // console.log('A promise failed to resolve', err);
+                resolve(undefined)
+            })
+        })
+    })
+
+    Promise.all( text_promises ).then(function(text_promises) {
+        // full array of resolved promises;
+        documents = text_promises.map( function(text){return text})
+            .filter(function(n){ return n != undefined });
+
+        seed_db( "text", documents )
+    })
+    
+    
+}
+
+// Programmatically upload images,
+// store URL in DB w/ name + tags
+function make_images( dump ){
+
+    var documents = []
+
+    dump.forEach( function( item ){
+
+    })
+
+    // seed_db( "image", documents )
+}
+
+// Map JSON for mapbox.gl
+function make_maps( dump ){
+
+    var documents = []
+
+    dump.forEach( function( item ){
+        var filepath = root + item.path
+        var map = JSON.parse( fs.readFileSync( filepath ) );
+            map.tags = get_tags(item.tags)
+            documents.push(map)
+    });
+    seed_db( "map", documents )
+}
+
+// Split and clean up tags
 function get_tags( tagString ){
     return tagString.split(",").map( function(tag){ return tag.trim()})
 }
 
-function seed_db( data ){
-    console.log("seed_db");
-   // Connect to MongoDB via Mongoose
-    seeder.connect( config.db, function() {
+// Iterate over Workbook sheets, import data to MongoDB
+function seed_from_xlsx( path ){
+    console.log("Dumping XLSX");
+    var data = []
 
-        // Load Mongoose models
+    var workbook = XLSX.readFile( path );
+
+    var sheet_name_list = workbook.SheetNames;
+    sheet_name_list.forEach(function(sheet_name) { /* iterate through sheets */
+        try {
+
+            var worksheet = workbook.Sheets[sheet_name]
+                sheetdata = {};
+
+            switch(sheet_name) {
+
+                case "Tags":
+                    var required_fields = ["text", "type"] 
+                    make_tags( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Chart":
+                    var required_fields = ["name", "c3 config path", "key", "sheet", "range", "tags"] 
+                    make_charts( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Table":
+                    var required_fields = ["name", "key", "sheet", "range", "tags"]
+                    make_tables( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Text":
+                    var required_fields = ["path", "tags"] 
+                    make_text( dump_data( worksheet, required_fields ) )
+                    break;
+
+                // case "Image":
+                //     var required_fields = ["path", "tags"] 
+                //     make_images( dump_data( worksheet, required_fields ) )
+                //     break;
+
+                case "Maps":
+                    var required_fields = ["path", "tags"] 
+                    make_maps( dump_data( worksheet, required_fields ) )
+                    break;
+
+                default:
+                    // Do nothing
+            };
+
+        }
+        catch(err){
+            console.log( err)
+        }
+    });
+}
+
+// Opens a connection to mongo, dumps the database, loads models
+function dump_db( callback ){
+    console.log("Dump DB");
+
+   // Connect to MongoDB via Mongoose 
+    seeder.connect( config.db, function() {
+        // Load Mongoose models 
         var modelFiles = models.map( function(model){ return './api/models/'+model+".js" })
         seeder.loadModels( modelFiles )
 
         // Clear specified collections
         seeder.clearModels( models , function() {
-            // Callback to populate DB once collections have been cleared
-            seeder.populateModels(data);
+            callback();
         });
     });
 }
 
-dump_xlsx(path,  seed_db )
+// Loads data for a specific model into the db
+// Seeder is available since it was defined in dump_db
+function seed_db( model, documents ){
+    console.log("Seeding "+model);
+
+    // Format the data for the seeder
+    var data = []
+
+    var sheetdata = {}
+        sheetdata.model = model
+        sheetdata.documents = documents
+        
+    if( Object.keys(sheetdata).length > 0 ){
+        data.push( sheetdata );
+    }
+
+    // Load Mongoose models 
+    var modelFile = './api/models/'+model+".js"
+    // seeder.loadModels( modelFile )
+
+    seeder.populateModels(data);
+}
+
+// Dump the database and reload all the data
+dump_db( seed_from_xlsx.bind(null, path ) );

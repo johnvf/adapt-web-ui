@@ -47,6 +47,22 @@ module.exports = {
           }
 
         });
+    },
+
+    getText: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/text?filter[tags]="+tags : "/api/text"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveText(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
     }
 
 };

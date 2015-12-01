@@ -14,6 +14,13 @@ module.exports = {
       type: "RECEIVE_MAPS",
       map_list: map_list
     });
+  },
+
+  receiveText: function( text ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_TEXT",
+      text: text
+    });
   }
 
 };

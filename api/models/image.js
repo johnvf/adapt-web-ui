@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var AssetSchema = mongoose.Schema({
+var ImageSchema = mongoose.Schema({
     name: String,
     type: String,
     width: Number,
@@ -9,4 +9,4 @@ var AssetSchema = mongoose.Schema({
     tags: [ String ]
 });
 
-module.exports = mongoose.model('asset', AssetSchema);
+module.exports = mongoose.model('image', ImageSchema);
