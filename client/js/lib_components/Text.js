@@ -4,7 +4,9 @@ var marked = require('marked');
 var Text = React.createClass({
 
     render: function(){
-        return <div id={this.props.id}  dangerouslySetInnerHTML={ { __html: marked(this.props.item.body) } }/>
+        console.log(this.props.body)
+        return <div id={this.props.id}  dangerouslySetInnerHTML={ { __html: marked(this.props.body) } }/>
+        // return (<div>FOOO</div>)
     }
 });
 

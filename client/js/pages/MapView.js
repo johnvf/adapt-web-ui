@@ -19,10 +19,10 @@ function getStateFromStores() {
   var urlTags = TagStore.getURLTags()[0]
   return {
     map_list: MapStore.getMaps( urlTags ),
-    text: TextStore.getText(),
+    text: TextStore.getText( urlTags ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
-    tags: TagStore.getTags( ),
+    tags: TagStore.getTags(),
     active_tags: TagStore.getActiveTags()
   };
 }
@@ -38,11 +38,13 @@ var MapView = React.createClass({
   componentDidMount: function() {
     MapStore.addChangeListener(this._onChange);  
     TagStore.addChangeListener(this._onChange);  
+    TextStore.addChangeListener(this._onChange);  
   },
 
   componentWillUnmount: function() {
     MapStore.removeChangeListener(this._onChange);
     TagStore.removeChangeListener(this._onChange);
+    TextStore.addChangeListener(this._onChange);  
   },
 
 
@@ -55,12 +57,13 @@ var MapView = React.createClass({
     var content = [],
         loaded = this.state.loaded,
         map_list = this.state.map_list,
-        text = this.state.text,
+        // text = this.state.text || "",
+        text = "Report text here",
         tags = this.state.tags,
         active_tags = this.state.active_tags;
 
         content.push( <Map tags={this.state.tags} active_tags={active_tags} map_list={ map_list } /> )
-        content.push( <Text item={ {body: text} }/>)
+        content.push( <Text body={text}/>)
         content.push( <div> DATA AVAILABLE </div>  )
 
     return (
