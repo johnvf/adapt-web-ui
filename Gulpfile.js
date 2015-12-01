@@ -70,6 +70,8 @@ gulp.task('browserify', function() {
 gulp.task('copy', function() {
   gulp.src('./client/index.html')
     .pipe(gulp.dest('./public'));
+  gulp.src('./client/favicon.ico')
+    .pipe(gulp.dest('./public'));    
   gulp.src('./client/lib/**/*.*')
     .pipe(gulp.dest('./public/js'));
   gulp.src('./client/img/**/*.*')
