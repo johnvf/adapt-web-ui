@@ -13,22 +13,129 @@
 
 @background:            #ECECEC;
 
+@adapt-green: #78BB57;
+
 /*
  * Layout Variables
  */
 @toolbar-width: 55px;
 @sidebar-width: 120px;
 
+@text-color: #9D9D9D;
+
+
+
 /*
  * Only include styles confined to app.js here.
  */
+
 
 body {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
   background-color: @background;
-  color: #9D9D9D;
+  color: @text-color;
 }
+
+
+
+
+
+/*
+ * Fonts
+ */
+
+
+
+h1 {
+  font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
+  font-size: 63px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  color: rgba(255,255,255,.3);
+  line-height: 58.8px;
+}
+
+h3 {
+  font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+p {
+  color: white;
+  text-align: left;
+
+}
+
+
+.light-text{
+  color: lighten(@text-color, 30%);  
+}
+.dark-text {
+  color: darken(@text-color, 30%);   
+}
+
+
+/*
+ * Backgrounds
+ */
+
+.bg-green{
+    background-color: @adapt-green;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    text-align: center;
+    padding-top: 100px;
+    margin-left: -15px;
+}
+
+.bg-toolbox {
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    text-align: center;
+    padding: 30px; 
+}
+
+
+.text-scroll-body{
+    background-color: rgba(255,255,255,.9);
+    border-radius: 8px;
+    height: 80vh;
+    margin-top: 73px;
+    overflow-y: scroll;
+    font-weight: 300;
+    font-size: 13px;
+    text-align: left;
+    padding: 15px 0px 10px 15px;
+}
+
+.text-scroll{
+  padding: 15px 30px 15px 15px;
+  color: darkgray;
+}
+
+.text-scroll > p {
+  color: darkgray;
+}
+
+
+.left {
+  text-align: left;
+}
+
+
+
+/*
+ * Media queries
+ */
 
 
 @media screen and (max-device-width: 480px){

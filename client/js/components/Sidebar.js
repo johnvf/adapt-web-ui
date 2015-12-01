@@ -13,7 +13,8 @@ var Panel = require('react-bootstrap/lib/Panel');
 var Link = require('react-router').Link;
 var History = require('react-router').History;
 
-var MapStore = require('../stores/MapStore')
+var MapStore = require('../stores/MapStore');
+var Icon = require('../lib_components/Icon');
 
 
 function displayCase( snakeString ){
@@ -76,24 +77,32 @@ var Sidebar = React.createClass({
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand">
-                <Link to={ "/adapt" }></Link>
+              <li className="brand"> 
+                <Link to={"/adapt"}>
+                  <Icon symbolID="icon-icon_logo"/>
+                </Link>
               </li>
               <li>
-                <Link to={ "/adapt/toolbox" }></Link>
+                <Link to={ "/adapt/toolbox" }>
+                  <Icon symbolID="icon-icon_toolbox"/>
+                </Link>
               </li>
               <li>
-                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(mapsTree) }>
-                  <a id="map-icon"></a>
+                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(maps) }>
+                  <a><Icon symbolID="icon-icon_map"/></a>
                 </OverlayTrigger>
               </li>
           </ul>
           <ul className="toolbar-nav bottom">
               <li>
-                <Link to={ "/adapt/about" }></Link>
+                <Link to={ "/adapt/about" }>
+                  <Icon symbolID="icon-icon_about"/>
+                </Link>
               </li>
               <li>
-                <Link to={ "/adapt/share" }></Link>
+                <Link to={ "/adapt/share" }>
+                  <Icon symbolID="icon-icon_share"/>
+                </Link>
               </li>
           </ul>
 
@@ -103,56 +112,7 @@ var Sidebar = React.createClass({
 
 });
 
-          // <ul className="sidebar-nav">
-          //     <li className="sidebar-brand">
-          //         <a href="#">
-          //             Start Bootstrap
-          //         </a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Dashboard</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Shortcuts</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Overview</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Events</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">About</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Services</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Contact</a>
-          //     </li>
-          // </ul>
-          // <ul className="sidebar-nav bottom">
-          //     <li>
-          //         <a href="#">Dashboard</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Shortcuts</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Overview</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Events</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">About</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Services</a>
-          //     </li>
-          //     <li>
-          //         <a href="#">Contact</a>
-          //     </li>
-          // </ul>
+
+
 
 module.exports = Sidebar;
