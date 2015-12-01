@@ -85,7 +85,7 @@ React.render((
   <Router history={ history } >
     <Route path="adapt" component={App}>
       <IndexRoute component={Home}/>
-      <Route path="map" component={MapView}>
+      <Route path="oakland" component={MapView}>
         <Route path=":tags" component={MapView} onEnter={ urlChanged }/>
       </Route>
       <Route path="toolbox" component={Toolbox}>
