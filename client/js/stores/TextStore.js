@@ -50,7 +50,7 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case "RECEIVE_TEXT":
-      _text = action.text
+      _text = action.text.map( function(textItem){ return textItem.data }).join("\n")
       _loading = false
       TextStore.emitChange();
       break;

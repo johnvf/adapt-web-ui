@@ -57,8 +57,8 @@ var MapView = React.createClass({
     var content = [],
         loaded = this.state.loaded,
         map_list = this.state.map_list,
-        // text = this.state.text || "",
-        text = "Report text here",
+        text = this.state.text || "",
+        // text = "Report text here",
         tags = this.state.tags,
         active_tags = this.state.active_tags;
 
