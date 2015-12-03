@@ -81,19 +81,19 @@ var Map = React.createClass({
     var layer_control = [];
 
     if( map ){
-      for (var key in map_list) {
-        map_list[key].layers.forEach( function(layer, index){ layer.id = String(index)+map_list[key]._id; })
-        var add = self.addMapLayers.bind(null, map, map_list[key])
-        var remove = self.removeMapLayers.bind( null, map,  map_list[key] )
+      map_list.forEach( function( map_list_item , key){
+        map_list_item.layers.forEach( function(layer, index){ layer.id = String(index)+map_list_item._id; })
+        var add = self.addMapLayers.bind(null, map, map_list_item)
+        var remove = self.removeMapLayers.bind( null, map,  map_list_item )
 
-        var className = self.state.shown[map_list[key].name] ? 'active' : ''
+        var className = self.state.shown[map_list_item.name] ? 'active' : ''
 
         layer_control.push( 
           <li key={key}>
-            <a className={className} onClick={ self.toggleMapLayer.bind( null, map, map_list[key], add, remove )}>{map_list[key].name}</a>
+            <a className={className} onClick={ self.toggleMapLayer.bind( null, map, map_list_item, add, remove )}>{map_list_item.name}</a>
           </li>
         )
-      }
+      });
     }
 
     return (

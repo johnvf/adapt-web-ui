@@ -15,11 +15,10 @@ var Dashboard = require('../components/Dashboard');
 var Map = require('../components/Map')
 var Data = require('../components/Data')
 
-function getStateFromStores() {
-  var urlTags = TagStore.getURLTags()[0]
+function getStateFromStores( tag ) {
   return {
-    map_list: MapStore.getMaps( urlTags ),
-    text: TextStore.getText( urlTags ),
+    map_list: MapStore.getMaps( tag ),
+    text: TextStore.getText( tag ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
@@ -32,7 +31,7 @@ var MapView = React.createClass({
    * State Boilerplate 
    */
   getInitialState: function() {  
-    var state = getStateFromStores();
+    var state = getStateFromStores( this.props.params.mapTag);
     state.view = "map"
     return state
   },
@@ -51,7 +50,7 @@ var MapView = React.createClass({
 
 
   _onChange: function() {  
-    this.setState(getStateFromStores())
+    this.setState(getStateFromStores( this.props.params.mapTag ))
   },
 
   toggleView: function(){
@@ -78,6 +77,11 @@ var MapView = React.createClass({
         // text = "Report text here",
         tags = this.state.tags,
         active_tags = this.state.active_tags;
+
+        // Why isn't more of this coming from url params?
+        console.log(this.props.params.mapTag)
+        console.log(this.props.params.resource)
+        console.log(this.props.params.id)
 
         content.push( <Map tags={this.state.tags} active_tags={active_tags} map_list={ map_list } /> )
         content.push( <Data toggleView={ this.toggleView} body={text}/>)

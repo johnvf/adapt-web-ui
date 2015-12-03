@@ -11,7 +11,7 @@ var _tags = {},
     _tagLookup = {},
     _active_tags = {},
     _mapTagTree = [],
-    _URLTags = [];
+    _URLTag;
 
 window.onpopstate = function(event) {
   alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
@@ -51,7 +51,7 @@ var TagStore = assign({}, EventEmitter.prototype, {
       _tagLookup[tag.text] = tag
     });
 
-    this.activateTags(_URLTags);
+    this.activateTags(_URLTag);
   },
 
   getTags: function(){
@@ -62,8 +62,8 @@ var TagStore = assign({}, EventEmitter.prototype, {
     return _active_tags
   },
 
-  getURLTags: function(){
-    return _URLTags
+  getURLTag: function(){
+    return _URLTag
   },
 
   getMapTagTree: function(){
@@ -78,9 +78,8 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
   switch(action.type) {
 
     case "URL_CHANGED":
-      // var tags = window.location.pathname.split("/").reverse()[0].split("+")
       // FIXME: Looks like only a single tag is supported by MERS filtering
-      _URLTags = [window.location.pathname.split("/").reverse()[0]];
+      _URLTag = window.location.pathname.split("/").reverse()[0];
       TagStore.emitChange();
       break;
 
