@@ -80,7 +80,7 @@ var Map = React.createClass({
     // Need to refactor so that it doesn't depend on the map existing first
     var layer_control = [];
 
-    if( map ){
+    if( map  && map_list ){
       map_list.forEach( function( map_list_item , key){
         map_list_item.layers.forEach( function(layer, index){ layer.id = String(index)+map_list_item._id; })
         var add = self.addMapLayers.bind(null, map, map_list_item)

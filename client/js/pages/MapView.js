@@ -11,18 +11,20 @@ var TagStore = require('../stores/TagStore')
 // var Well = require('react-bootstrap/lib/Well');
 
 var Dashboard = require('../components/Dashboard');
+var Modal = require('../lib_components/Modal');
 
 var Map = require('../components/Map')
 var Data = require('../components/Data')
 
 function getStateFromStores( tag ) {
   return {
-    map_list: MapStore.getMaps( tag ),
+    map_list: MapStore.getMaps( tag),
     text: TextStore.getText( tag ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
     active_tags: TagStore.getActiveTags(),
+
   };
 }
 
@@ -31,9 +33,18 @@ var MapView = React.createClass({
    * State Boilerplate 
    */
   getInitialState: function() {  
-    var state = getStateFromStores( this.props.params.mapTag);
-    state.view = "map"
+    var state = getStateFromStores( this.props.params.mapTag );
+    
+    state.map_list = MapStore.getMaps( this.props.params.mapTag );
+    state.text = TextStore.getText( this.props.params.mapTag );
+    state.view = this.props.params.resource ? "data" : "map"
+
     return state
+  },
+
+  // URL param changes have State consequences, need to be handled here.
+  componentWillReceiveProps: function(nextProps){
+    this.setState(getStateFromStores( nextProps.params.mapTag ))
   },
 
   componentDidMount: function() {
@@ -47,7 +58,6 @@ var MapView = React.createClass({
     TagStore.removeChangeListener(this._onChange);
     TextStore.addChangeListener(this._onChange);  
   },
-
 
   _onChange: function() {  
     this.setState(getStateFromStores( this.props.params.mapTag ))
@@ -67,6 +77,12 @@ var MapView = React.createClass({
     }
   },
 
+  getModalContent: function(){
+    return(
+      <p> Aenean lacinia bibendum nulla sed consectetur.</p>
+    )
+  },
+
   render: function() {
 
     var content = [],
@@ -76,19 +92,32 @@ var MapView = React.createClass({
         text = this.state.text || "",
         // text = "Report text here",
         tags = this.state.tags,
-        active_tags = this.state.active_tags;
+        active_tags = this.state.active_tags,
+        modalShown,
+        modalTitle,
+        modalContent;
 
-        // Why isn't more of this coming from url params?
-        console.log(this.props.params.mapTag)
-        console.log(this.props.params.resource)
-        console.log(this.props.params.id)
+        console.log( this.props.params.mapTag)
+        // If a resource is found in the url params, show it in the modal
+        if( this.props.params.resource ){
+          modalShown = true
+          modalContent = this.getModalContent();
+          // Placeholder title
+          modalTitle = this.props.params.resource + " | " + this.props.params.id
+        }
 
+        // These will become widgets in the dashboard
+        // Note: currently the widget layouts are hardcoded.
+        // don't change this without updating the layouts
         content.push( <Map tags={this.state.tags} active_tags={active_tags} map_list={ map_list } /> )
         content.push( <Data toggleView={ this.toggleView} body={text}/>)
         content.push( <div> DATA AVAILABLE </div>  )
 
     return (
-      <Dashboard view={view} content={ content }/>
+      <div>
+        <Modal show={modalShown} content={ modalContent } title={modalTitle}/>
+        <Dashboard view={view} content={ content }/>
+      </div>
     )
   }
 });

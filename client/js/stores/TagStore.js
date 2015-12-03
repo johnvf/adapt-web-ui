@@ -31,17 +31,18 @@ var TagStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  toggleTags: function(tagTextArray){
-    tagTextArray.forEach(function(tagText){
-      _active_tags[tagText] ? delete _active_tags[tagText] : _active_tags[tagText] = _tagLookup[tagText]
-    })
-  },
+  // FIXME: Are these used?
+  // toggleTags: function(tagTextArray){
+  //   tagTextArray.forEach(function(tagText){
+  //     _active_tags[tagText] ? delete _active_tags[tagText] : _active_tags[tagText] = _tagLookup[tagText]
+  //   })
+  // },
 
-  activateTags: function(tagTextArray){
-    tagTextArray.forEach(function(tagText){
-      _active_tags[tagText] = _tagLookup[tagText]
-    });
-  },
+  // activateTags: function(tagTextArray){
+  //   tagTextArray.forEach(function(tagText){
+  //     _active_tags[tagText] = _tagLookup[tagText]
+  //   });
+  // },
 
   receiveTags: function(tags){
     // Categorize tags by type for UI,
@@ -51,7 +52,7 @@ var TagStore = assign({}, EventEmitter.prototype, {
       _tagLookup[tag.text] = tag
     });
 
-    this.activateTags(_URLTag);
+    // this.activateTags(_URLTag);
   },
 
   getTags: function(){
@@ -83,15 +84,16 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       TagStore.emitChange();
       break;
 
-    case "TOGGLE_TAGS":
-      TagStore.toggleTags( action.tags );
-      TagStore.emitChange();
-      break;
+    // FIXME: Are these used?
+    // case "TOGGLE_TAGS":
+    //   TagStore.toggleTags( action.tags );
+    //   TagStore.emitChange();
+    //   break;
 
-    case "ACTIVATE_TAGS":
-      TagStore.activateTags( action.tags );
-      TagStore.emitChange();
-      break;
+    // case "ACTIVATE_TAGS":
+    //   TagStore.activateTags( action.tags );
+    //   TagStore.emitChange();
+    //   break;
 
     case "RECEIVE_TAGS":
       TagStore.receiveTags( action.tags )
