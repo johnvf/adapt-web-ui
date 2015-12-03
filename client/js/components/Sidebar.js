@@ -15,6 +15,7 @@ var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore');
 var Icon = require('../lib_components/Icon');
+var MapLayerToggle = require('../components/MapLayerToggle');
 
 
 function displayCase( snakeString ){
@@ -33,19 +34,19 @@ var Sidebar = React.createClass({
 
         var LayerItems = group.layers.map(function(layer, index){
           return(
-            <li>{ layer.text }</li>
+            <MapLayerToggle key={index} layer={ layer }></MapLayerToggle>
             )
         });
 
         return (
-          <Panel header={ displayCase(group.text) }>
+          <Panel key={index} header={ displayCase(group.text) }>
             {LayerItems}
           </Panel>
           )
       });
 
       return(
-        <Panel header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
+        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
           { GroupPanels }
         </Panel>
       )
@@ -77,7 +78,7 @@ var Sidebar = React.createClass({
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand"> 
+              <li className="brand">
                 <Link to={"/adapt"}>
                   <Icon symbolID="icon-icon_logo"/>
                 </Link>

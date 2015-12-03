@@ -23,6 +23,7 @@ function getStateFromStores( tag ) {
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
+    activeMapLayers: MapStore.getActiveLayers(),
     active_tags: TagStore.getActiveTags(),
 
   };
@@ -30,11 +31,11 @@ function getStateFromStores( tag ) {
 
 var MapView = React.createClass({
   /**
-   * State Boilerplate 
+   * State Boilerplate
    */
-  getInitialState: function() {  
+  getInitialState: function() {
     var state = getStateFromStores( this.props.params.mapTag );
-    
+
     state.map_list = MapStore.getMaps( this.props.params.mapTag );
     state.text = TextStore.getText( this.props.params.mapTag );
     state.view = this.props.params.resource ? "data" : "map"
@@ -48,18 +49,18 @@ var MapView = React.createClass({
   },
 
   componentDidMount: function() {
-    MapStore.addChangeListener(this._onChange);  
-    TagStore.addChangeListener(this._onChange);  
-    TextStore.addChangeListener(this._onChange);  
+    MapStore.addChangeListener(this._onChange);
+    TagStore.addChangeListener(this._onChange);
+    TextStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     MapStore.removeChangeListener(this._onChange);
     TagStore.removeChangeListener(this._onChange);
-    TextStore.addChangeListener(this._onChange);  
+    TextStore.addChangeListener(this._onChange);
   },
 
-  _onChange: function() {  
+  _onChange: function() {
     this.setState(getStateFromStores( this.props.params.mapTag ))
   },
 
@@ -88,7 +89,7 @@ var MapView = React.createClass({
     var content = [],
         loaded = this.state.loaded,
         view = this.state.view,
-        map_list = this.state.map_list,
+        active_layers = this.state.activeMapLayers,
         text = this.state.text || "",
         // text = "Report text here",
         tags = this.state.tags,
@@ -97,7 +98,6 @@ var MapView = React.createClass({
         modalTitle,
         modalContent;
 
-        console.log( this.props.params.mapTag)
         // If a resource is found in the url params, show it in the modal
         if( this.props.params.resource ){
           modalShown = true
@@ -109,7 +109,7 @@ var MapView = React.createClass({
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts
-        content.push( <Map tags={this.state.tags} active_tags={active_tags} map_list={ map_list } /> )
+        content.push( <Map active_layers={ active_layers } /> )
         content.push( <Data toggleView={ this.toggleView} body={text}/>)
         content.push( <div> DATA AVAILABLE </div>  )
 
