@@ -57,10 +57,10 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
     case "TOGGLE_MAP_LAYER":
       // check if the layer is in the active map layer set
       var matchIndex = _.findIndex(_activeLayers, function(activeLayer){
-        return activeLayer.name = action.layer.text;
+        return activeLayer.name === action.layer.text;
       });
+
       if( matchIndex > -1 ){
-        // we have a match! turn it off.
         action.layer.is_active = false;
         _activeLayers.splice( matchIndex, 1 );
       } else {

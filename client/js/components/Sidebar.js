@@ -34,19 +34,19 @@ var Sidebar = React.createClass({
 
         var LayerItems = group.layers.map(function(layer, index){
           return(
-            <MapLayerToggle layer={ layer }></MapLayerToggle>
+            <MapLayerToggle key={index} layer={ layer }></MapLayerToggle>
             )
         });
 
         return (
-          <Panel header={ displayCase(group.text) }>
+          <Panel key={index} header={ displayCase(group.text) }>
             {LayerItems}
           </Panel>
           )
       });
 
       return(
-        <Panel header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
+        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
           { GroupPanels }
         </Panel>
       )

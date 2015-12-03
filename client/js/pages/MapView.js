@@ -98,7 +98,6 @@ var MapView = React.createClass({
         modalTitle,
         modalContent;
 
-        console.log( this.props.params.mapTag)
         // If a resource is found in the url params, show it in the modal
         if( this.props.params.resource ){
           modalShown = true
@@ -110,7 +109,7 @@ var MapView = React.createClass({
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts
-        content.push( <Map tags={this.state.tags} active_tags={active_tags} active_layers={ active_layers } /> )
+        content.push( <Map active_layers={ active_layers } /> )
         content.push( <Data toggleView={ this.toggleView} body={text}/>)
         content.push( <div> DATA AVAILABLE </div>  )
 
