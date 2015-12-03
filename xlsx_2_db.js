@@ -74,6 +74,13 @@ function make_tables( dump ){
     });   
 }
 
+function transformDocElement(element) {
+    if ( element.id ) {
+        element.id = "";
+    }
+    return element;
+}
+
 // Report text from .docx to Markdown or HTML
 // Mammoth is async, so promises are used here
 function make_text( dump ){
@@ -84,9 +91,14 @@ function make_text( dump ){
         return new Promise( function(resolve, reject){
             var filepath = root + item.path
 
-            mammoth.convertToMarkdown({path: filepath})            
+            var options = {
+                path: filepath,
+                transformDocument: transformDocElement
+            };
+
+            mammoth.convertToMarkdown({ path: filepath }, options)            
             .then(function(result){
-                var data = result.value; // The generated HTML 
+                var data = result.value.replace(/id=.*"/g, ""); // The generated HTML, with ids regexed out
                 var name = item.name
                 var tags = get_tags(item.tags)
                 resolve( { name: name, data: data, tags: tags } )

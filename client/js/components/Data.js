@@ -1,6 +1,19 @@
 var React = require('react');
 var marked = require('marked');
 
+var renderer = new marked.Renderer();
+
+renderer.heading = function (text, level) {
+  var escapedText =  text.toLowerCase().split(/[^\w]+/g).slice(3).join('-');
+
+  return '<h' + level + '><a name="' +
+                escapedText +
+                 '" class="anchor" href="#' +
+                 escapedText +
+                 '"><span class="header-link"></span></a>' +
+                  text + '</h' + level + '>';
+}
+
 var Text = React.createClass({
 
     render: function(){
@@ -13,7 +26,7 @@ var Text = React.createClass({
                   <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
                 </button>
                 <hr/>
-                <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text) } }/>
+                <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
             </div>
         )
     }
