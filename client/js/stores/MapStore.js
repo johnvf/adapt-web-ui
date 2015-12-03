@@ -1,3 +1,4 @@
+var _ = require("lodash");
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
@@ -8,6 +9,7 @@ var CHANGE_EVENT = 'change';
 
 var _maps = {};
 var _loading = true;
+var _activeLayers = [];
 
 var MapStore = assign({}, EventEmitter.prototype, {
 
@@ -25,6 +27,10 @@ var MapStore = assign({}, EventEmitter.prototype, {
 
   getMaps: function( tag ){
     return _maps[tag]
+  },
+
+  getActiveLayers: function(){
+    return _activeLayers;
   },
 
   isLoaded: function(){
@@ -48,6 +54,21 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
       MapStore.emitChange();
       break;
 
+    case "TOGGLE_MAP_LAYER":
+      // check if the layer is in the active map layer set
+      var matchIndex = _.findIndex(_activeLayers, function(activeLayer){
+        return activeLayer.name = action.layer.text;
+      });
+      if( matchIndex > -1 ){
+        // we have a match! turn it off.
+        action.layer.is_active = false;
+        _activeLayers.splice( matchIndex, 1 );
+      } else {
+        action.layer.is_active = true;
+        _activeLayers.push( action.layer.map_item );
+      }
+      MapStore.emitChange();
+      break;
 
     default:
       // do nothing

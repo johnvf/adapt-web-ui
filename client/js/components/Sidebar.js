@@ -15,6 +15,7 @@ var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore');
 var Icon = require('../lib_components/Icon');
+var MapLayerToggle = require('../components/MapLayerToggle');
 
 
 function displayCase( snakeString ){
@@ -33,7 +34,7 @@ var Sidebar = React.createClass({
 
         var LayerItems = group.layers.map(function(layer, index){
           return(
-            <li>{ layer.text }</li>
+            <MapLayerToggle layer={ layer }></MapLayerToggle>
             )
         });
 
@@ -77,7 +78,7 @@ var Sidebar = React.createClass({
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand"> 
+              <li className="brand">
                 <Link to={"/adapt"}>
                   <Icon symbolID="icon-icon_logo"/>
                 </Link>
