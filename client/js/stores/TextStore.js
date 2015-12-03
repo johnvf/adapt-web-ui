@@ -6,8 +6,8 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var CHANGE_EVENT = 'change';
 
-var _text;
-var _loading = false;
+var _text = {};
+var _loading = true;
 
 var TextStore = assign({}, EventEmitter.prototype, {
 
@@ -23,14 +23,8 @@ var TextStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getText: function( tags ){
-
-    if( _loading === false && _text === null ){
-      WebAPIUtils.getText( tags )
-      _loading = true;
-    }
-    
-    return _text
+  getText: function(tag){    
+    return _text[tag]
   },
 
   isLoaded: function(){
@@ -44,13 +38,12 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "URL_CHANGED":
-      _text = null;
-      TextStore.emitChange();
-      break;
-
     case "RECEIVE_TEXT":
-      _text = action.text.map( function(textItem){ return textItem.data }).join("\n")
+      action.text.forEach( function(text){
+        text.tags.forEach( function(tag){
+          !_text[tag] ? _text[tag] = [text] : _text[tag].push(text)
+        })
+      })
       _loading = false
       TextStore.emitChange();
       break;
@@ -62,4 +55,5 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
+WebAPIUtils.getText();
 module.exports = TextStore;
