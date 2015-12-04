@@ -49,15 +49,15 @@ body {
     position: absolute;
     right: 14px;
     z-index: 1000;
-    width: 200px;
+    width: 240px;
     padding: 15px 30px 0 0;
     vertical-align: middle;
 }
 
 
 #header .info {
-  display: inline;
-  float: left;
+  display: inline-block;
+  float: right;
 }
 
 #header h1 {
@@ -72,14 +72,20 @@ body {
 }
 
 #header svg {
-  width: 40%;
+    width: 40%;
+    padding: 10px;
   float:right;
-  // padding: 10px 0 0 3px;
+  display: inline-block;
+}
+
+#header .fill-colour {
+  fill: red;
 }
 
 
 .my_addthis-style {
   opacity: .5;
+  float: right;
 }
 
 /*
@@ -178,6 +184,21 @@ p {
 
 
 
+/*
+ *SVG icon fills
+ */
+
+.fill-white {
+  fill: rgba(255,255,255,.5);
+}
+
+.stroke-white{
+  stroke: #fff;
+}
+
+.fill-green {
+  fill: rgba(120, 188, 87, 0.7);
+}
 
 
 

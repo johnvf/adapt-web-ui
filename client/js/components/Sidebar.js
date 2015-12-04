@@ -80,7 +80,7 @@ var Sidebar = React.createClass({
         <ul className="toolbar-nav">
               <li className="brand">
                 <Link to={"/adapt"}>
-                  <Icon symbolID="icon-icon_logo"/>
+                  <Icon className="fill-green" symbolID="icon-icon_logo"/>
                 </Link>
               </li>
               <li>
