@@ -21,6 +21,20 @@ module.exports = {
       type: "RECEIVE_TEXT",
       text: text
     });
+  },
+
+  receiveCharts: function( charts ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_CHARTS",
+      charts: charts
+    });
+  },
+
+  receiveTables: function( tables ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_TABLES",
+      tables: tables
+    });
   }
 
 };

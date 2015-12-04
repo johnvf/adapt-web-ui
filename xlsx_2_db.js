@@ -17,6 +17,10 @@ var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
+function convertToSlug(Text){
+    return Text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+}
+
 // Dumps items in main spreadsheet, skips incomplete entries
 function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
@@ -55,6 +59,7 @@ function make_charts( dump ){
         var filepath = root + item["c3 config path"]
             item.config = JSON.parse( fs.readFileSync( filepath ) );
             item.tags = get_tags(item.tags)
+            item.slug = convertToSlug(item.name)
         return item
     }), 
     function(documents){ 
@@ -67,6 +72,7 @@ function make_tables( dump ){
     // Load data from google drive + seed database
     driveClient.getSheetData( dump.map(function(item){
         item.tags = get_tags(item.tags)
+        item.slug = convertToSlug(item.name)
         return item
     }), 
     function(documents){ 
