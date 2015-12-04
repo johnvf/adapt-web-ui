@@ -3,6 +3,8 @@
 @import "./variables.less";
 @import "./components.less";
 
+
+
 // @brand-success: #18B4BC;
 
 @brand-primary:         #F3CD60; // YELLOW
@@ -30,6 +32,10 @@
  */
 
 
+html {
+  overflow: hidden;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
@@ -38,13 +44,57 @@ body {
 }
 
 
+/*
+ * Header
+ */
+
+#header {
+    top: 0px;
+    position: absolute;
+    right: 14px;
+    z-index: 1000;
+    width: auto;
+    padding: 15px 30px 0 0;
+    vertical-align: middle;
+}
 
 
+#header .info {
+  display: inline-block;
+  float: right;
+}
+
+#header h1 {
+    font-family: 'Dosis', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: right;
+    color: white;
+    margin: 0px;
+    letter-spacing: 2px;
+    margin-bottom: -10px;
+}
+
+#header svg {
+    width: 75px;
+    padding: 10px;
+  float:right;
+  display: inline-block;
+}
+
+#header .fill-colour {
+  fill: red;
+}
+
+
+.my_addthis-style {
+  opacity: .5;
+  float: right;
+}
 
 /*
  * Fonts
  */
-
 
 
 h1 {
@@ -104,6 +154,12 @@ p {
 }
 
 
+
+/*
+ * Text
+ */
+
+
 .text-scroll-body{
     background-color: rgba(255,255,255,.9);
     border-radius: 8px;
@@ -133,6 +189,25 @@ p {
 
 
 /*
+ *SVG icon fills
+ */
+
+.fill-white {
+  fill: rgba(255,255,255,.5);
+}
+
+.stroke-white{
+  stroke: #fff;
+}
+
+.fill-green {
+  fill: rgba(120, 188, 87, 0.7);
+}
+
+
+
+
+/*
  * Media queries
  */
 
@@ -144,8 +219,9 @@ p {
 }
 
 .main {
-  height: 100vh;
-  overflow: hidden;
+  height: 99vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .centered {
