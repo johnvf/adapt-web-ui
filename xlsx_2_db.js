@@ -98,7 +98,7 @@ function make_text( dump ){
 
             mammoth.convertToMarkdown({ path: filepath }, options)            
             .then(function(result){
-                var data = result.value.replace(/id=.*"/g, ""); // The generated HTML, with ids regexed out
+                var data = result.value.replace(/id=.*"/g, "").replace(/~/g, "#"); // The generated HTML, with ids regexed out
                 var name = item.name
                 var tags = get_tags(item.tags)
                 resolve( { name: name, data: data, tags: tags } )

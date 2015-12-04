@@ -22,10 +22,9 @@ var Text = React.createClass({
 
         return (
             <div id="data">
-                <button type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
+                <button style={{position: 'fixed', top: '30px', right: '60px'}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
                   <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
                 </button>
-                <hr/>
                 <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
             </div>
         )
