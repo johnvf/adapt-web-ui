@@ -9,6 +9,13 @@ module.exports = {
     });
   },
 
+  toggleMapLayer: function( layer ) {
+    AppDispatcher.handleViewAction({
+      type: "TOGGLE_MAP_LAYER",
+      layer: layer
+    });
+  },
+
   urlChanged: function( url ) {
     AppDispatcher.handleViewAction({
       type: "URL_CHANGED",

@@ -1,3 +1,4 @@
+var _ = require("lodash");
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
@@ -6,9 +7,9 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var CHANGE_EVENT = 'change';
 
-var _mapLookup = {};
-var _map_list;
-var _loading = false;
+var _maps = {};
+var _loading = true;
+var _activeLayers = [];
 
 var MapStore = assign({}, EventEmitter.prototype, {
 
@@ -24,14 +25,12 @@ var MapStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getMaps: function( tags ){
+  getMaps: function( tag ){
+    return _maps[tag]
+  },
 
-    if( _loading === false && _map_list === undefined ){
-      WebAPIUtils.getMaps( tags )
-      _loading = true;
-    }
-
-    return _map_list
+  getActiveLayers: function(){
+    return _activeLayers;
   },
 
   isLoaded: function(){
@@ -45,18 +44,31 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "URL_CHANGED":
-      _map_list = null;
-      MapStore.emitChange();
-      break;
-
     case "RECEIVE_MAPS":
-      _map_list = action.map_list
-      _mapLookup[action.tags] = action.map_list
+      action.map_list.forEach( function(map){
+        map.tags.forEach( function(tag){
+          !_maps[tag] ? _maps[tag] = [map] : _maps[tag].push(map)
+        })
+      })
       _loading = false
       MapStore.emitChange();
       break;
 
+    case "TOGGLE_MAP_LAYER":
+      // check if the layer is in the active map layer set
+      var matchIndex = _.findIndex(_activeLayers, function(activeLayer){
+        return activeLayer.name === action.layer.text;
+      });
+
+      if( matchIndex > -1 ){
+        action.layer.is_active = false;
+        _activeLayers.splice( matchIndex, 1 );
+      } else {
+        action.layer.is_active = true;
+        _activeLayers.push( action.layer.map_item );
+      }
+      MapStore.emitChange();
+      break;
 
     default:
       // do nothing
@@ -64,4 +76,5 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
+WebAPIUtils.getMaps();
 module.exports = MapStore;
