@@ -14,7 +14,8 @@ var _tags = {},
     _URLTag;
 
 window.onpopstate = function(event) {
-  alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+  // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+  console.debug ("location: " + document.location + ", state: " + JSON.stringify(event.state));
 };
 
 var TagStore = assign({}, EventEmitter.prototype, {
