@@ -89,7 +89,7 @@ var MapView = React.createClass({
     switch ( this.props.params.resource ) {
       case "chart":
         var item = ChartStore.getCharts(this.props.params.slug)
-        content = item ? <Chart item={ item }/> : ""
+        content = item ? <Chart item={ item } id={this.props.params.slug}/> : ""
         break;
 
       case "table":
