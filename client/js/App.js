@@ -96,6 +96,7 @@ React.render((
       <IndexRoute component={Home} onEnter={ urlChanged }/>
       <Route path="oakland" component={MapView}>
         <Route path=":tag" component={MapView} onEnter={ urlChanged }/>
+        <Route path=":tag/:resource/:id" component={MapView} onEnter={ urlChanged }/>
       </Route>
       <Route path="toolbox" component={Toolbox} onEnter={ urlChanged }>
         <Route path=":tag" component={Toolbox} onEnter={ urlChanged }/>
