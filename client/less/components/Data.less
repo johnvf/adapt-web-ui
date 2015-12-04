@@ -7,8 +7,17 @@
     width: 100%;
 }
 
-#data > .body { 
+#data .row { 
     height: 100%;
-    overflow-y: auto;
+}
+
+#data .row > * { 
+    height: 100%;
+}
+
+#data .body { 
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
     overflow-wrap: break-word;
 }

@@ -19,17 +19,48 @@ var Table = require('../lib_components/Table');
 
 var Map = require('../components/Map')
 var Data = require('../components/Data')
+var Resources = require('../components/Resources')
 
-function getStateFromStores( tag ) {
+function getStateFromStores( tag , resource , slug ) {
+
+  var modal,
+      item,
+      content;
+
+  if( resource && slug ){
+    console.log("resource", resource)
+    console.log("slug", slug)
+    switch ( resource) {
+      case "chart":
+        item = ChartStore.getCharts( slug )
+        console.log(item)
+        content = <Chart key={slug} item={ item } id={slug}/>
+        break;
+
+      case "table":
+        item = TableStore.getTables( slug )
+        console.log(item)
+        content = <Table key={slug} item={ item }/>
+        break;
+
+      default:
+    }
+    if( item && content ){
+      modal = <Modal show={true} content={ content } title={ resource + " | " + slug }/>
+    }
+  }
+
   return {
     map_list: MapStore.getMaps( tag),
     text: TextStore.getText( tag ),
+    charts: ChartStore.getCharts( tag ),
+    tables: TableStore.getTables( tag ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
     activeMapLayers: MapStore.getActiveLayers(),
     active_tags: TagStore.getActiveTags(),
-
+    modal: modal
   };
 }
 
@@ -38,35 +69,36 @@ var MapView = React.createClass({
    * State Boilerplate
    */
   getInitialState: function() {
-    var state = getStateFromStores( this.props.params.tag );
-
-    state.map_list = MapStore.getMaps( this.props.params.tag );
-    state.text = TextStore.getText( this.props.params.tag );
+    var state = getStateFromStores( this.props.params.tag , this.props.params.resource , this.props.params.slug );
     state.view = this.props.params.resource ? "data" : "map"
-
     return state
   },
 
   // URL param changes have State consequences, need to be handled here.
   componentWillReceiveProps: function(nextProps){
-    this.setState(getStateFromStores( nextProps.params.tag ))
+    this.setState(getStateFromStores( nextProps.params.tag , nextProps.params.resource , nextProps.params.slug ))
+  },
+
+  _onChange: function() {
+    this.setState(getStateFromStores( this.props.params.tag ,  this.props.params.resource ,  this.props.params.slug ))
   },
 
   componentDidMount: function() {
     MapStore.addChangeListener(this._onChange);
     TagStore.addChangeListener(this._onChange);
     TextStore.addChangeListener(this._onChange);
+    ChartStore.addChangeListener(this._onChange);
+    TableStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     MapStore.removeChangeListener(this._onChange);
     TagStore.removeChangeListener(this._onChange);
-    TextStore.addChangeListener(this._onChange);
+    TextStore.removeChangeListener(this._onChange);
+    ChartStore.removeChangeListener(this._onChange);
+    TableStore.removeChangeListener(this._onChange);
   },
 
-  _onChange: function() {
-    this.setState(getStateFromStores( this.props.params.tag ))
-  },
 
   toggleView: function(){
     switch ( this.state.view ) {
@@ -82,26 +114,6 @@ var MapView = React.createClass({
     }
   },
 
-  // FIXME: This is wastefule on each render. 
-  //It should 'get' the data when props change
-  getModalContent: function(){
-    var content;
-    switch ( this.props.params.resource ) {
-      case "chart":
-        var item = ChartStore.getCharts(this.props.params.slug)
-        content = item ? <Chart item={ item } id={this.props.params.slug}/> : ""
-        break;
-
-      case "table":
-        var item = TableStore.getTables(this.props.params.slug)
-        content = item ? <Table item={ item }/> : ""
-        break;
-
-      default:
-    }
-    return content
-  },
-
   render: function() {
 
     var content = [],
@@ -109,32 +121,25 @@ var MapView = React.createClass({
         view = this.state.view,
         active_layers = this.state.activeMapLayers,
         text = this.state.text || "",
-        // text = "Report text here",
+        resources = {
+          chart: this.state.charts ? this.state.charts : [],
+          table: this.state.tables ? this.state.tables : []
+        },
         tags = this.state.tags,
-        active_tags = this.state.active_tags,
-        modalShown,
-        modalTitle,
-        modalContent;
+        active_tags = this.state.active_tags;
 
-        // If a resource is found in the url params, show it in the modal
-        if( this.props.params.resource ){
-          modalShown = true
-          modalContent = this.getModalContent();
-          // Placeholder title
-          modalTitle = this.props.params.resource + " | " + this.props.params.slug
-        }
-
+        var modal = this.state.modal;
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts
         content.push( <Map active_layers={ active_layers } /> )
-        content.push( <Data toggleView={ this.toggleView} body={text}/>)
-        content.push( <div> DATA AVAILABLE </div>  )
+        content.push( <Data tag={this.props.params.tag} view={view} toggleView={ this.toggleView} body={text} resources={ resources }/>)
+        content.push( <Resources resources={ resources }/> )
 
     return (
       <div>
-        <Modal show={modalShown} content={ modalContent } title={modalTitle}/>
-        <Dashboard view={view} content={ content }/>
+        { modal }
+        <Dashboard view={view} content={ content } />
       </div>
     )
   }

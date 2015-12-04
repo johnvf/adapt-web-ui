@@ -25,16 +25,21 @@ var Map = React.createClass({
     var self = this,
         map = this.state.map,
         diff = this.diffMapLayers(newLayers);
-    map.batch(function(batch){
-      diff.remove.styles.map(batch.removeLayer, batch);
-      diff.remove.sources.map(batch.removeSource, batch);
-      diff.add.sources.map(function(s){
-        batch.addSource(s.id, s.source);
-      }, batch);
-      diff.add.styles.map(function(style){
-        batch.addLayer(style);
-      }, batch);
-    });
+    if( this.state.map ){
+
+      map.batch(function(batch){
+        diff.remove.styles.map(batch.removeLayer, batch);
+        diff.remove.sources.map(batch.removeSource, batch);
+        diff.add.sources.map(function(s){
+          batch.addSource(s.id, s.source);
+        }, batch);
+        diff.add.styles.map(function(style){
+          batch.addLayer(style);
+        }, batch);
+      }); 
+      
+    }
+
     return diff;
   },
 

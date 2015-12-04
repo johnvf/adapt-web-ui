@@ -10,6 +10,10 @@ var ModalWrapper = React.createClass({
     return { showModal: this.props.show };
   },
 
+  componentWillReceiveProps: function(nextProps){
+    this.setState({ showModal: nextProps.show });
+  },
+
   close: function() {
     this.setState({ showModal: false });
   },

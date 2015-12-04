@@ -3,6 +3,11 @@ var marked = require('marked');
 
 var renderer = new marked.Renderer();
 
+var Link = require('react-router').Link;
+var Grid = require('react-bootstrap/lib/Grid');
+var Row = require('react-bootstrap/lib/Row');
+var Col = require('react-bootstrap/lib/Col');
+
 renderer.heading = function (text, level) {
   var escapedText =  text.toLowerCase().split(/[^\w]+/g).slice(3).join('-');
 
@@ -14,21 +19,64 @@ renderer.heading = function (text, level) {
                   text + '</h' + level + '>';
 }
 
-var Text = React.createClass({
+var Data = React.createClass({
+
+    renderResources: function(resources){
+      var resourceMarkup = []
+      var tag = this.props.tag
+
+      Object.keys(resources).forEach( function(resourceType){
+
+        resources[resourceType].forEach( function(item){
+          resourceMarkup.push(<div><Link to={"/adapt/oakland/"+tag+"/"+resourceType+"/"+item.slug}>{item.name}</Link></div>)
+        })
+
+      });
+
+      return resourceMarkup
+    },
 
     render: function(){
         // console.log(this.props.body)
         var text = !this.props.body ? "" : this.props.body.map(function(textItem){ return textItem.data }).join("\n");
+        var resourceMarkup = !this.props.resources ? [] : this.renderResources( this.props.resources )
 
-        return (
-            <div id="data">
-                <button style={{position: 'fixed', top: '30px', right: '60px'}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
+        switch ( this.props.view ) {
+          case "map":
+            return (
+              <Grid id="data">
+                <button style={{position: 'fixed', top: '30px', right: '60px', zIndex: 1000}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
                   <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
                 </button>
-                <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
-            </div>
-        )
+                <Row>
+                  <Col xs={12} md={12}>
+                    <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
+                  </Col>
+                </Row>
+              </Grid>
+            )
+            break;
+
+          case "data":
+            return (
+              <Grid id="data">
+                <button style={{position: 'fixed', top: '30px', right: '60px', zIndex: 1000}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
+                  <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
+                </button>
+                <Row>
+                  <Col xs={12} md={8}>
+                    <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
+                  </Col>
+                  <Col xs={6} md={4}>
+                    <h4>Resources</h4>
+                    { resourceMarkup }
+                  </Col>
+                </Row>
+              </Grid>
+            )
+            break;
+        }
     }
 });
 
-module.exports = Text
+module.exports = Data

@@ -2,12 +2,17 @@ var React = require('react');
 
 var c3 = require('c3')
 
-function coerceNum( str ){
-    var num = parseFloat(str.replace(/[,$]+/g, ""))
-    if( isNaN(num)){
-        return str
-    } else{
-        return num
+function coerceNum( candidate ){
+    if( typeof candidate === "string"){
+        var num = parseFloat(candidate.replace(/[,$]+/g, ""))
+        if( isNaN(num)){
+            return candidate
+        } else{
+            return num
+        }
+    }
+    else{
+        return candidate
     }
 }
 
@@ -49,13 +54,15 @@ var Chart = React.createClass({
     },
 
     componentDidMount: function () {
-        // console.log("re-render chart");
+        // console.log(this.props.item);
         var self = this;
-        try {
-            this._renderChart(this.props.item);
-        }
-        catch(err) {
-            alert( "Incorrect data for chart "+this.props.id+": " + err)
+        if ( !!this.props.item ){
+            // try {
+                this._renderChart(this.props.item);
+            // }
+            // catch(err) {
+            //     alert( "Incorrect data for chart "+this.props.id+": " + err)
+            // }
         }
 
         // FIXME: This shouldn't be necessary - prop updates should work too
@@ -73,6 +80,15 @@ var Chart = React.createClass({
     componentWillReceiveProps: function (newProps) {
         // TODO: Update graph data if new data is loaded.
         // this would allow the graph to be dynamic..
+        // if( !!newProps.item ){
+        //     try {
+        //         this._renderChart(newProps.item);
+        //     }
+        //     catch(err) {
+        //         alert( "Incorrect data for chart "+this.props.id+": " + err)
+        //     }  
+        // }
+
     },
 
     render: function(){
