@@ -15,17 +15,17 @@ var Header = React.createClass({
 	    console.log(pageIcon)
 	    return (
 	    	<div id="header">
-				<Icon symbolID= {pageIcon}/>
-	    		<h1>{pageTitle}</h1>
-	    		<div className="addthis_toolbox addthis_default_style">
-				    <a className="addthis_button_preferred_1"></a>
-				    <a className="addthis_button_preferred_2"></a>
-				    <a className="addthis_button_preferred_3"></a>
-				    <a className="addthis_button_preferred_4"></a>
-				    <a className="addthis_button_compact"></a>
-				    // <a className="addthis_counter addthis_bubble_style"></a>s
+	    		<div className="info">
+		    		<h1>{pageTitle}</h1>
+		    		<div className="addthis_toolbox addthis_default_style my_addthis-style">
+					    <a className="addthis_button_preferred_1"></a>
+					    <a className="addthis_button_preferred_2"></a>
+					    <a className="addthis_button_preferred_3"></a>
+					    <a className="addthis_button_preferred_4"></a>
+					    <a className="addthis_button_compact"></a>
+					</div>
 	    		</div>
-
+	    		<Icon className="fill-white" symbolID= {pageIcon}/>
 	    	</div>
 	    )
 	}

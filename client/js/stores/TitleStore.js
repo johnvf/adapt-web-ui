@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
 
+
 var CHANGE_EVENT = 'change';
 
 var _title;
@@ -9,19 +10,19 @@ var _icon;
 
 var _titlesIcons = {
   "adapt" : {
-    icon: "home icon",
+    icon: "icon-icon_logo",
     title: "Home"
   },
   "toolbox" : {
-    icon: "toolbox icon",
+    icon: "icon-icon_toolbox",
     title: "Toolbox"
   },
   "oakland" : {
-    icon: "oakland icon",
+    icon: "icon-icon_map",
     title: "Adapt Oakland"
   },
   "about" : {
-    icon: "about icon",
+    icon: "icon-icon_about",
     title: "About"
   }
 }
