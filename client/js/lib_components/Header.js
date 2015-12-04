@@ -5,8 +5,10 @@ var Icon = require('../lib_components/Icon');
 var Header = React.createClass({
 
 	componentDidMount: function(){
-    	if (!window.addthis.toolbox) window.addthis.init() 
-    	window.addthis.toolbox('.addthis_toolbox')
+		if( window.addthis ){
+	    	if (!window.addthis.toolbox) window.addthis.init() 
+	    	window.addthis.toolbox('.addthis_toolbox')
+		}
 	},
 
 	render: function() {

@@ -4,10 +4,6 @@ var React = require('react');
 // - Standard keys vs. custom keys? Maybe custom keys, since they're more explicit?
 var ResponsiveReactGridLayout = require('react-grid-layout').Responsive;
 
-var Image = require('../lib_components/Image');
-var Table = require('../lib_components/Table');
-var Chart = require('../lib_components/Chart');
-
 var Dashboard = React.createClass({
 
   getDefaultProps: function() {
@@ -99,7 +95,7 @@ var Dashboard = React.createClass({
     // ]
 
     var widgets = content.map( function(component, index){
-      return( <div key={index} className="widget">{component}</div> )
+      return( <div key={index} className="widget">{ component }</div> )
     })
     return widgets
   },

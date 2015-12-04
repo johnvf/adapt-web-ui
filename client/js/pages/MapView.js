@@ -34,10 +34,10 @@ var MapView = React.createClass({
    * State Boilerplate
    */
   getInitialState: function() {
-    var state = getStateFromStores( this.props.params.mapTag );
+    var state = getStateFromStores( this.props.params.tag );
 
-    state.map_list = MapStore.getMaps( this.props.params.mapTag );
-    state.text = TextStore.getText( this.props.params.mapTag );
+    state.map_list = MapStore.getMaps( this.props.params.tag );
+    state.text = TextStore.getText( this.props.params.tag );
     state.view = this.props.params.resource ? "data" : "map"
 
     return state
@@ -45,7 +45,7 @@ var MapView = React.createClass({
 
   // URL param changes have State consequences, need to be handled here.
   componentWillReceiveProps: function(nextProps){
-    this.setState(getStateFromStores( nextProps.params.mapTag ))
+    this.setState(getStateFromStores( nextProps.params.tag ))
   },
 
   componentDidMount: function() {
@@ -61,7 +61,7 @@ var MapView = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(getStateFromStores( this.props.params.mapTag ))
+    this.setState(getStateFromStores( this.props.params.tag ))
   },
 
   toggleView: function(){

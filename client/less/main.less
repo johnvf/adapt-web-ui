@@ -32,6 +32,10 @@
  */
 
 
+html {
+  overflow: hidden;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
@@ -49,7 +53,7 @@ body {
     position: absolute;
     right: 14px;
     z-index: 1000;
-    width: 240px;
+    width: auto;
     padding: 15px 30px 0 0;
     vertical-align: middle;
 }
@@ -72,7 +76,7 @@ body {
 }
 
 #header svg {
-    width: 40%;
+    width: 75px;
     padding: 10px;
   float:right;
   display: inline-block;
@@ -215,8 +219,9 @@ p {
 }
 
 .main {
-  height: 100vh;
-  overflow: hidden;
+  height: 99vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .centered {

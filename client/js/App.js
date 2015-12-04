@@ -95,10 +95,10 @@ React.render((
     <Route path="adapt" component={App}>
       <IndexRoute component={Home} onEnter={ urlChanged }/>
       <Route path="oakland" component={MapView}>
-        <Route path=":tags" component={MapView} onEnter={ urlChanged }/>
+        <Route path=":tag" component={MapView} onEnter={ urlChanged }/>
       </Route>
       <Route path="toolbox" component={Toolbox} onEnter={ urlChanged }>
-        <Route path=":tags" component={Toolbox} onEnter={ urlChanged }/>
+        <Route path=":tag" component={Toolbox} onEnter={ urlChanged }/>
       </Route>
       <Route path="about" component={About} onEnter={ urlChanged }/>
     </Route>
