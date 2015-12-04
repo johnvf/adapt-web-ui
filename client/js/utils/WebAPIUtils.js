@@ -63,6 +63,38 @@ module.exports = {
           }
 
         });
+    },
+
+    getCharts: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/chart?filter[tags]="+tags : "/api/chart"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveCharts(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
+    getTables: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/table?filter[tags]="+tags : "/api/table"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveTables(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
     }
 
 };

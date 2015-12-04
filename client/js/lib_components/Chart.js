@@ -59,11 +59,14 @@ var Chart = React.createClass({
         }
 
         // FIXME: This shouldn't be necessary - prop updates should work too
-        this.props.subscribeToLayoutChange( function(){ 
-            if( self.chart ){
-                self.chart.resize()                 
-            }
-        })
+        if (this.props.subscribeToLayoutChange){
+            this.props.subscribeToLayoutChange( function(){ 
+                if( self.chart ){
+                    self.chart.resize()                 
+                }
+            }) 
+        }
+
     },
 
 

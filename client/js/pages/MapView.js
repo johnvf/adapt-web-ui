@@ -7,11 +7,15 @@ var ViewActions = require('../actions/ViewActions');
 var MapStore = require('../stores/MapStore')
 var TextStore = require('../stores/TextStore')
 var TagStore = require('../stores/TagStore')
+var ChartStore = require('../stores/ChartStore')
+var TableStore = require('../stores/TableStore')
 
 // var Well = require('react-bootstrap/lib/Well');
 
 var Dashboard = require('../components/Dashboard');
 var Modal = require('../lib_components/Modal');
+var Chart = require('../lib_components/Chart');
+var Table = require('../lib_components/Table');
 
 var Map = require('../components/Map')
 var Data = require('../components/Data')
@@ -78,10 +82,24 @@ var MapView = React.createClass({
     }
   },
 
+  // FIXME: This is wastefule on each render. 
+  //It should 'get' the data when props change
   getModalContent: function(){
-    return(
-      <p> Aenean lacinia bibendum nulla sed consectetur.</p>
-    )
+    var content;
+    switch ( this.props.params.resource ) {
+      case "chart":
+        var item = ChartStore.getCharts(this.props.params.slug)
+        content = item ? <Chart item={ item } id={this.props.params.slug}/> : ""
+        break;
+
+      case "table":
+        var item = TableStore.getTables(this.props.params.slug)
+        content = item ? <Table item={ item }/> : ""
+        break;
+
+      default:
+    }
+    return content
   },
 
   render: function() {
@@ -103,7 +121,7 @@ var MapView = React.createClass({
           modalShown = true
           modalContent = this.getModalContent();
           // Placeholder title
-          modalTitle = this.props.params.resource + " | " + this.props.params.id
+          modalTitle = this.props.params.resource + " | " + this.props.params.slug
         }
 
         // These will become widgets in the dashboard
