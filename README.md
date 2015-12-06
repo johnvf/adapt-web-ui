@@ -26,12 +26,12 @@ copy and paste the first two lines Homebrew suggests to run Mongo on login (and 
 Install NodeJS 0.12.7 using NVM. Then clone the repo and install dependencies:
 ```
 nvm install 0.12.7
-git clone git@github.com:johnvf/adapt-web-ui.git
+git clone https://github.com/johnvf/adapt-web-ui.git
 cd adapt-web-ui
 npm install -g gulp-cli
 npm install
 ```
-Place a .env file in your folder that contains the following keys:
+Place a .env file in your folder that contains the following keys (if you aren't working on the AdaptOakland project but using this repo for your own purposes, you will need to create a google service account and obtain these keys. The value of GAPI_PRIVATE_KEY needs to be surrounded by double quotes in order for the .env file to work correctly):
 - GAPI_PRIVATE_KEY_ID
 - GAPI_PRIVATE_KEY
 - GAPI_CLIENT_EMAIL
