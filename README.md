@@ -4,22 +4,64 @@ Adapt Oakland Web UI
 ## Installation
 
 Use node v0.12.7 (0.12.4+ should also work). Also, install mongodb.
+
+More details:
+
+### MacOSX:
+
+Sync AO_Website folder on Google Drive.
+
+Install Homebrew.
+
+Install Node Version Manager (NVM).
+
+Install Heroku Toolbelt.
+
+Install Git (if you don't already have it).
+
+`brew install mongo`
+
+copy and paste the first two lines Homebrew suggests to run Mongo on login (and to launch it now)
+
+Install NodeJS 0.12.7 using NVM:
+`nvm install 0.12.7`
+
 ```
 - git clone git@github.com:johnvf/adapt-web-ui.git
-- cd adaptoak
+- cd adapt-web-ui
+- npm install -g gulp-cli
 - npm install
-- gulp
+```
+Place a .env file in your folder that contains the following keys:
+- GAPI_PRIVATE_KEY_ID
+- GAPI_PRIVATE_KEY
+- GAPI_CLIENT_EMAIL
+- GAPI_CLIENT_ID
+- GAPI_TYPE
+
+Add the following to your .bashrc, changing paths as needed:
+alias adaptweb="cd ~/Projects/adapt-web-ui; git pull; heroku local"
+alias adaptdata="cd ~/Projects/adapt-web-ui; node ~/Projects/adapt-web-ui/xlsx_2_db.js ~/Google\ Drive/Adapt\ Oakland/AO_Website/AO_Master_spreadsheet.xlsx"
+
+To run, type: 
+```
+adaptweb
 ```
 Visit [http://localhost:8080](http://localhost:8080)
 
-To seed the database:
+To run the importer, type:
 ```
-node seed_db
+adaptdata
 ```
-To run the importer:
-```
-node xlsx_2_db ~/Path/to/AO/folder/AO_Website.xlsx
-```
+
+### Windows:
+Ensure you have Powershell 3
+
+Install Git
+
+Install Scoop
+
+To be continued...
 
 ## Description
 
