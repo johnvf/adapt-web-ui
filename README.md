@@ -23,14 +23,13 @@ Install Git (if you don't already have it).
 
 copy and paste the first two lines Homebrew suggests to run Mongo on login (and to launch it now)
 
-Install NodeJS 0.12.7 using NVM:
-`nvm install 0.12.7`
-
+Install NodeJS 0.12.7 using NVM. Then clone the repo and install dependencies:
 ```
-- git clone git@github.com:johnvf/adapt-web-ui.git
-- cd adapt-web-ui
-- npm install -g gulp-cli
-- npm install
+nvm install 0.12.7
+git clone git@github.com:johnvf/adapt-web-ui.git
+cd adapt-web-ui
+npm install -g gulp-cli
+npm install
 ```
 Place a .env file in your folder that contains the following keys:
 - GAPI_PRIVATE_KEY_ID
