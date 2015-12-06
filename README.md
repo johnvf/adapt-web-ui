@@ -40,8 +40,11 @@ Place a .env file in your folder that contains the following keys:
 - GAPI_TYPE
 
 Add the following to your .bashrc, changing paths as needed:
+
+```
 alias adaptweb="cd ~/Projects/adapt-web-ui; git pull; heroku local"
 alias adaptdata="cd ~/Projects/adapt-web-ui; node ~/Projects/adapt-web-ui/xlsx_2_db.js ~/Google\ Drive/Adapt\ Oakland/AO_Website/AO_Master_spreadsheet.xlsx"
+```
 
 To run, type: 
 ```
