@@ -2,55 +2,27 @@ var React = require('react');
 
 var c3 = require('c3')
 
-function coerceNum( candidate ){
-    if( typeof candidate === "string"){
-        var num = parseFloat(candidate.replace(/[,$]+/g, ""))
-        if( isNaN(num)){
-            return candidate
-        } else{
-            return num
-        }
-    }
-    else{
-        return candidate
-    }
-}
-
-function cleanData( data ){
-    // console.log(data);
-    data.forEach( function(row, i){
-        row.forEach( function(col, j){
-            data[i][j] = coerceNum( data[i][j] )
-        })
-    })
-    // console.log(data);
-    return data
-}
-
 var Chart = React.createClass({
     // ...
     _renderChart: function (item) {
-        // save reference to our chart to the instance
-        this.chart = c3.generate({
-            bindto: '#'+this.props.id,
-            data: {
-                rows: cleanData( item.data ),
-                x : 'x',
-                type: item.chart_type,
-                types: item.types
-            },
-            axis: {
-                x: {
-                    type: 'category'
-                }
-            }
-        })
+        // Copy the data - should use immutable.js instead?
+        var rItem = JSON.parse(JSON.stringify(item))
+
+        // Modify config and insert data where c3 expects it
+        rItem.config.bindto = '#'+this.props.id
+        rItem.config.data.rows = rItem.data
+
+        // Remove groups so they can be added later, to animate them
+        var groups = rItem.config.data.groups
+        delete( rItem.config.data.groups )
+
+        this.chart = c3.generate( rItem.config )
 
         var self = this;
 
         setTimeout(function () {
-            self.chart.groups( item.groups )
-        }, 1000);
+            self.chart.groups( groups )
+        }, 1500);
     },
 
     componentDidMount: function () {
