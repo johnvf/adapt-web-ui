@@ -27,9 +27,13 @@ var Data = React.createClass({
 
       Object.keys(resources).forEach( function(resourceType){
 
+        var resourceLinks = [];
+
         resources[resourceType].forEach( function(item){
-          resourceMarkup.push(<div><Link to={"/adapt/oakland/"+tag+"/"+resourceType+"/"+item.slug}>{item.name}</Link></div>)
+          resourceLinks.push(<div><Link to={"/adapt/oakland/"+tag+"/"+resourceType+"/"+item.slug}>{item.name}</Link></div>)
         })
+
+        resourceMarkup.push( <div><h3>{ resourceType }</h3><ul>{ resourceLinks }</ul></div> )
 
       });
 

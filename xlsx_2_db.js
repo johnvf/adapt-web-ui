@@ -173,6 +173,7 @@ function make_images( dump ){
                 var public_id = item.path.split("/").reverse()[0].split(".")[0]
                 exImage = exImages[public_id]
                 exImage.name = item.name
+                exImage.slug = convertToSlug(item.name)
                 exImage.tags = get_tags(item.tags)
                 return exImage
             })

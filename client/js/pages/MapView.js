@@ -9,6 +9,7 @@ var TextStore = require('../stores/TextStore')
 var TagStore = require('../stores/TagStore')
 var ChartStore = require('../stores/ChartStore')
 var TableStore = require('../stores/TableStore')
+var ImageStore = require('../stores/ImageStore')
 
 // var Well = require('react-bootstrap/lib/Well');
 
@@ -16,6 +17,7 @@ var Dashboard = require('../components/Dashboard');
 var Modal = require('../lib_components/Modal');
 var Chart = require('../lib_components/Chart');
 var Table = require('../lib_components/Table');
+var Image = require('../lib_components/Image');
 
 var Map = require('../components/Map')
 var Data = require('../components/Data')
@@ -43,6 +45,12 @@ function getStateFromStores( tag , resource , slug ) {
         content = <Table key={slug} item={ item }/>
         break;
 
+      case "image":
+        item = ImageStore.getImages( slug )
+        console.log(item)
+        content = <Image key={slug} item={ item }/>
+        break;
+
       default:
     }
     if( item && content ){
@@ -55,6 +63,7 @@ function getStateFromStores( tag , resource , slug ) {
     text: TextStore.getText( tag ),
     charts: ChartStore.getCharts( tag ),
     tables: TableStore.getTables( tag ),
+    images: ImageStore.getImages( tag ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
@@ -123,7 +132,8 @@ var MapView = React.createClass({
         text = this.state.text || "",
         resources = {
           chart: this.state.charts ? this.state.charts : [],
-          table: this.state.tables ? this.state.tables : []
+          table: this.state.tables ? this.state.tables : [],
+          image: this.state.images ? this.state.images : []
         },
         tags = this.state.tags,
         active_tags = this.state.active_tags;

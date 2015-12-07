@@ -95,6 +95,22 @@ module.exports = {
           }
 
         });
+    },
+
+    getImages: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/image?filter[tags]="+tags : "/api/image"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveImages(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
     }
 
 };
