@@ -3,13 +3,11 @@ Adapt Oakland Web UI
 
 ## Installation
 
-Use node v0.12.7 (0.12.4+ should also work). Also, install mongodb.
-
-More details:
-
 ### MacOSX:
 
 Sync AO_Website folder on Google Drive.
+
+(if you aren't working on the AdaptOakland project but using this repo for your own purposes, there is an importer - xlsx_2_db.js - which is set up to read a .xlsx with pointers to content to be imported to mongoDB. The format of this spreadsheet can be inferred from reading the importer code):
 
 Install Homebrew.
 
@@ -18,6 +16,8 @@ Install Node Version Manager (NVM).
 Install Heroku Toolbelt.
 
 Install Git (if you don't already have it).
+
+Install MongoDB using Homebrew:
 
 `brew install mongo`
 
@@ -31,7 +31,9 @@ cd adapt-web-ui
 npm install -g gulp-cli
 npm install
 ```
-Place a .env file in your folder that contains the following keys (if you aren't working on the AdaptOakland project but using this repo for your own purposes, you will need to create a google service account and obtain these keys. The value of GAPI_PRIVATE_KEY needs to be surrounded by double quotes in order for the .env file to work correctly):
+Place a .env file in your folder that contains the following keys 
+
+(if you aren't working on the AdaptOakland project but using this repo for your own purposes, you will need to create a google service account and obtain these keys. The value of GAPI_PRIVATE_KEY needs to be surrounded by double quotes in order for the .env file to work correctly):
 - GAPI_PRIVATE_KEY_ID
 - GAPI_PRIVATE_KEY
 - GAPI_CLIENT_EMAIL
