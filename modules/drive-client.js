@@ -3,6 +3,11 @@
  * Requires service account key from https://console.developers.google.com
  * Assumes a single config.yaml in a folder shared with this service account
  */
+var fs=require('fs'),
+    https=require('https'),
+    mkdirp=require('mkdirp'),
+    request = require('request');
+
 
 var google = require('googleapis');
     spreadsheets = require("google-spreadsheets"),
@@ -72,42 +77,47 @@ function getDriveSheetData( items ){
     });
 }
 
-/*
- * Utils
- */
+function downloadFolderContents( folderId , targetFolder ){
+    return new Promise( function(resolve,reject){
 
+        mkdirp( targetFolder, function (err) {
+            if (err) console.error(err)
 
+            drive.children.list({ 'folderId': folderId}, function(err, resp){ 
+                resp.items.forEach(function(itemMetadata){
+                    drive.files.get({ 'fileId': itemMetadata.id}, function(err, item){
+                        if( item ){
+                            var fileName =  targetFolder + '/'+item.title
+                            // Only downloads image files if they don't exist. 
+                            // The user will have to delete images if any are changed
+                            // Possible Fix: Compare download date to modifed date on google drive?
+                            if (!fs.existsSync(fileName)){
+                                var headers = { authorization: 'Bearer ' + jwtClient.credentials.access_token }
 
-function log(){
-    if(console){
-        console.log.apply(console, arguments);
-    }
+                                request.get({ url: item.downloadUrl, encoding: null,  headers: headers}, function done (err, res) {
+                                    fs.writeFile( targetFolder + '/'+item.title, res.body, function (err) {
+                                        console.log(err)
+                                    })
+                                })
+                            }
+                            else{
+                                console.log( fileName + " already exists, skipped download");
+                            }
+                        }   
+                    }) 
+                })
+                // FIXME: Google Drive rejects requests if they come too fast. 
+                // Convert file downloads to a promise chain, THEN resolve the overall promise with URLs to files
+                // resolve( resp )
+            });
+
+        });
+    })
 }
 
-function log_test(arg){
-    console.log( JSON.stringify(arg, null, 2) )
-}
 /*
  * Public
  */
-
-// TESTED - works
-function test( ){
-    console.log("Testing ...");
-    require('dotenv').load();
-    // console.log(process.env)
-    
-    var chart = {
-        key: "1PPwXH9Yrr4ZlEkqXfPVjDuVK6wIctkE4ROdmL1xspP8",
-        sheet: "0",
-        range: "A1:I13"
-    }
-    auth()
-    .then( getDriveSheetData.bind( null, [chart, chart, chart] ))
-    .then( log )
-    .catch( function(err){console.error(err);} )
-}
-
 function getSheetData( items, callback ){
     auth()
     .then( getDriveSheetData.bind( null, items ))
@@ -118,10 +128,25 @@ function getSheetData( items, callback ){
     })
 }
 
+function downloadFolder( folderId, targetFolder, callback ){
+    auth()
+    .then( downloadFolderContents.bind( null, folderId, targetFolder ))
+    .then( callback )
+    .catch( function(err){
+        console.error(err);
+        throw "Problem getting images"
+    }) 
+}
+
 if (!module.parent) {
-    test();
+    require('dotenv').load();
+    var imageFolderId = "0B-VKAjgnrgXwWTk5QUF2Q3Y1VVk"
+    downloadFolder( imageFolderId , './public/img', function(items){ 
+        // Callback to do something with file URLs would happen here.
+    });
 }
 
 module.exports = { 
-    getSheetData: getSheetData
+    getSheetData: getSheetData,
+    downloadFolder: downloadFolder
 }
