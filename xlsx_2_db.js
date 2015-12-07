@@ -62,7 +62,7 @@ function make_charts( dump ){
             item.slug = convertToSlug(item.name)
         return item
     }), 
-    function(documents){ 
+    function(documents){
         seed_db( "chart", documents ) 
     });
 }
@@ -75,7 +75,7 @@ function make_tables( dump ){
         item.slug = convertToSlug(item.name)
         return item
     }), 
-    function(documents){ 
+    function(documents){
         seed_db( "table", documents ) 
     });   
 }
