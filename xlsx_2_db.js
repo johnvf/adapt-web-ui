@@ -2,15 +2,14 @@ var fs=require('fs'),
     seeder = require('mongoose-seed'),
     XLSX = require('xlsx'),
     mammoth = require("mammoth"),
-    driveClient = require("./modules/drive-client");
+    driveClient = require("./modules/drive-client"),
+    cloudinary = require('cloudinary');
 
 // FIXME: Need to replace FRICKLE boiler plate ENV configuration with 'dotenv' + .env file
 require('dotenv').load();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
-
-// var models = ['asset', 'map', 'tabular', 'tag', 'text', 'user']
 var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
 
 // Call this script with a path to an xlsx file.
@@ -62,7 +61,7 @@ function make_charts( dump ){
             item.slug = convertToSlug(item.name)
         return item
     }), 
-    function(documents){ 
+    function(documents){
         seed_db( "chart", documents ) 
     });
 }
@@ -75,7 +74,7 @@ function make_tables( dump ){
         item.slug = convertToSlug(item.name)
         return item
     }), 
-    function(documents){ 
+    function(documents){
         seed_db( "table", documents ) 
     });   
 }
@@ -133,13 +132,56 @@ function make_text( dump ){
 // store URL in DB w/ name + tags
 function make_images( dump ){
 
-    var documents = []
+    // A hash of existing images
+    var exImages = {}
 
-    dump.forEach( function( item ){
+    cloudinary.api.resources(function(result) { 
 
-    })
+        // Assemble a hash of existing resources by public_id.
+        result.resources.forEach( function(resource){
+            exImages[resource.public_id] = resource
+        })
 
-    // seed_db( "image", documents )
+        // Filter out images that are already uploaded
+        var newImages = dump.filter(function(item){ 
+            var public_id = item.path.split("/").reverse()[0].split(".")[0]
+            return exImages[public_id] === undefined 
+        });
+
+        // Get an array of promises to upload the new images
+        var newImagePromises = newImages.map( function( item ){
+            return new Promise( function(resolve, reject){
+                var filepath = root + item.path
+                
+                var public_id = item.path.split("/").reverse()[0].split(".")[0]
+                console.log("uploading: " + public_id)
+                cloudinary.uploader.upload( filepath, function(result) {
+                    resolve(result)
+                }, { public_id: public_id })
+            });
+        })
+
+        // Upload all new images, then combine new and old image data and seed db
+        Promise.all( newImagePromises ).then(function(results) {
+            console.log("done uploading")
+
+            // Add the newly uploaded images to the existing images hash
+            results.map( function(resource){ exImages[resource.public_id] = resource});
+
+            // FIXME: Cloudinary supports tags, but I'm tacking ours on after upload. This could be confusing
+            var documents = dump.map( function(item){ 
+                var public_id = item.path.split("/").reverse()[0].split(".")[0]
+                exImage = exImages[public_id]
+                exImage.name = item.name
+                exImage.slug = convertToSlug(item.name)
+                exImage.tags = get_tags(item.tags)
+                return exImage
+            })
+
+            seed_db( "image", documents )
+        })
+
+    });
 }
 
 // Map JSON for mapbox.gl
@@ -197,10 +239,10 @@ function seed_from_xlsx( path ){
                     make_text( dump_data( worksheet, required_fields ) )
                     break;
 
-                // case "Image":
-                //     var required_fields = ["path", "tags"] 
-                //     make_images( dump_data( worksheet, required_fields ) )
-                //     break;
+                case "Image":
+                    var required_fields = ["path", "tags"] 
+                    make_images( dump_data( worksheet, required_fields ) )
+                    break;
 
                 case "Maps":
                     var required_fields = ["path", "tags"] 

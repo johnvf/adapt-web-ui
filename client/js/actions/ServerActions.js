@@ -35,6 +35,13 @@ module.exports = {
       type: "RECEIVE_TABLES",
       tables: tables
     });
+  },
+
+  receiveImages: function( images ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_IMAGES",
+      images: images
+    });
   }
 
 };
