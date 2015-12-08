@@ -1,0 +1,26 @@
+// MapTooltip.less
+.map-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    .active {
+        background-color: #fff;
+        padding: 1em;
+    }
+    .feature + .feature {
+        border-top: 1px solid #aaa;
+    }
+
+}
+
+.feature-property-label {
+    color: #888;
+    margin-right: 0.6em;
+}
+.feature-property-value {
+    color: black;
+}
+.feature-property-row + .feature-property-row {
+    border-top: 1px solid #ddd;
+}
