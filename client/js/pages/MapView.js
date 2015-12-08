@@ -17,9 +17,9 @@ var Modal = require('../lib_components/Modal');
 var Chart = require('../lib_components/Chart');
 var Table = require('../lib_components/Table');
 
-var Map = require('../components/Map')
-var Data = require('../components/Data')
-var Resources = require('../components/Resources')
+var Map = require('../components/Map');
+var Data = require('../components/Data');
+var Resources = require('../components/Resources');
 
 function getStateFromStores( tag , resource , slug ) {
 

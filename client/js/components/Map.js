@@ -2,6 +2,9 @@ var React = require('react');
 
 var mapboxgl = require('mapbox-gl');
 
+var MouseActions = require("../actions/MouseActions");
+var Tooltip = require('../components/MapTooltip');
+
 function styleId(layer, styleIndex){
   return layer._id + "_" + styleIndex;
 }
@@ -13,12 +16,24 @@ var Map = React.createClass({
   },
 
   componentDidMount: function(){
-    this.setState({ map: this.makeMap( )});
+    var map = this.makeMap();
+    this.setState({ map: map});
+    this.addEventListeners(map);
   },
 
   componentWillReceiveProps: function(nextProps){
     var results = this.batchUpdateLayers(nextProps.active_layers);
     this.setState({activeStyles: results.styles, activeSources: results.sources})
+  },
+
+  addEventListeners: function(map){
+    var self = this;
+    map.on('mousemove', function( e ){
+      map.featuresAt(e.point, {radius:5}, function( err, features ){
+        if (err) throw err;
+        MouseActions.featureHover(e, features);
+      });
+    });
   },
 
   batchUpdateLayers: function (newLayers){
@@ -36,8 +51,8 @@ var Map = React.createClass({
         diff.add.styles.map(function(style){
           batch.addLayer(style);
         }, batch);
-      }); 
-      
+      });
+
     }
 
     return diff;
@@ -108,7 +123,8 @@ var Map = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div id="mapWrapper">
+        <Tooltip></Tooltip>
         <div id="map" className="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"></div>
       </div>
     )
