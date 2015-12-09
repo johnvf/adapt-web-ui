@@ -9,7 +9,7 @@ var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
 
 renderer.heading = function (text, level) {
-  var escapedText =  text.toLowerCase().split(/[^\w]+/g).slice(3).join('-');
+  var escapedText =  text.toLowerCase().split(/[^\w]+/g).slice(3).join('_');
 
   return '<h' + level + '><a name="' +
                 escapedText +
