@@ -17,7 +17,7 @@ var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
 function convertToSlug(Text){
-    return Text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+    return Text.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
 }
 
 // Dumps items in main spreadsheet, skips incomplete entries
