@@ -6,10 +6,17 @@ var ViewActions = require("../actions/ViewActions");
 
 var MapLayerToggle = React.createClass({
 
-  _onClick: function () {
+  onLayerClick: function () {
     var self = this;
     return function (e){
-      ViewActions.toggleMapLayer(self.props.layer);
+      ViewActions.layerClicked(self.props.layer);
+    };
+  },
+
+  onLayerMapDisplayClick: function () {
+    var self = this;
+    return function (e){
+      ViewActions.toggleLayerMapDisplay(self.props.layer);
     };
   },
 
@@ -18,11 +25,11 @@ var MapLayerToggle = React.createClass({
     var status = this.props.layer.is_active ? "●" : "○" ;
     var className = "map-menu-layer" + this.props.layer.is_active ? " active" : "";
     return (
-      <div className={ className } onClick={ this._onClick() }>
-        <span className="status-indicator">{ status }</span>
-        <span className="map-menu-layer-name">
+      <div className={ className } >
+        <span className="map-menu-layer-name" onClick={ this.onLayerClick() }>
         { layerName }
         </span>
+        <span className="status-indicator" onClick={ this.onLayerMapDisplayClick() }>{ status }</span>
       </div>
     )
   }
