@@ -1,10 +1,9 @@
 // MapLayerMenuItem.js
 
-// MapTooltip.js
 var React = require('react');
 var ViewActions = require("../actions/ViewActions");
 
-var MapLayerToggle = React.createClass({
+var MapLayerMenuItem = React.createClass({
 
   onLayerClick: function () {
     var self = this;
@@ -25,15 +24,15 @@ var MapLayerToggle = React.createClass({
     var status = this.props.layer.is_active ? "●" : "○" ;
     var className = "map-menu-layer" + this.props.layer.is_active ? " active" : "";
     return (
-      <div className={ className } >
+      <li className={ className } >
         <span className="map-menu-layer-name" onClick={ this.onLayerClick() }>
         { layerName }
         </span>
         <span className="status-indicator" onClick={ this.onLayerMapDisplayClick() }>{ status }</span>
-      </div>
+      </li>
     )
   }
 
 });
 
-module.exports = MapLayerToggle;
+module.exports = MapLayerMenuItem;

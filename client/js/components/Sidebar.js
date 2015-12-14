@@ -15,7 +15,7 @@ var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore');
 var Icon = require('../lib_components/Icon');
-var MapLayerToggle = require('../components/MapLayerToggle');
+var MapGroupMenuItem = require('../components/MapGroupMenuItem');
 
 
 function displayCase( snakeString ){
@@ -31,17 +31,8 @@ var Sidebar = React.createClass({
     // loo00l .. maps.map(function(map...))
     var MapPanels = maps.map(function(map, index){
       var GroupPanels = map.groups.map(function(group, index){
-
-        var LayerItems = group.layers.map(function(layer, index){
-          return(
-            <MapLayerToggle key={index} layer={ layer }></MapLayerToggle>
-            )
-        });
-
         return (
-          <Panel key={index} header={ displayCase(group.text) }>
-            {LayerItems}
-          </Panel>
+          <MapGroupMenuItem group={group}></MapGroupMenuItem>
           )
       });
 
