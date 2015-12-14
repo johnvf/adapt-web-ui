@@ -23,6 +23,7 @@ var Map = React.createClass({
 
   componentWillReceiveProps: function(nextProps){
     var results = this.batchUpdateLayers(nextProps.active_layers);
+    console.log("new active layers:", nextProps.active_layers)
     this.setState({activeStyles: results.styles, activeSources: results.sources})
   },
 

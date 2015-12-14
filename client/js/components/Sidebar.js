@@ -32,12 +32,12 @@ var Sidebar = React.createClass({
     var MapPanels = maps.map(function(map, index){
       var GroupPanels = map.groups.map(function(group, index){
         return (
-          <MapGroupMenuItem group={group}></MapGroupMenuItem>
+          <MapGroupMenuItem group={group} navigate={self.navigate}></MapGroupMenuItem>
           )
       });
 
       return(
-        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
+        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
           { GroupPanels }
         </Panel>
       )
@@ -52,8 +52,17 @@ var Sidebar = React.createClass({
     )
   },
 
-  navigate: function(url){
-    this.history.pushState(null, url)
+  navigate: function(url, tag){
+    if(!url){
+      url = window.location.pathname;
+    }
+    if(tag){
+      url = url.split("#")[0];
+      tag = "#" + tag;
+    } else {
+      tag = "";
+    }
+    this.history.pushState(null, url + tag);
   },
 
   render: function() {

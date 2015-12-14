@@ -5,11 +5,10 @@ var ViewActions = require("../actions/ViewActions");
 
 var MapLayerMenuItem = React.createClass({
 
-  onLayerClick: function () {
-    var self = this;
-    return function (e){
-      ViewActions.layerClicked(self.props.layer);
-    };
+  onLayerClick: function (e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.navigate(null, this.props.layer.tag.text);
   },
 
   onLayerMapDisplayClick: function () {
@@ -20,13 +19,14 @@ var MapLayerMenuItem = React.createClass({
   },
 
   render: function() {
-    var layerName = this.props.layer.text;
-    var status = this.props.layer.is_active ? "●" : "○" ;
-    var className = "map-menu-layer" + this.props.layer.is_active ? " active" : "";
+    var layer = this.props.layer;
+    var status = this.props.layer.is_displayed ? "●" : "○" ;
+    // check if this layer is the active layer
+    var className = "map-menu-layer";
     return (
       <li className={ className } >
-        <span className="map-menu-layer-name" onClick={ this.onLayerClick() }>
-        { layerName }
+        <span className="map-menu-layer-name" onClick={ this.onLayerClick }>
+        { layer.text }
         </span>
         <span className="status-indicator" onClick={ this.onLayerMapDisplayClick() }>{ status }</span>
       </li>

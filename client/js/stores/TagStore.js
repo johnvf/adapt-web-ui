@@ -11,6 +11,9 @@ var _tags = {},
     _tagLookup = {},
     _active_tags = {},
     _mapTagTree = [],
+    _activeGroup,
+    _activeLayer,
+    _activeMap,
     _URLTag;
 
 window.onpopstate = function(event) {
@@ -81,7 +84,8 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case "URL_CHANGED":
       // FIXME: Looks like only a single tag is supported by MERS filtering
-      _URLTag = window.location.pathname.split("/").reverse()[0];
+      _URLTag = action.url.split("/").reverse()[0];
+      console.log(action.url);
       TagStore.emitChange();
       break;
 

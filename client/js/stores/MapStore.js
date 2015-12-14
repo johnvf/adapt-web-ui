@@ -10,6 +10,8 @@ var CHANGE_EVENT = 'change';
 var _maps = {};
 var _loading = true;
 var _activeLayers = [];
+var _activeGroup;
+var _activeLayer;
 
 var MapStore = assign({}, EventEmitter.prototype, {
 
@@ -61,15 +63,36 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
       });
 
       if( matchIndex > -1 ){
-        action.layer.is_active = false;
+        action.layer.is_displayed = false;
         _activeLayers.splice( matchIndex, 1 );
       } else {
-        action.layer.is_active = true;
+        action.layer.is_displayed = true;
         _activeLayers.push( action.layer.map_item );
       }
       MapStore.emitChange();
       break;
 
+    case "GROUP_CLICKED":
+      _activeLayers.forEach(function(layer){
+        layer.is_displayed = false;
+      });
+      var layers = action.group.layers.filter(function(layer){
+        // check if layer should be displayed by default
+        // for now we will randomly choose
+        var result = parseInt(Math.random());
+        console.log("random layer activation", result)
+        if( result ){
+          layer.is_displayed = true;
+          return true;
+        } else {
+          layer.is_displayed = false;
+          return false;
+        }
+      });
+      console.log("setting new active layers", layers);
+      _activeLayers = layers;
+      MapStore.emitChange();
+      break;
     default:
       // do nothing
   }

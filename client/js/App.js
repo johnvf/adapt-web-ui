@@ -86,7 +86,7 @@ const history = useBasename(createBrowserHistory)({
 })
 
 function urlChanged( nextRoute ){
-  ViewActions.urlChanged( nextRoute.location.pathname )
+  ViewActions.urlChanged( nextRoute.location.pathname + nextRoute.location.hash );
 }
 // React-Router route configuration
 // Essentially a mini-sitemap used to direct users to different pages
