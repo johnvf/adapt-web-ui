@@ -17,7 +17,7 @@ renderer.heading = function (text, level) {
 var Text = React.createClass({
 
     render: function(){
-        return <div id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body) } }/>
+        return <div id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
     }
 });
 
