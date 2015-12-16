@@ -26,7 +26,7 @@ var Sidebar = React.createClass({
 
   mixins: [ History ],
 
-  getPopover: function(maps){
+  getMapNav: function(maps){
     var self = this;
     // loo00l .. maps.map(function(map...))
     var MapPanels = maps.map(function(map, index){
@@ -44,11 +44,11 @@ var Sidebar = React.createClass({
     })
 
     return(
-      <Popover placement="right" positionLeft={70} positionTop={0} title="MAP HOME">
+      <div className="second-nav">
         <Accordion>
           { MapPanels }
         </Accordion>
-      </Popover>
+      </div>
     )
   },
 
@@ -73,40 +73,40 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var mapsTree = this.props.mapTagTree;
+    var mapNav = this.getMapNav( this.props.mapTagTree );
 
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand">
-                <Link to={"/adapt"}>
-                  <Icon className="fill-green" symbolID="icon-icon_logo"/>
-                </Link>
-              </li>
-              <li>
-                <Link to={ "/adapt/toolbox" }>
-                  <Icon symbolID="icon-icon_toolbox"/>
-                </Link>
-              </li>
-              <li>
-                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(mapsTree) }>
-                  <a><Icon symbolID="icon-icon_map"/></a>
-                </OverlayTrigger>
-              </li>
-          </ul>
-          <ul className="toolbar-nav bottom">
-              <li>
-                <Link to={ "/adapt/about" }>
-                  <Icon symbolID="icon-icon_about"/>
-                </Link>
-              </li>
-              <li>
-                <Link to={ "/adapt/share" }>
-                  <Icon symbolID="icon-icon_share"/>
-                </Link>
-              </li>
-          </ul>
-
+            <li className="brand">
+              <Link to={"/adapt"}>
+                <Icon className="fill-green" symbolID="icon-icon_logo"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/toolbox" }>
+                <Icon symbolID="icon-icon_toolbox"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/oakland/analyze" }>
+                <Icon symbolID="icon-icon_map"/>
+              </Link>
+            </li>
+        </ul>
+        <ul className="toolbar-nav bottom">
+            <li>
+              <Link to={ "/adapt/about" }>
+                <Icon symbolID="icon-icon_about"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/share" }>
+                <Icon symbolID="icon-icon_share"/>
+              </Link>
+            </li>
+        </ul>
+        {mapNav}
       </div>
     )
   }
