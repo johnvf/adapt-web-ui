@@ -72,8 +72,10 @@ var Data = React.createClass({
                     <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
                   </Col>
                   <Col xs={6} md={4}>
-                    <h4>Resources</h4>
-                    { resourceMarkup }
+                    <div className="body">
+                      <h4>Resources</h4>
+                      { resourceMarkup }
+                    </div>
                   </Col>
                 </Row>
               </Grid>

@@ -57,23 +57,30 @@ function auth( ){
 // Loads data from a spreadsheet
 function getDriveSheetData( items ){
     return new Promise( function(resolve,reject){
-
+        
         var itemPromises = items.map( function(item){
-            return new Promise( function(resolve,reject){
+            return new Promise( function(resolveItem, rejectItem){
 
                 spreadsheets({ key: item.key, auth: jwtClient }, function(err, spreadsheet) {
-                    if (err){ reject(err);};
-                    spreadsheet.worksheets[parseInt(item.sheet)].cells({ range: item.range}, function(err, cells) {
-                        if (err){ reject(err);};
-                        var data = chartPreprocessor.processGoogleSheet( cells )
-                        item.data = data
-                        resolve(item)
-                    });
+                    if (err){ console.log(err); resolveItem(item) };
+                    if ( !spreadsheet ){
+                        console.log("ERROR parsing sheet for: "+item.name+" - Unable to access: " +item.key);
+                        resolveItem(item);
+                    }
+                    else{
+                        spreadsheet.worksheets[parseInt(item.sheet)].cells({ range: item.range}, function(err, cells) {
+                            if (err){ rejectItem(err);};
+                            var data = chartPreprocessor.processGoogleSheet( cells )
+                            item.data = data
+                            resolveItem(item)
+                        });
+                    }
                 });
 
             });
         })
-        new Promise.all(itemPromises).then( resolve )
+        Promise.all(itemPromises).then( resolve );
+
     });
 }
 
