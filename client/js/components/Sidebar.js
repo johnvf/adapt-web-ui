@@ -53,7 +53,7 @@ var Sidebar = React.createClass({
     })
 
     return(
-      <Popover placement="right" width={400} positionLeft={70} positionTop={0} title="MAP HOME">
+      <Popover placement="right" positionLeft={70} positionTop={0} title="MAP HOME">
         <Accordion>
           { MapPanels }
         </Accordion>
