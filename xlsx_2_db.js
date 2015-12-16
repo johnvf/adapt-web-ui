@@ -75,6 +75,7 @@ function make_tables( dump ){
         return item
     }), 
     function(documents){
+        // console.log(documents)
         seed_db( "table", documents ) 
     });   
 }
