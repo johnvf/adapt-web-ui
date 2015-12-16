@@ -1,23 +1,11 @@
 var React = require('react');
-var marked = require('marked');
 
-var renderer = new marked.Renderer();
+var Text = require('../lib_components/Text')
 
 var Link = require('react-router').Link;
 var Grid = require('react-bootstrap/lib/Grid');
 var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
-
-renderer.heading = function (text, level) {
-  var escapedText =  text.toLowerCase().split(/[^\w]+/g).slice(3).join('_');
-
-  return '<h' + level + '><a name="' +
-                escapedText +
-                 '" class="anchor" href="#' +
-                 escapedText +
-                 '"><span class="header-link"></span></a>' +
-                  text + '</h' + level + '>';
-}
 
 var Data = React.createClass({
 
@@ -54,7 +42,7 @@ var Data = React.createClass({
                 </button>
                 <Row>
                   <Col xs={12} md={12}>
-                    <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
+                    <Text className="body" body={text}/>
                   </Col>
                 </Row>
               </Grid>
@@ -69,7 +57,7 @@ var Data = React.createClass({
                 </button>
                 <Row>
                   <Col xs={12} md={8}>
-                    <div className="body"  dangerouslySetInnerHTML={ { __html: marked(text, {renderer: renderer}) } }/>
+                    <Text className="body" body={text}/>
                   </Col>
                   <Col xs={6} md={4}>
                     <div className="body">

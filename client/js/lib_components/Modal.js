@@ -25,7 +25,7 @@ var ModalWrapper = React.createClass({
   render: function() {
 
     return (
-      <Modal show={this.state.showModal} onHide={this.close}>
+      <Modal bsSize={"large"} show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
           <Modal.Title>{this.props.title || ""}</Modal.Title>
         </Modal.Header>
