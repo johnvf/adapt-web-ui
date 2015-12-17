@@ -6,8 +6,7 @@ var NavItem = require('react-bootstrap/lib/NavItem');
 var NavDropdown = require('react-bootstrap/lib/NavDropdown');
 var NavBrand = require('react-bootstrap/lib/NavBrand');
 var MenuItem = require('react-bootstrap/lib/MenuItem');
-var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
-var Popover = require('react-bootstrap/lib/Popover');
+
 var Accordion = require('react-bootstrap/lib/Accordion');
 var Panel = require('react-bootstrap/lib/Panel');
 var Link = require('react-router').Link;

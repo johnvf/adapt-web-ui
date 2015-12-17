@@ -96,20 +96,39 @@ body {
 /*
  * Resources
  */
+ #resources{
+    overflow-y: scroll;
+    max-height: 100%;
+ }
+
+ #resources > div{
+  display: inline-block;
+  margin: 10px;
+ }
 
  #resources svg{
   width: 20px;
-  display: block;
  }
 
-#resources .row{
-  height: 30px;
+#resources label{
+  width: 50px;
+  margin-left: 5px;
+  vertical-align: middle;
 }
 
-#resources span{
-  vertical-align: super;
-  margin-left: 20px;
+.popover-content {
+    overflow-y: scroll;
+    height: 400px;
+    width: 260px;
 }
+
+/*
+ * Modal
+ */
+.modal{
+  z-index: 1100;
+}
+
 /*
  * Fonts
  */
