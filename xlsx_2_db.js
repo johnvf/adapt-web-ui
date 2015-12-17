@@ -194,10 +194,21 @@ function make_maps( dump ){
     dump.forEach( function( item ){
         var filepath = root + item.path
         var map = JSON.parse( fs.readFileSync( filepath ) );
+            map = lint_map( map )
             map.tags = get_tags(item.tags)
             documents.push(map)
     });
     seed_db( "map", documents )
+}
+
+function lint_map( map ){
+    map.layers.forEach( function(layer){
+        if( !layer.type ){
+            // Layers need a type or Mapbox errors out.
+            layer["type"] = "line"
+        }
+    })
+    return map
 }
 
 // Split and clean up tags

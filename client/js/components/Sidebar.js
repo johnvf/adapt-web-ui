@@ -15,7 +15,7 @@ var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore');
 var Icon = require('../lib_components/Icon');
-var MapLayerToggle = require('../components/MapLayerToggle');
+var MapGroupMenuItem = require('../components/MapGroupMenuItem');
 
 
 function displayCase( snakeString ){
@@ -26,43 +26,43 @@ var Sidebar = React.createClass({
 
   mixins: [ History ],
 
-  getPopover: function(maps){
+  getMapNav: function(maps){
     var self = this;
     // loo00l .. maps.map(function(map...))
     var MapPanels = maps.map(function(map, index){
       var GroupPanels = map.groups.map(function(group, index){
-
-        var LayerItems = group.layers.map(function(layer, index){
-          return(
-            <MapLayerToggle key={index} layer={ layer }></MapLayerToggle>
-            )
-        });
-
         return (
-          <Panel key={index} header={ displayCase(group.text) }>
-            {LayerItems}
-          </Panel>
+          <MapGroupMenuItem group={group} navigate={self.navigate}></MapGroupMenuItem>
           )
       });
 
       return(
-        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ self.navigate.bind(null,'/adapt/oakland/' + map.tag.text) } >
+        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
           { GroupPanels }
         </Panel>
       )
     })
 
     return(
-      <Popover placement="right" positionLeft={70} positionTop={0} title="MAP HOME">
+      <div className="second-nav">
         <Accordion>
           { MapPanels }
         </Accordion>
-      </Popover>
+      </div>
     )
   },
 
-  navigate: function(url){
-    this.history.pushState(null, url)
+  navigate: function(url, tag){
+    if(!url){
+      url = window.location.pathname;
+    }
+    if(tag){
+      url = url.split("#")[0];
+      tag = "#" + tag;
+    } else {
+      tag = "";
+    }
+    this.history.pushState(null, url + tag);
   },
 
   render: function() {
@@ -73,40 +73,40 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var mapsTree = this.props.mapTagTree;
+    var mapNav = this.props.active ? this.getMapNav( this.props.mapTagTree ) : false;
 
     return (
       <div id="sidebar-wrapper">
         <ul className="toolbar-nav">
-              <li className="brand">
-                <Link to={"/adapt"}>
-                  <Icon className="fill-green" symbolID="icon-icon_logo"/>
-                </Link>
-              </li>
-              <li>
-                <Link to={ "/adapt/toolbox" }>
-                  <Icon symbolID="icon-icon_toolbox"/>
-                </Link>
-              </li>
-              <li>
-                <OverlayTrigger trigger="click" placement="right" overlay={ this.getPopover(mapsTree) }>
-                  <a><Icon symbolID="icon-icon_map"/></a>
-                </OverlayTrigger>
-              </li>
-          </ul>
-          <ul className="toolbar-nav bottom">
-              <li>
-                <Link to={ "/adapt/about" }>
-                  <Icon symbolID="icon-icon_about"/>
-                </Link>
-              </li>
-              <li>
-                <Link to={ "/adapt/share" }>
-                  <Icon symbolID="icon-icon_share"/>
-                </Link>
-              </li>
-          </ul>
-
+            <li className="brand">
+              <Link to={"/adapt"}>
+                <Icon className="fill-green" symbolID="icon-icon_logo"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/toolbox" }>
+                <Icon symbolID="icon-icon_toolbox"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/oakland/analyze" }>
+                <Icon symbolID="icon-icon_map"/>
+              </Link>
+            </li>
+        </ul>
+        <ul className="toolbar-nav bottom">
+            <li>
+              <Link to={ "/adapt/about" }>
+                <Icon symbolID="icon-icon_about"/>
+              </Link>
+            </li>
+            <li>
+              <Link to={ "/adapt/share" }>
+                <Icon symbolID="icon-icon_share"/>
+              </Link>
+            </li>
+        </ul>
+        {mapNav}
       </div>
     )
   }

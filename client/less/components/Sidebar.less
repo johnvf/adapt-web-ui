@@ -95,8 +95,52 @@
   margin-bottom: 83px;
 }
 
-.popover-content {
-  width: 240px;
-  max-height: 360px;
-  overflow: auto;
+.second-nav {
+  position: absolute;
+  top: 0;
+  left: 55px;
+  padding: 10px;
+  background: #F8F8F8;
+  width: 220px;
+  z-index: 100;
+  height: 100vh;
+  font-size: 8pt;
+  overflow-y: scroll;
+}
+
+.second-nav .panel-heading {
+  color: white;
+  background-color: rgb(147, 195, 124)!important
+}
+
+.second-nav ul {
+  padding-left: 5px;
+}
+
+.second-nav li {
+  list-style: none;
+  line-height: 14px;
+}
+
+.second-nav ul>li:hover, .second-nav li>h3:hover { 
+  cursor: pointer;
+  background-color: rgba(147, 195, 124, 0.3);
+}
+
+.second-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999;
+}
+
+.second-nav h3 {
+  font-size: 10pt;
+  line-height: 12pt;
+}
+
+.status-indicator {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+  color: rgb(147, 195, 124);
 }

@@ -9,11 +9,25 @@ module.exports = {
     });
   },
 
-  toggleMapLayer: function( layer ) {
+  layerClicked: function( layer ) {
     AppDispatcher.handleViewAction({
-      type: "TOGGLE_MAP_LAYER",
+      type: "LAYER_CLICKED",
       layer: layer
     });
+  },
+
+  toggleLayerMapDisplay: function( layer ) {
+    AppDispatcher.handleViewAction({
+      type: "TOGGLE_LAYER_MAP_DISPLAY",
+      layer: layer
+    })
+  },
+
+  groupClicked: function( group ) {
+    AppDispatcher.handleViewAction({
+      type: "GROUP_CLICKED",
+      group: group
+    })
   },
 
   urlChanged: function( url ) {
