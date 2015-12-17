@@ -10,30 +10,24 @@ var Resources = React.createClass({
     render: function(){
        
         return (
-            <Grid id="resources">
+            <Grid id="resources" fluid={true}>
               <Row>
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_chart"/>
-                N Charts
-              </Row>
-              <Row>
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_casestudy"/>
-                N Case Studies
-              </Row>
-              <Row>
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_plantlist"/>
-                N Plant Lists
-              </Row>
-              <Row>       
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_image"/>
-                N Images
-              </Row>
-              <Row>
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_diagram"/>
-                N Diagrams
-              </Row>
-              <Row>
-                <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_link"/>
-                N Links
+                <Col xs={2} md={2}>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_chart"/>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_casestudy"/>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_plantlist"/>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_image"/>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_diagram"/>
+                  <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID="icon-icon_link"/>
+                </Col>
+                <Col xs={10} md={10}>
+                  <div>Charts</div>
+                  <div>Case Studies</div>
+                  <div>Plant Lists</div>
+                  <div>Images</div>
+                  <div>Diagrams</div>
+                  <div>Links</div>
+                </Col>
               </Row>
             </Grid>
         )
