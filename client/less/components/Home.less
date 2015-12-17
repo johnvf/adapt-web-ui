@@ -5,11 +5,7 @@
 
 .home-heading{
 	position: relative;
-    width: 100%;
-}
-
-.home-heading {
-  clear: left;
+  width: 100%;
 }
 
 .home-description {
@@ -36,7 +32,7 @@
 
 .home {
   height: 70vh;
-  overflow: hidden;
+  margin-right: 15px;
 }
 
 .home > .col-md-3 {
@@ -48,28 +44,30 @@
 }
 
 .home-description > p{
-    text-align: justify;
-    width: 90%;
-    line-height: 1.2;
+  text-align: justify;
+  width: 90%;
+  line-height: 1.2;
+  overflow-wrap: break-word;
 }
 
 .home-options{
-  width: 90%;
   border-radius: 8px;
-  height: 48%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 300px;
   padding: 15px;
 }
 
-.home-options p {
-  color: white;
-  clear: left
+.home-options > p{
+  clear: left;
 }
 
-.home-description p {
-  color: white;
+.home-options > .body{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 .home-options:last-child{
-  margin-top: 4%;
+  margin-top: 20px;
 }

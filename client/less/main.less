@@ -96,6 +96,7 @@ body {
 /*
  * Resources
  */
+
  #resources{
     overflow-y: scroll;
     max-height: 100%;
@@ -114,6 +115,11 @@ body {
   width: 50px;
   margin-left: 5px;
   vertical-align: middle;
+}
+
+.popover{
+  box-shadow: 0 0 1em #5F5F5F;
+  // padding
 }
 
 .popover-content {
@@ -198,11 +204,13 @@ p {
 
 
 .text-scroll-body{
-    background-color: rgba(255,255,255,.9);
+    // background-color: rgba(255,255,255,.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     height: 80vh;
     margin-top: 73px;
     overflow-y: scroll;
+    overflow-x: hidden;
     font-weight: 300;
     font-size: 13px;
     text-align: left;
