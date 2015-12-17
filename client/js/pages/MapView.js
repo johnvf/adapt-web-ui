@@ -79,7 +79,7 @@ var MapView = React.createClass({
    */
   getInitialState: function() {
     var state = getStateFromStores( this.props.params.tag , this.props.params.resource , this.props.params.slug );
-    state.view = this.props.params.resource ? "data" : "map"
+    state.view = "data" // this.props.params.resource ? "data" : "map"
     return state
   },
 

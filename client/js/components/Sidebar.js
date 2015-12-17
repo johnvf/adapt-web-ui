@@ -73,7 +73,7 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var mapNav = this.getMapNav( this.props.mapTagTree );
+    var mapNav = this.props.active ? this.getMapNav( this.props.mapTagTree ) : false;
 
     return (
       <div id="sidebar-wrapper">

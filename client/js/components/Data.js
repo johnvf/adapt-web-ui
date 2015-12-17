@@ -37,7 +37,7 @@ var Data = React.createClass({
           case "map":
             return (
               <Grid id="data">
-                <button style={{position: 'fixed', top: '30px', right: '60px', zIndex: 1000}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
+                <button style={{position: 'fixed', top: '5px', right: '5px', zIndex: 1000}} type="button" className="btn btn-xs btn-success" aria-label="Left Align" onClick={this.props.toggleView}>
                   <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
                 </button>
                 <Row>
@@ -52,19 +52,21 @@ var Data = React.createClass({
           case "data":
             return (
               <Grid id="data">
-                <button style={{position: 'fixed', top: '30px', right: '60px', zIndex: 1000}} type="button" className="btn btn-default" aria-label="Left Align" onClick={this.props.toggleView}>
+                <button style={{position: 'fixed', top: '5px', right: '5px', zIndex: 1000}} type="button" className="btn btn-xs btn-success" aria-label="Left Align" onClick={this.props.toggleView}>
                   <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
                 </button>
                 <Row>
-                  <Col xs={12} md={8}>
+                  <Col xs={12} md={12}>
                     <Text className="body" body={text}/>
                   </Col>
-                  <Col xs={6} md={4}>
-                    <div className="body">
-                      <h4>Resources</h4>
-                      { resourceMarkup }
-                    </div>
-                  </Col>
+                  {
+                  // <Col xs={6} md={4}>
+                  //   <div className="body">
+                  //     <h4>Resources</h4>
+                  //     { resourceMarkup }
+                  //   </div>
+                  // </Col>
+                  }
                 </Row>
               </Grid>
             )

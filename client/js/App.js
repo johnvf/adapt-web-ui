@@ -67,11 +67,15 @@ var App = React.createClass({
     var tags = this.state.tags;
     var active_tags = this.state.active_tags;
     var mapTagTree = this.state.mapTagTree;
+    // console.debug( active_tags );
 
+    // FIXME: Not the most reliable test, but hey....
+    var sidebarActive = title == "Adapt Oakland" ? true : false
+    
     return (
       <div className= "app-loggedin">
         <Header pageTitle={title} pageIcon={icon}/>
-        <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} />
+        <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
         <div className="container-fluid main centered">
           {this.props.children}
         </div>
