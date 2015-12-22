@@ -25,6 +25,8 @@ function dump_data( worksheet, required_fields ){
     var dump = XLSX.utils.sheet_to_json( worksheet )
 
     var validData = [];
+    var i = 0;
+
     dump.forEach(function( item ){
         var valid = true
         // Discard invalid documents using required_fields
@@ -35,6 +37,8 @@ function dump_data( worksheet, required_fields ){
         })
 
         if( valid ){
+            item.index = i
+            i++
             validData.push( item )
         }
 
@@ -108,7 +112,7 @@ function make_text( dump ){
                 var data = result.value.replace(/id=.*"/g, "").replace(/http:\/\/www.adaptoakland.org/g, "").replace(/~/g, "#");
                 var name = item.name
                 var tags = get_tags(item.tags)
-                resolve( { name: name, data: data, tags: tags } )
+                resolve( { name: name, data: data, tags: tags, index: item.index } )
             })
             .catch(function(err) {
                 // log that I have an error, return the entire array;
@@ -137,8 +141,11 @@ function make_images( dump ){
     // A hash of existing images
     var exImages = {}
 
-    cloudinary.api.resources(function(result) { 
-
+    cloudinary.api.resources(function(result, err) { 
+        if(!result.resources){ 
+            console.error("ERROR: Unable to load images from cloudinary"); 
+            return;
+        }
         // Assemble a hash of existing resources by public_id.
         result.resources.forEach( function(resource){
             exImages[resource.public_id] = resource
@@ -177,6 +184,7 @@ function make_images( dump ){
                 exImage.name = item.name
                 exImage.slug = convertToSlug(item.name)
                 exImage.tags = get_tags(item.tags)
+                exImage.index = item.index
                 return exImage
             })
 
@@ -194,8 +202,9 @@ function make_maps( dump ){
     dump.forEach( function( item ){
         var filepath = root + item.path
         var map = JSON.parse( fs.readFileSync( filepath ) );
-            map = lint_map( map )
-            map.tags = get_tags(item.tags)
+            map = lint_map( map );
+            map.tags = get_tags(item.tags);
+            map.index = item.index;
             documents.push(map)
     });
     seed_db( "map", documents )

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var TableSchema = mongoose.Schema({
     name: String,
+    index: Number,
     slug: String,
     type: String,
     chart_type: { },

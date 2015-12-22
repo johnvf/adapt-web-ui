@@ -20,7 +20,7 @@ module.exports = {
 
     getTags: function( ){
         // If tags, concatenate and append to URL
-        request.get( "/api/tag?limit=1000" )
+        request.get( "/api/tag?limit=1000&sort=index:1" )
           .set('Accept', 'application/json')
           .end(function(err, res){
 
@@ -35,7 +35,7 @@ module.exports = {
 
     getMaps: function( tags ){
         // If tags, concatenate and append to URL
-        var url = tags ?  "/api/map?filter[tags]="+tags : "/api/map"
+        var url = tags ?  "/api/map?sort=index:1&filter[tags]="+tags : "/api/map?sort=index:1"
         request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
@@ -51,7 +51,7 @@ module.exports = {
 
     getText: function( tags ){
         // If tags, concatenate and append to URL
-        var url = tags ?  "/api/text?filter[tags]="+tags : "/api/text"
+        var url = tags ?  "/api/text?sort=index:1&filter[tags]="+tags : "/api/text?sort=index:1"
         request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
@@ -67,7 +67,7 @@ module.exports = {
 
     getCharts: function( tags ){
         // If tags, concatenate and append to URL
-        var url = tags ?  "/api/chart?filter[tags]="+tags : "/api/chart"
+        var url = tags ?  "/api/chart?sort=index:1&filter[tags]="+tags : "/api/chart?sort=index:1"
         request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
@@ -83,7 +83,7 @@ module.exports = {
 
     getTables: function( tags ){
         // If tags, concatenate and append to URL
-        var url = tags ?  "/api/table?filter[tags]="+tags : "/api/table"
+        var url = tags ?  "/api/table?sort=index:1&filter[tags]="+tags : "/api/table?sort=index:1"
         request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
@@ -99,7 +99,7 @@ module.exports = {
 
     getImages: function( tags ){
         // If tags, concatenate and append to URL
-        var url = tags ?  "/api/image?filter[tags]="+tags : "/api/image"
+        var url = tags ?  "/api/image?sort=index:1&filter[tags]="+tags : "/api/image?sort=index:1"
         request.get( url )
           .set('Accept', 'application/json')
           .end(function(err, res){
