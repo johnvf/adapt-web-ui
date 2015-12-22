@@ -205,6 +205,7 @@ function make_maps( dump ){
             map = lint_map( map );
             map.tags = get_tags(item.tags);
             map.index = item.index;
+            map.default = item.default
             documents.push(map)
     });
     seed_db( "map", documents )
