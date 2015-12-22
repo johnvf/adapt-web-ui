@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var TextSchema = mongoose.Schema({
     name: String,
+    index: Number,
     data: String,
     tags: [ String ]
 });

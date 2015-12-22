@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var ImageSchema = mongoose.Schema({
     name: String,
+    index: Number,
     slug: String,
     tags: [ String ],
     public_id: String,
