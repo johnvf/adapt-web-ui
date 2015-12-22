@@ -24,7 +24,7 @@ var Data = require('../components/Data');
 var Resources = require('../components/Resources');
 
 function getStateFromStores( tag , resource , slug ) {
-
+  console.log(tag)
   var modal,
       item,
       content;

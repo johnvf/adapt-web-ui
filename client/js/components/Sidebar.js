@@ -51,17 +51,26 @@ var Sidebar = React.createClass({
     )
   },
 
+  // This function has become hacky - 
+  // need to find a better way to have react-router handle navigation.
+  // FIXME: This code is also copy/pasted into the text widget
   navigate: function(url, tag){
     if(!url){
       url = window.location.pathname;
     }
     if(tag){
-      url = url.split("#")[0];
-      tag = "#" + tag;
-    } else {
-      tag = "";
+      url = url.split("#")[0] + "#" + tag;
     }
-    this.history.pushState(null, url + tag);
+    // FIXME: For some reason, this works for navigating tags 
+    // but not for the unadorned URL
+    if( url.split("#").length > 1 ){
+      window.location.assign(url) 
+    }
+    else{
+      // While this works for the unadorned URL, but not for tags
+      this.history.pushState(null, url);  
+    }
+
   },
 
   render: function() {
