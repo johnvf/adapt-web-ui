@@ -37,6 +37,11 @@ var Sidebar = React.createClass({
 
       return(
         <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
+          <div className="map-header"> 
+            <h3>section</h3>
+            <h3>map layer</h3>
+          </div>
+          <hr/>
           { GroupPanels }
         </Panel>
       )

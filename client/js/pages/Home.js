@@ -1,7 +1,8 @@
 var React = require('react');
 
 var Loader = require('react-loader');
-var TextStore = require('../stores/TextStore')
+var TextStore = require('../stores/TextStore');
+var Link = require('react-router').Link;
 
 var Text = require('../lib_components/Text')
 
@@ -52,18 +53,22 @@ var Home = React.createClass({
                 </div>
               </div>
               <div className="col-xs-5 col-md-3">
-                <div className="row bg-light home-options">
-                  <div className= "home-heading">
-                    <Icon className ="options-icon" symbolID="icon-icon_toolbox"/>
-                    <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
+                  <div className="row bg-light home-options">
+                   <Link to={ "/adapt/toolbox" }>
+                      <div className= "home-heading">
+                        <Icon className ="options-icon" symbolID="icon-icon_toolbox"/>
+                        <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
+                      </div>
+                    </Link>
+                    <p>The Adaptation Toolbox provides tools and methodologies for community members, legislators, developers, and researchers to evaluate current conditions and design solutions for mitigating environmental hazards in cities across the country.</p> 
                   </div>
-                  <p>The Adaptation Toolbox provides tools and methodologies for community members, legislators, developers, and researchers to evaluate current conditions and design solutions for mitigating environmental hazards in cities across the country.</p> 
-                </div>
                 <div className="row bg-light home-options">
-                  <div className= "home-heading">
-                    <Icon className ="options-icon"  symbolID="icon-icon_map"/>
-                    <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
-                  </div>
+                  <Link to={ "/adapt/oakland/analyze" }>
+                    <div className= "home-heading">
+                      <Icon className ="options-icon"  symbolID="icon-icon_map"/>
+                      <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
+                    </div>
+                  </Link>
                   <p>Adapt Oakland is a greening plan that identifies environmental hazards and pairs them with adaptation strategies to create a healthier, more sustainable urban environment.</p> 
                 </div>
               </div>
