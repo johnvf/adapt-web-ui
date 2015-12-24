@@ -68,11 +68,18 @@ function getDriveSheetData( items ){
                         resolveItem(item);
                     }
                     else{
-                        spreadsheet.worksheets[parseInt(item.sheet)].cells({ range: item.range}, function(err, cells) {
+                        spreadsheet.worksheets[parseInt(item.sheet)].cells({ range: item.range}, function(err, data) {
                             if (err){ rejectItem(err);};
-                            var data = chartPreprocessor.processGoogleSheet( cells )
-                            item.data = data
-                            resolveItem(item)
+                            if ( !data ){
+                                console.error( "ERROR: No cell data for item: ");
+                                console.error( JSON.stringify(item, undefined, 2));
+                                resolveItem(item)
+                            }
+                            else{
+                                var cell_data = chartPreprocessor.processGoogleSheet( data )
+                                item.data = cell_data
+                                resolveItem(item)
+                            }
                         });
                     }
                 });
