@@ -209,17 +209,18 @@ p {
     border-radius: 8px;
     height: 80vh;
     margin-top: 73px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
     font-weight: 300;
     font-size: 13px;
     text-align: left;
-    padding: 15px 0px 10px 15px;
+    box-shadow: 10px 5px 5px rgba(0,0,0,0.25), 0px 0px 5px rgba(0,0,0,0.25);
 }
 
 .text-scroll{
-  padding: 15px 30px 15px 15px;
-  color: darkgray;
+  padding: 10px;
+  overflow-y: scroll;
+  height: 100%;
+  border-radius: 25px;
 }
 
 .text-scroll > p {
