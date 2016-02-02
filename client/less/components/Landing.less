@@ -13,7 +13,10 @@
     text-align: center;
 }
 
+@icon-height: 50vw;
+
 .row.banner > a > h1 {
+    margin-top: @icon-height;
     font-size: 100px;
     padding: 15px;
     color: rgba(255,255,255,1);
@@ -25,9 +28,25 @@
 
 
 .landing_icon{
-  height: 500px;
-  margin: auto;
-  display: block;
-    fill: rgba(120, 188, 87, 0.7);
+    height: @icon-height;
+    position: fixed;
+    left: 25%;
 }
 
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+svg.Adapt {color: rgba(113, 185, 68, 1.0); -webkit-animation: fadein 8s; animation: fadein 8s;}
+svg.Evaluate {color: rgba(113, 185, 68, 0.9); -webkit-animation: fadein 6s; animation: fadein 6s;}
+svg.Monitor {color: rgba(113, 185, 68, 0.7); -webkit-animation: fadein 4s; animation: fadein 4s;}
+svg.Implement {color: rgba(113, 185, 68, 0.5); -webkit-animation: fadein 3s; animation: fadein 3s;}
+svg.Design {color: rgba(113, 185, 68, 0.3); -webkit-animation: fadein 2s; animation: fadein 2s;}
+svg.Analyze {color: rgba(113, 185, 68, 0.1); -webkit-animation: fadein 1s; animation: fadein 1s;}
