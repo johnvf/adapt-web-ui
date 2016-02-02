@@ -31,22 +31,42 @@
     height: @icon-height;
     position: fixed;
     left: 25%;
+    animation-delay: 2s;
 }
 
-
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+@keyframes fade6 {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade5 {
+  0% { opacity: 0; }
+  40% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade4 {
+  0% { opacity: 0; }
+  30% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade3 {
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade2 {
+  0% { opacity: 0; }
+  10% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade1 {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-svg.Adapt {color: rgba(113, 185, 68, 1.0); -webkit-animation: fadein 8s; animation: fadein 8s;}
-svg.Evaluate {color: rgba(113, 185, 68, 0.9); -webkit-animation: fadein 6s; animation: fadein 6s;}
-svg.Monitor {color: rgba(113, 185, 68, 0.7); -webkit-animation: fadein 4s; animation: fadein 4s;}
-svg.Implement {color: rgba(113, 185, 68, 0.5); -webkit-animation: fadein 3s; animation: fadein 3s;}
-svg.Design {color: rgba(113, 185, 68, 0.3); -webkit-animation: fadein 2s; animation: fadein 2s;}
-svg.Analyze {color: rgba(113, 185, 68, 0.1); -webkit-animation: fadein 1s; animation: fadein 1s;}
+svg.Adapt {color: rgba(113, 185, 68, 1.0); animation: fade6 6s; }
+svg.Evaluate {color: rgba(113, 185, 68, 0.9); animation: fade5 6s; }
+svg.Monitor {color: rgba(113, 185, 68, 0.7);  animation: fade4 6s; }
+svg.Implement {color: rgba(113, 185, 68, 0.5);  animation: fade3 6s; }
+svg.Design {color: rgba(113, 185, 68, 0.3);  animation: fade2 6s; }
+svg.Analyze {color: rgba(113, 185, 68, 0.1);  animation: fade1 6s; }
