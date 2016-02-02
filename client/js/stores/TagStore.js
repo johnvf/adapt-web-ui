@@ -8,7 +8,8 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 var CHANGE_EVENT = 'change';
 
 var _tags = {},
-    _tagLookup = {},
+    _tagLookup,
+    _map_list,
     _active_tags = {},
     _mapTagTree = [],
     _activeGroup,
@@ -51,12 +52,44 @@ var TagStore = assign({}, EventEmitter.prototype, {
   receiveTags: function(tags){
     // Categorize tags by type for UI,
     // hold onto a lookup of them for future reference.
+    _tagLookup = {}
+
     tags.forEach(function(tag){
       _tags[tag.type] ? _tags[tag.type].push(tag.text) : _tags[tag.type] = [tag.text]
       _tagLookup[tag.text] = tag
     });
 
     // this.activateTags(_URLTag);
+  },
+
+  makeMapTagTree: function(){
+    
+    _map_list.forEach( function(layer){
+
+      var layerTags = layer.tags.map(function(tagText){ return _tagLookup[tagText]; });
+      layerTags = layerTags.filter(function (t){ return t; });
+      var mapTag = layerTags.filter(function(tag){ return tag.type == "map";})[0];
+      var groupTag = layerTags.filter(function(tag){ return tag.type == "map_group";})[0];
+      var layerTag = layerTags.filter(function(tag){ return tag.type == "map_layer";})[0];
+      if( mapTag && groupTag && layerTag ){
+        // add these items to the map tag tree structure
+        var mapObject = _mapTagTree.filter(function(mapObj){ return mapObj.tag.text === mapTag.text; })[0];
+        if( !mapObject ){
+          mapObject = { text: mapTag.text, tag: mapTag, groups: [] };
+          _mapTagTree.push(mapObject);
+        }
+        var groupObject = mapObject.groups.filter(function(g){return g.tag.text === groupTag.text; })[0];
+        if( !groupObject ){
+          groupObject = { text: groupTag.text, tag: groupTag, layers: [] };
+          mapObject.groups.push(groupObject);
+        }
+        var layerObject = { text: layer.name, tag: layerTag, map_item: layer };
+        groupObject.layers.push(layerObject);
+      } else {
+        console.log("insufficient tags:", layer.name, layer.tags);
+      }
+    });
+    console.log("built mapTagTree", _mapTagTree);
   },
 
   getTags: function(){
@@ -102,40 +135,26 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case "RECEIVE_TAGS":
       TagStore.receiveTags( action.tags )
+
+      if( _tagLookup && _map_list){
+        TagStore.makeMapTagTree();
+      }
       console.debug(_tags)
       console.debug(_active_tags)
       TagStore.emitChange();
       break;
 
     case "RECEIVE_MAPS":
-      var map_list = action.map_list;
+      _map_list = action.map_list;
 
-      map_list.forEach( function(layer){
+      // NOTE - relies on tag lookup to work. If Tags are received after maps,
+      // this results in an empty map tag tree. To protect against this, map tag tree
+      // should be updated on RECEIVE_MAPS and on RECEIVE_TAGS, 
+      // but should only generate the tage tree when _tagLookup exists
+      if( _tagLookup && _map_list){
+        TagStore.makeMapTagTree();
+      }
 
-        var layerTags = layer.tags.map(function(tagText){ return _tagLookup[tagText]; });
-        layerTags = layerTags.filter(function (t){ return t; });
-        var mapTag = layerTags.filter(function(tag){ return tag.type == "map";})[0];
-        var groupTag = layerTags.filter(function(tag){ return tag.type == "map_group";})[0];
-        var layerTag = layerTags.filter(function(tag){ return tag.type == "map_layer";})[0];
-        if( mapTag && groupTag && layerTag ){
-          // add these items to the map tag tree structure
-          var mapObject = _mapTagTree.filter(function(mapObj){ return mapObj.tag.text === mapTag.text; })[0];
-          if( !mapObject ){
-            mapObject = { text: mapTag.text, tag: mapTag, groups: [] };
-            _mapTagTree.push(mapObject);
-          }
-          var groupObject = mapObject.groups.filter(function(g){return g.tag.text === groupTag.text; })[0];
-          if( !groupObject ){
-            groupObject = { text: groupTag.text, tag: groupTag, layers: [] };
-            mapObject.groups.push(groupObject);
-          }
-          var layerObject = { text: layer.name, tag: layerTag, map_item: layer };
-          groupObject.layers.push(layerObject);
-        } else {
-          console.log("insufficient tags:", layer.name, layer.tags);
-        }
-      });
-      console.log("built mapTagTree", _mapTagTree);
       _loading = false
       TagStore.emitChange();
       break;
