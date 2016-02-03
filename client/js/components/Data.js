@@ -13,7 +13,7 @@ var Data = React.createClass({
 
       return (
         <Grid id="data">
-          <button style={{position: 'fixed', top: '5px', right: '5px', zIndex: 1000}} type="button" className="btn btn-xs btn-success" aria-label="Left Align" onClick={this.props.toggleView}>
+          <button style={{position: 'fixed', top: '5px', right: '20px', zIndex: 1000}} type="button" className="btn btn-xs btn-success" aria-label="Left Align" onClick={this.props.toggleView}>
             <span className="glyphicon glyphicon-resize-full" aria-hidden="true" ></span>
           </button>
           <Row>
