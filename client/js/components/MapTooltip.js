@@ -23,11 +23,11 @@ var MapTooltip = React.createClass({
     var features  = UserActionStore.getHoveredFeatures();
     var mapEvent = UserActionStore.getMapEvent();
     var display = features.length ? true : false;
-    // var rect = canvas.getBoundingClientRect();
+    var rect = mapEvent.target._canvasContainer.getBoundingClientRect();
     this.setState({
       position: {
-        x: mapEvent.originalEvent.clientX,
-        y: mapEvent.originalEvent.clientY
+        x: mapEvent.originalEvent.clientX - rect.left,
+        y: mapEvent.originalEvent.clientY - rect.top
       },
       display: display,
       features: features,
@@ -43,8 +43,8 @@ var MapTooltip = React.createClass({
     var display = this.state.display;
     var features = this.state.features;
     var position = this.state.position;
-    var dx = -50;
-    var dy = -160;
+    var dx = 20;
+    var dy = 0;
     var style = {
       left: position.x + dx,
       top: position.y + dy,
