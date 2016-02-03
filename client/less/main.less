@@ -298,10 +298,20 @@ a:hover , a:hover svg {
 only screen
     and (min-device-width: 320px) and (max-device-width: 736px) and (orientation: landscape) {
 
+      .second-nav{
+        // display: none;
+        opacity: 0;
+        z-index: 0;
+        transition: 0.5s ease;
+      }
+
       // FIXME: Need to make second-nav expandable so to work with mobile
       // These two attributes will have to respond to add/remove classes
-      .second-nav{
-        display: none;
+      .second-nav:hover{
+        // display: none;
+        opacity: 0.85;
+        z-index: 800;
+        padding-top: 90px;
       }
 
       .layout{
