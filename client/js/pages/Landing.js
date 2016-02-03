@@ -25,6 +25,7 @@ var Landing = React.createClass({
           <BigIcon className ="landing_icon Analyze" symbolID="Analyze"/>
           <h1 className="light-text">ADAPT</h1>
           <h3 className="light-text">AN ECOSYSTEM SERVICES MODEL</h3>
+          <span className="glyphicon glyphicon-arrow-right" aria-hidden="true" ></span>
         </a>
       </div> 
     );
