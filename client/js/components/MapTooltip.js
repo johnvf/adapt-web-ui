@@ -23,6 +23,7 @@ var MapTooltip = React.createClass({
     var features  = UserActionStore.getHoveredFeatures();
     var mapEvent = UserActionStore.getMapEvent();
     var display = features.length ? true : false;
+    var rect = canvas.getBoundingClientRect();
     this.setState({
       position: {
         x: mapEvent.originalEvent.clientX,

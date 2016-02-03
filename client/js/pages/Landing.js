@@ -23,8 +23,8 @@ var Landing = React.createClass({
           <BigIcon className ="landing_icon Implement" symbolID="Implement"/>
           <BigIcon className ="landing_icon Design" symbolID="Design"/>
           <BigIcon className ="landing_icon Analyze" symbolID="Analyze"/>
-          <h1>ADAPT</h1>
-          <h3>AN ECOSYSTEM SERVICES MODEL</h3>
+          <h1 className="light-text">ADAPT</h1>
+          <h3 className="light-text">AN ECOSYSTEM SERVICES MODEL</h3>
         </a>
       </div> 
     );

@@ -43,7 +43,6 @@ body {
   color: @text-color;
 }
 
-
 /*
  * Header
  */
@@ -62,17 +61,6 @@ body {
 #header .info {
   display: inline-block;
   float: right;
-}
-
-#header h1 {
-    font-family: 'Dosis', sans-serif;
-    font-size: 30px;
-    text-transform: uppercase;
-    text-align: right;
-    color: white;
-    margin: 0px;
-    letter-spacing: 2px;
-    margin-bottom: -10px;
 }
 
 #header svg {
@@ -138,7 +126,9 @@ body {
 /*
  * Fonts
  */
-
+h1, h2, h3, h4, h5 {
+  color: rgba(100, 100, 100, 0.5);
+}
 
 h1 {
   font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
@@ -146,7 +136,6 @@ h1 {
   font-style: normal;
   font-variant: normal;
   font-weight: 400;
-  color: rgba(255,255,255,.3);
   line-height: 58.8px;
 }
 
@@ -161,9 +150,20 @@ h3 {
 
 p {
   // color: white;
+  color: rgba(0, 0, 0, 0.5);
   text-align: left;
 }
 
+#header h1 {
+    font-family: 'Dosis', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: right;
+    color: white;
+    margin: 0px;
+    letter-spacing: 2px;
+    margin-bottom: -10px;
+}
 
 .light-text{
   color: lighten(@text-color, 30%);  

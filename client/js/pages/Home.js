@@ -41,11 +41,10 @@ var Home = React.createClass({
       
         <div className="container-fluid bg-green" >
           <Loader loaded={true}>
-            <div className="row home">
-              <div className="col-xs-1 col-md-3"></div>            
-              <div className="col-xs-6 col-md-6 home-description">
+            <div className="row home">           
+              <div className="col-xs-6 col-md-9 home-description">
                 <div className="row home-options">
-                  <h1 className="left">ADAPT:</h1>
+                  <h1 className="left light-text">ADAPT:</h1>
                   <h3 className="left light-text">AN ECOSYSTEM SERVICES MODEL</h3> 
                 </div>
                 <div className="row bg-light home-options">

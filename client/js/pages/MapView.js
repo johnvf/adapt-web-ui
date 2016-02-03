@@ -147,7 +147,7 @@ var MapView = React.createClass({
         content.push( <Resources tag={this.props.params.tag} resources={ resources }/> )
 
     return (
-      <div>
+      <div className="map-view">
         { modal }
         <Dashboard view={view} content={ content } />
       </div>
