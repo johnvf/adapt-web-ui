@@ -8,6 +8,20 @@ var Col = require('react-bootstrap/lib/Col');
 
 var Data = React.createClass({
 
+    componentDidUpdate: function(){
+      // window.scrollTo(0, 0);
+      // var elem = React.findDOMNode(this.refs.text);
+      // var links = elem.querySelectorAll('[href]')
+      // // console.log(links)
+    },
+
+    componentWillUpdate: function(nextProps){
+      if (this.props.body !== nextProps.body){
+        var elem = React.findDOMNode(this.refs.text);
+        elem.scrollIntoView();
+      }
+    },
+
     render: function(){
       var text = !this.props.body ? "" : this.props.body.map(function(textItem){ return textItem.data }).join("\n");
 
@@ -18,7 +32,7 @@ var Data = React.createClass({
           </button>
           <Row>
             <Col xs={12} md={12}>
-              <Text className="body" body={text}/>
+              <Text className="body" body={text} ref="text"/>
             </Col>
           </Row>
         </Grid>
