@@ -55,7 +55,7 @@ var Home = React.createClass({
                   <div className="row bg-light home-options">
                    <Link to={ "/adapt/toolbox" }>
                       <div className= "home-heading">
-                        <Icon className ="options-icon" symbolID="icon-icon_toolbox"/>
+                        <Icon className ="green-fill options-icon" symbolID="icon-icon_toolbox"/>
                         <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
                       </div>
                     </Link>
@@ -64,7 +64,7 @@ var Home = React.createClass({
                 <div className="row bg-light home-options">
                   <Link to={ "/adapt/oakland/analyze" }>
                     <div className= "home-heading">
-                      <Icon className ="options-icon"  symbolID="icon-icon_map"/>
+                      <Icon className ="green-fill options-icon"  symbolID="icon-icon_map"/>
                       <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
                     </div>
                   </Link>

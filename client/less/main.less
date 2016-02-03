@@ -8,7 +8,7 @@
 // @brand-success: #18B4BC;
 
 @brand-primary:         #F3CD60; // YELLOW
-@brand-success:         #66BCA5; // TURQ
+@brand-success:         #93c37c; // GREEN
 @brand-info:            #176974; // DARKISH TURQ
 @brand-warning:         #F36B4B; // RED
 @brand-danger:          #101C29; // DARK BLUE
@@ -154,6 +154,15 @@ p {
   text-align: left;
 }
 
+a, a svg{
+  transition: 0.5s ease;
+}
+
+a:hover , a:hover svg {
+  text-decoration: none;
+  color: rgba(100, 100, 100, 0.5);
+}
+
 #header h1 {
     font-family: 'Dosis', sans-serif;
     font-size: 30px;
@@ -238,18 +247,21 @@ p {
  *SVG icon fills
  */
 
-.fill-white {
-  fill: rgba(255,255,255,.5);
+.white-fill {
+  color: rgba(255,255,255,.5);
 }
 
-.stroke-white{
+.white-stroke{
   stroke: #fff;
 }
 
-.fill-green {
-  fill: rgba(120, 188, 87, 0.7);
+.green-fill {
+  color: rgba(120, 188, 87, 0.7);
 }
 
+// .svg{
+//   color: inherit;
+// }
 
 
 

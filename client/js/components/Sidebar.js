@@ -93,29 +93,29 @@ var Sidebar = React.createClass({
         <ul className="toolbar-nav">
             <li className="brand">
               <Link to={"/adapt"}>
-                <Icon className="fill-green" symbolID="icon-icon_logo"/>
+                <Icon className="green-fill" symbolID="icon-icon_logo"/>
               </Link>
             </li>
             <li>
               <Link to={ "/adapt/toolbox" }>
-                <Icon symbolID="icon-icon_toolbox"/>
+                <Icon className="green-fill" symbolID="icon-icon_toolbox"/>
               </Link>
             </li>
             <li>
               <Link to={ "/adapt/oakland/analyze" }>
-                <Icon symbolID="icon-icon_map"/>
+                <Icon className="green-fill" symbolID="icon-icon_map"/>
               </Link>
             </li>
         </ul>
         <ul className="toolbar-nav bottom">
             <li>
               <Link to={ "/adapt/about" }>
-                <Icon symbolID="icon-icon_about"/>
+                <Icon className="green-fill" symbolID="icon-icon_about"/>
               </Link>
             </li>
             <li>
               <Link to={ "/adapt/share" }>
-                <Icon symbolID="icon-icon_share"/>
+                <Icon className="green-fill" symbolID="icon-icon_share"/>
               </Link>
             </li>
         </ul>

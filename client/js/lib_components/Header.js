@@ -17,7 +17,7 @@ var Header = React.createClass({
 	    console.log(pageIcon)
 	    return (
 	    	<div id="header">
-	    		<Icon fill="rgba(255,255,255,1)" className ="fill-white" symbolID= {pageIcon}/>	    	
+	    		<Icon className ="white-fill" symbolID= {pageIcon}/>	    	
 	    		<div className="info">
 		    		<h1>{pageTitle}</h1>
 		    		<div className="addthis_toolbox addthis_default_style my_addthis-style">
