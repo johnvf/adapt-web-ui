@@ -115,10 +115,9 @@ var Map = React.createClass({
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/light-v8', //stylesheet location
-        center: [ -122.3028, 37.8119], // starting position
-        zoom: 15 // starting zoom
+        center: [ -122.2226, 37.7541], // starting position
+        zoom: 11 // starting zoom
     });
-
     return map;
   },
 
