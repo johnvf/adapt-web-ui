@@ -90,36 +90,38 @@ var Sidebar = React.createClass({
 
     return (
       <div id="sidebar-wrapper">
-        <ul className="toolbar-nav">
-            <li className="brand">
-              <Link to={"/adapt"}>
-                <Icon className="green-fill" symbolID="icon-icon_logo"/>
-              </Link>
-            </li>
-            <li>
-              <Link to={ "/adapt/toolbox" }>
-                <Icon className="green-fill" symbolID="icon-icon_toolbox"/>
-              </Link>
-            </li>
-            <li>
-              <Link to={ "/adapt/oakland/1_analyze" }>
-                <Icon className="green-fill" symbolID="icon-icon_map"/>
-              </Link>
-            </li>
-        </ul>
-        <ul className="toolbar-nav bottom">
-            <li>
-              <Link to={ "/adapt/about" }>
-                <Icon className="green-fill" symbolID="icon-icon_about"/>
-              </Link>
-            </li>
-            <li>
-              <Link to={ "/adapt/share" }>
-                <Icon className="green-fill" symbolID="icon-icon_share"/>
-              </Link>
-            </li>
-        </ul>
-        {mapNav}
+        <div className="all-bars">
+          <ul className="toolbar-nav">
+              <li className="brand">
+                <Link to={"/adapt"}>
+                  <Icon className="green-fill" symbolID="icon-icon_logo"/>
+                </Link>
+              </li>
+              <li>
+                <Link to={ "/adapt/toolbox" }>
+                  <Icon className="green-fill" symbolID="icon-icon_toolbox"/>
+                </Link>
+              </li>
+              <li>
+                <Link to={ "/adapt/oakland/1_analyze" }>
+                  <Icon className="green-fill" symbolID="icon-icon_map"/>
+                </Link>
+              </li>
+          </ul>
+          <ul className="toolbar-nav bottom">
+              <li>
+                <Link to={ "/adapt/about" }>
+                  <Icon className="green-fill" symbolID="icon-icon_about"/>
+                </Link>
+              </li>
+              <li>
+                <Link to={ "/adapt/share" }>
+                  <Icon className="green-fill" symbolID="icon-icon_share"/>
+                </Link>
+              </li>
+          </ul>
+          {mapNav}
+        </div>
       </div>
     )
   }

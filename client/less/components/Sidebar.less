@@ -6,14 +6,20 @@
 @toolbar-background: darken(@background,10%);
 
 /* Sidebar Styles */
+.all-bars{
+  width: @toolbar-width + @sidebar-width;
+  height: 100vh;
+  position: absolute;
+}
+
 
 .toolbar-nav {
-  position: absolute;
+  // position: absolute;
   top: 0;
   width: @toolbar-width;
   margin: 0;
   padding: 8px;
-  height: 100%;
+  height: 80vh;
   list-style: none;
   background: @toolbar-background;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15), 0px 0px 5px rgba(0, 0, 0, 0.15);
