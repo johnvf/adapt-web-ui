@@ -44,7 +44,7 @@ var Resources = React.createClass({
         <div>
           <OverlayTrigger trigger="click" placement="top" overlay={ popover }>
             <Button className="btn btn-xs btn-success">
-              <Icon fill="rgba(0,0,0,0.5)" className ="fill-black" symbolID={resourceIcons[resourceType]}/>
+              <Icon fill="rgba(0,0,0,0.5)" symbolID={resourceIcons[resourceType]}/>
             </Button>
           </OverlayTrigger>
           <label>{ resourceType }</label>

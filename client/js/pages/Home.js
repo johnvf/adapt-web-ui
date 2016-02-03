@@ -62,7 +62,7 @@ var Home = React.createClass({
                     <p>The Adaptation Toolbox provides tools and methodologies for community members, legislators, developers, and researchers to evaluate current conditions and design solutions for mitigating environmental hazards in cities across the country.</p> 
                   </div>
                 <div className="row bg-light home-options">
-                  <Link to={ "/adapt/oakland/analyze" }>
+                  <Link to={ "/adapt/oakland/1_analyze" }>
                     <div className= "home-heading">
                       <Icon className ="green-fill options-icon"  symbolID="icon-icon_map"/>
                       <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
