@@ -21,7 +21,7 @@
  * Layout Variables
  */
 @toolbar-width: 55px;
-@sidebar-width: 120px;
+@sidebar-width: 250px;
 
 @text-color: #9D9D9D;
 
@@ -276,11 +276,11 @@ a:hover , a:hover svg {
  */
 
 
-@media screen and (max-device-width: 480px){
-  body {
-    font-size: 16px!important;
-  }
-}
+// @media screen and (max-device-width: 480px){
+//   body {
+//     font-size: 16px!important;
+//   }
+// }
 
 .main {
   height: 99vh;
@@ -293,12 +293,18 @@ a:hover , a:hover svg {
   max-width: 100%;
 }
 
-@media print {
-  .panel{ border: none!important }
-  .centered{ 
-    // width: 100%!important; 
-    // max-width: 100%!important; 
-    // margin-left: 0%!important; 
-    // margins: 25px!important;
-  }
+@media only screen 
+    and (min-device-width: 320px) and (max-device-width: 736px) and (orientation: portrait),
+only screen
+    and (min-device-width: 320px) and (max-device-width: 736px) and (orientation: landscape) {
+
+      // FIXME: Need to make second-nav expandable so to work with mobile
+      // These two attributes will have to respond to add/remove classes
+      .second-nav{
+        display: none;
+      }
+
+      .layout{
+        margin-left: 0px;
+      }
 }
