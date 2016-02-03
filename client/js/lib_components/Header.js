@@ -21,7 +21,6 @@ var Header = React.createClass({
 	    		<div className="info">
 		    		<h1>{pageTitle}</h1>
 		    		<div className="addthis_toolbox addthis_default_style my_addthis-style">
-					    <a className="addthis_button_preferred_1"></a>
 					    <a className="addthis_button_preferred_2"></a>
 					    <a className="addthis_button_preferred_3"></a>
 					    <a className="addthis_button_preferred_4"></a>
