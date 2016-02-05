@@ -19,12 +19,18 @@ var Map = React.createClass({
     var map = this.makeMap();
     this.setState({ map: map});
     this.addEventListeners(map);
+
+    var self = this;
+    window.onresize = function(){
+      self.resizeMap();
+    }
   },
 
   componentWillReceiveProps: function(nextProps){
     var results = this.batchUpdateLayers(nextProps.active_layers);
     console.log("new active layers:", nextProps.active_layers)
     this.setState({activeStyles: results.styles, activeSources: results.sources})
+    this.resizeMap();
   },
 
   addEventListeners: function(map){
@@ -35,6 +41,15 @@ var Map = React.createClass({
         MouseActions.featureHover(e, features);
       });
     });
+  },
+
+  resizeMap: function(){
+    var self = this;
+    setTimeout( function() { 
+      if( self.state.map ){
+        self.state.map.resize();
+      }
+    }, 200);
   },
 
   batchUpdateLayers: function (newLayers){
@@ -125,7 +140,7 @@ var Map = React.createClass({
     return (
       <div id="mapWrapper">
         <Tooltip></Tooltip>
-        <div id="map" className="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"></div>
+        <div id="map" ref="mapElement" className="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"></div>
       </div>
     )
   }

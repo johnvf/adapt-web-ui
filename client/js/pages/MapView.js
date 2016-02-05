@@ -142,7 +142,7 @@ var MapView = React.createClass({
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts
-        content.push( <Map active_layers={ active_layers } /> )
+        content.push( <Map active_layers={ active_layers } view={view}/> )
         content.push( <Data tag={this.props.params.tag} view={view} toggleView={ this.toggleView} body={text}/>)
         content.push( <Resources tag={this.props.params.tag} resources={ resources }/> )
 

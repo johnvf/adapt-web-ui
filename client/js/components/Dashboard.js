@@ -11,7 +11,7 @@ var Dashboard = React.createClass({
       className: "layout",
       view: "data",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: 30,
+      rowHeight: (screen.height/30),
       verticalCompact: false
     };
   },
