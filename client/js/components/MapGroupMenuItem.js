@@ -12,7 +12,7 @@ var MapGroupMenuItem = React.createClass({
       // do nothing if this is the current group
       e.preventDefault();
       e.stopPropagation();
-      if( this.props.group.is_sactive ) {
+      if( this.props.group.is_active ) {
           return;
       } else {
         this.props.navigate(null, this.props.group.tag.text);
