@@ -10,7 +10,7 @@ require('dotenv').load();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
-var models = ['tag', 'chart', 'table', 'text', 'image', 'map']
+var models = ['tag', 'chart', 'table', 'plantList', 'citation', 'caseStudy', 'text', 'image', 'map']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
@@ -81,6 +81,48 @@ function make_tables( dump ){
     function(documents){
         // console.log(documents)
         seed_db( "table", documents ) 
+    });   
+}
+
+// .XLSX table data - see make_charts for more info
+function make_plant_lists( dump ){
+    // Load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+        item.tags = get_tags(item.tags)
+        item.slug = convertToSlug(item.name)
+        return item
+    }), 
+    function(documents){
+        // console.log(documents)
+        seed_db( "plantList", documents ) 
+    });   
+}
+
+// .XLSX table data - see make_charts for more info
+function make_citations( dump ){
+    // Load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+        item.tags = get_tags(item.tags)
+        item.slug = convertToSlug(item.name)
+        return item
+    }), 
+    function(documents){
+        // console.log(documents)
+        seed_db( "citation", documents ) 
+    });   
+}
+
+// .XLSX table data - see make_charts for more info
+function make_case_studies( dump ){
+    // Load data from google drive + seed database
+    driveClient.getSheetData( dump.map(function(item){
+        item.tags = get_tags(item.tags)
+        item.slug = convertToSlug(item.name)
+        return item
+    }), 
+    function(documents){
+        // console.log(documents)
+        seed_db( "caseStudy", documents ) 
     });   
 }
 
@@ -255,6 +297,21 @@ function seed_from_xlsx( path ){
                 case "Table":
                     var required_fields = ["name", "key", "sheet", "range", "tags"]
                     make_tables( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Plant List":
+                    var required_fields = ["name", "key", "sheet", "range", "tags"]
+                    make_plant_lists( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Citation":
+                    var required_fields = ["name", "key", "sheet", "range", "tags"]
+                    make_citations( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Case Study":
+                    var required_fields = ["name", "key", "sheet", "range", "tags"]
+                    make_case_studies( dump_data( worksheet, required_fields ) )
                     break;
 
                 case "Text":
