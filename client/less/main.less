@@ -107,13 +107,19 @@ body {
 
 .popover{
   box-shadow: 0 0 1em #5F5F5F;
+  max-width: 600px;
+  max-height: 800px;
+  overflow: hidden;
   // padding
 }
 
 .popover-content {
     overflow-y: scroll;
-    height: 400px;
-    width: 260px;
+    max-height: inherit;
+}
+
+.popover-content ul {
+  list-style-type: decimal;
 }
 
 /*

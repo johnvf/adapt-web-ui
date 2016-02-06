@@ -11,6 +11,8 @@ var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 var Popover = require('react-bootstrap/lib/Popover');
 var Button = require('react-bootstrap/lib/Button');
 
+var camelCaseToRegular = require('../utils/Utils').camelCaseToRegular
+
 var resourceIcons = {
   "chart": "icon-icon_chart",
   "table": "icon-icon_table",
@@ -31,12 +33,12 @@ var Resources = React.createClass({
       var resourceLinks = [];
 
       resources[resourceType].forEach( function(item){
-        resourceLinks.push(<div><Link to={"/adapt/oakland/"+tag+"/"+resourceType+"/"+item.slug}>{item.name}</Link></div>)
+        resourceLinks.push(<li><Link to={"/adapt/oakland/"+tag+"/"+resourceType+"/"+item.slug}>{item.name}</Link></li>)
       })
 
-      resourceMarkup.push( <div><h3>{ resourceType }</h3><ul>{ resourceLinks }</ul></div> )
+      resourceMarkup.push( <div><ul>{ resourceLinks }</ul></div> )
 
-      return <Popover title={"Resources | "+resourceType}>{resourceMarkup}</Popover>
+      return <Popover title={"Resources | "+ camelCaseToRegular(resourceType) }>{resourceMarkup}</Popover>
     },
 
     renderButton: function(resourceType){
@@ -48,7 +50,7 @@ var Resources = React.createClass({
               <Icon fill="rgba(0,0,0,0.5)" symbolID={resourceIcons[resourceType]}/>
             </Button>
           </OverlayTrigger>
-          <label>{ resourceType }</label>
+          <label>{ camelCaseToRegular(resourceType) }</label>
         </div>
       )
     },

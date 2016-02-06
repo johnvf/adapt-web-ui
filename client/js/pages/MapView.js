@@ -14,8 +14,6 @@ var CitationStore = require('../stores/CitationStore')
 var CaseStudyStore = require('../stores/CaseStudyStore')
 var ImageStore = require('../stores/ImageStore')
 
-// var Well = require('react-bootstrap/lib/Well');
-
 var Dashboard = require('../components/Dashboard');
 var Modal = require('../lib_components/Modal');
 var Chart = require('../lib_components/Chart');
@@ -25,6 +23,8 @@ var Image = require('../lib_components/Image');
 var Map = require('../components/Map');
 var Data = require('../components/Data');
 var Resources = require('../components/Resources');
+
+var camelCaseToRegular = require('../utils/Utils').camelCaseToRegular
 
 function getStateFromStores( tag , resource , slug ) {
   console.log(tag)
@@ -75,7 +75,7 @@ function getStateFromStores( tag , resource , slug ) {
       default:
     }
     if( item && content ){
-      modal = <Modal show={true} content={ content } title={ resource + " | " + slug }/>
+      modal = <Modal show={true} content={ content } title={ camelCaseToRegular(resource) + " | " + item.name }/>
     }
   }
 
