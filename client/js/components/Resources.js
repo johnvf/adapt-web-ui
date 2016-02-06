@@ -13,11 +13,12 @@ var Button = require('react-bootstrap/lib/Button');
 
 var resourceIcons = {
   "chart": "icon-icon_chart",
-  "table": "icon-icon_casestudy",
-  "plantlist": "icon-icon_plantlist",
+  "table": "icon-icon_table",
+  "plantList": "icon-icon_plantlist",
+  "citation": "icon-icon_link",
+  "caseStudy": "icon-icon_casestudy",
   "image": "icon-icon_image",
-  "diagram": "icon-icon_diagram",
-  "link": "icon-icon_link"
+  "diagram": "icon-icon_diagram"
 }
 
 var Resources = React.createClass({

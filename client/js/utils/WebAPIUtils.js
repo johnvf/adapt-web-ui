@@ -97,6 +97,54 @@ module.exports = {
         });
     },
 
+    getPlantLists: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/plantlist?sort=index:1&filter[tags]="+tags : "/api/plantlist?sort=index:1"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receivePlantLists(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
+    getCitations: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/citation?sort=index:1&filter[tags]="+tags : "/api/citation?sort=index:1"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveCitations(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
+    getCaseStudies: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/casestudy?sort=index:1&filter[tags]="+tags : "/api/casestudy?sort=index:1"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveCaseStudies(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
     getImages: function( tags ){
         // If tags, concatenate and append to URL
         var url = tags ?  "/api/image?sort=index:1&filter[tags]="+tags : "/api/image?sort=index:1"

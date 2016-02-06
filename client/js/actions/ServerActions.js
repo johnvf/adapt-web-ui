@@ -37,6 +37,27 @@ module.exports = {
     });
   },
 
+  receivePlantLists: function( plantLists ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_PLANT_LISTS",
+      plantLists: plantLists
+    });
+  },
+
+  receiveCitations: function( citations ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_CITATIONS",
+      citations: citations
+    });
+  },
+
+  receiveCaseStudies: function( caseStudies ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_CASE_STUDIES",
+      caseStudies: caseStudies
+    });
+  },
+
   receiveImages: function( images ) {
     AppDispatcher.handleServerAction({
       type: "RECEIVE_IMAGES",

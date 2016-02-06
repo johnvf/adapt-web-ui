@@ -9,6 +9,9 @@ var TextStore = require('../stores/TextStore')
 var TagStore = require('../stores/TagStore')
 var ChartStore = require('../stores/ChartStore')
 var TableStore = require('../stores/TableStore')
+var PlantListStore = require('../stores/PlantListStore')
+var CitationStore = require('../stores/CitationStore')
+var CaseStudyStore = require('../stores/CaseStudyStore')
 var ImageStore = require('../stores/ImageStore')
 
 // var Well = require('react-bootstrap/lib/Well');
@@ -45,6 +48,24 @@ function getStateFromStores( tag , resource , slug ) {
         content = <Table key={slug} item={ item }/>
         break;
 
+      case "plantList":
+        item = PlantListStore.getPlantLists( slug )
+        console.log(item)
+        content = <Table key={slug} item={ item }/>
+        break;
+
+      case "citation":
+        item = CitationStore.getCitations( slug )
+        console.log(item)
+        content = <Table key={slug} item={ item }/>
+        break;
+
+      case "caseStudy":
+        item = CaseStudyStore.getCaseStudies( slug )
+        console.log(item)
+        content = <Table key={slug} item={ item }/>
+        break;
+
       case "image":
         item = ImageStore.getImages( slug )
         console.log(item)
@@ -63,6 +84,9 @@ function getStateFromStores( tag , resource , slug ) {
     text: TextStore.getText( tag ),
     charts: ChartStore.getCharts( tag ),
     tables: TableStore.getTables( tag ),
+    plantLists: PlantListStore.getPlantLists( tag ),
+    citations: CitationStore.getCitations( tag ),
+    caseStudies: CaseStudyStore.getCaseStudies( tag ),
     images: ImageStore.getImages( tag ),
     textLoaded: TextStore.isLoaded(),
     mapLoaded: MapStore.isLoaded(),
@@ -98,6 +122,9 @@ var MapView = React.createClass({
     TextStore.addChangeListener(this._onChange);
     ChartStore.addChangeListener(this._onChange);
     TableStore.addChangeListener(this._onChange);
+    PlantListStore.addChangeListener(this._onChange);
+    CitationStore.addChangeListener(this._onChange);
+    CaseStudyStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -106,6 +133,9 @@ var MapView = React.createClass({
     TextStore.removeChangeListener(this._onChange);
     ChartStore.removeChangeListener(this._onChange);
     TableStore.removeChangeListener(this._onChange);
+    PlantListStore.removeChangeListener(this._onChange);
+    CitationStore.removeChangeListener(this._onChange);
+    CaseStudyStore.removeChangeListener(this._onChange);
   },
 
 
@@ -133,6 +163,9 @@ var MapView = React.createClass({
         resources = {
           chart: this.state.charts ? this.state.charts : [],
           table: this.state.tables ? this.state.tables : [],
+          plantList: this.state.plantLists ? this.state.plantLists : [],
+          citation: this.state.citations ? this.state.citations : [],
+          caseStudy: this.state.caseStudies ? this.state.caseStudies : [],
           image: this.state.images ? this.state.images : []
         },
         tags = this.state.tags,
