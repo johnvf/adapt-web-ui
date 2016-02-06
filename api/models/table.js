@@ -9,6 +9,7 @@ var TableSchema = mongoose.Schema({
     xAxis: String,
     yAxis: String,
     data: [ { } ],
+    caption: String,
     tags: [ String ]
 });
 

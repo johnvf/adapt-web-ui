@@ -31,6 +31,7 @@ var ModalWrapper = React.createClass({
         </Modal.Header>
         <Modal.Body>
           { this.props.content || "" }
+          <label className="caption"> { this.props.caption || ""}</label>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.close}>Close</Button>

@@ -15,6 +15,7 @@ var ImageSchema = mongoose.Schema({
     width: Number,
     height: Number,
     url: String,
+    caption: String,
     secure_url: String
 });
 

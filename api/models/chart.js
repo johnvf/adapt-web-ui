@@ -7,6 +7,7 @@ var ChartSchema = mongoose.Schema({
     type: String,
     config: { },
     data: [ { } ],
+    caption: String,
     tags: [ String ]
 });
 

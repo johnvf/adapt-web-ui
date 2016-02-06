@@ -74,8 +74,9 @@ function getStateFromStores( tag , resource , slug ) {
 
       default:
     }
+    // var caption = item.caption ? <label className="caption">{item.caption}</label> : null
     if( item && content ){
-      modal = <Modal show={true} content={ content } title={ camelCaseToRegular(resource) + " | " + item.name }/>
+      modal = <Modal show={true} content={ content } caption={item.caption} title={ camelCaseToRegular(resource) + " | " + item.name }/>
     }
   }
 
