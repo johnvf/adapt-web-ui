@@ -20,7 +20,7 @@ var MapLayerMenuItem = React.createClass({
 
   render: function() {
     var layer = this.props.layer;
-    var status = this.props.layer.is_displayed ? "●" : "○" ;
+    var status = this.props.layer.map_item.is_displayed ? "●" : "○" ;
     // check if this layer is the active layer
     var className = "map-menu-layer";
     return (
