@@ -9,6 +9,12 @@ function styleId(layer, styleIndex){
   return layer._id + "_" + styleIndex;
 }
 
+function objInArrayHasId( array, id ){
+  return array.find(function(o){
+    return o.id === id
+  })
+}
+
 var Map = React.createClass({
 
   getInitialState: function(){
@@ -56,17 +62,56 @@ var Map = React.createClass({
     var self = this,
         map = this.state.map,
         diff = this.diffMapLayers(newLayers);
+
+    console.debug("DIFF ", diff)
     if( this.state.map ){
 
       map.batch(function(batch){
-        diff.remove.styles.map(batch.removeLayer, batch);
-        diff.remove.sources.map(batch.removeSource, batch);
-        diff.add.sources.map(function(s){
-          batch.addSource(s.id, s.source);
-        }, batch);
-        diff.add.styles.map(function(style){
-          batch.addLayer(style);
-        }, batch);
+
+          diff.remove.styles.map( function(layer){
+
+              try { 
+                batch.removeLayer( layer )
+              }
+              catch(err) {
+                console.debug("Problem removing layer: ", layer)
+                console.debug("Message: ", err.message)
+              }
+            
+          }, batch);
+
+          diff.remove.sources.map(function(source){
+
+              try { 
+                batch.removeSource
+              }
+              catch(err) {
+                console.debug("Problem removing source: ", source)
+                console.debug("Message: ", err.message)
+              }
+            
+          }, batch);
+
+          diff.add.sources.map(function(s){
+            try { 
+              batch.addSource(s.id, s.source);
+            }
+            catch(err) {
+              console.debug("Problem adding source: ", s.source)
+              console.debug("Message: ", err.message)
+            }
+          }, batch);
+
+          diff.add.styles.map(function(style){
+            try { 
+              batch.addLayer(style);
+            }
+            catch(err){
+              console.debug("Problem adding layer: ", style)
+              console.debug("Message: ", err.message)
+            }
+          }, batch);
+
       });
 
     }
@@ -88,10 +133,15 @@ var Map = React.createClass({
         newSources[source_id] = layer.sources[source_id];
         if(layer.sources.hasOwnProperty(source_id)){
           if(!activeSources.hasOwnProperty(source_id)){
-            addQueue.sources.push({
-              id: source_id,
-              source: layer.sources[source_id]
-            });
+
+            if( !objInArrayHasId( addQueue.sources, source_id) ){
+              addQueue.sources.push({
+                id: source_id,
+                source: layer.sources[source_id]
+              });
+            }
+
+
           }
         }
       }
@@ -99,8 +149,11 @@ var Map = React.createClass({
         var id = styleId(layer, i);
         newStyles[id] = style;
         if(!activeStyles.hasOwnProperty(id)){
-          style.id = id;
-          addQueue.styles.push(style);
+
+          if( !objInArrayHasId( addQueue.styles, id) ){
+            style.id = id;
+            addQueue.styles.push(style);
+          }
         }
       });
     });
@@ -108,17 +161,26 @@ var Map = React.createClass({
     for(id in activeStyles){
       if(activeStyles.hasOwnProperty(id)){
         if(!newStyles.hasOwnProperty(id)){
-          removeQueue.styles.push(id);
+
+          if( removeQueue.styles.indexOf(id) == -1){
+            removeQueue.styles.push(id);
+          }
+          
         }
       }
     }
     for(key in activeSources){
       if(activeSources.hasOwnProperty(key)){
         if(!newSources.hasOwnProperty(key)){
-          removeQueue.sources.push(key);
+
+          if( removeQueue.sources.indexOf(id) == -1){
+            removeQueue.sources.push(id);
+          }
+
         }
       }
     }
+
     return {add: addQueue, remove: removeQueue, styles: newStyles, sources: newSources};
   },
 

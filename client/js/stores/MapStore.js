@@ -45,6 +45,34 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.type) {
+    case "URL_CHANGED":
+      var urlParts = action.url.split("/"),
+          tag = urlParts[ urlParts.length - 1]
+
+      var layers = _maps[tag];
+
+      if( layers ){
+
+        _activeLayers.forEach(function(layer){
+          layer.is_displayed = false;
+        });
+
+        var layers = layers.filter(function(layer){
+          // check if layer should be displayed by default
+          if( layer.default == 1 ){
+            layer.is_displayed = true;
+            return true;
+          } else {
+            layer.is_displayed = false;
+            return false;
+          }
+        });
+
+        console.log("setting new active layers", layers);
+        _activeLayers = layers;
+      }
+      MapStore.emitChange();
+      break;
 
     case "RECEIVE_MAPS":
       action.map_list.forEach( function(map){
@@ -63,36 +91,19 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
       });
 
       if( matchIndex > -1 ){
-        action.layer.is_displayed = false;
+        action.layer.map_item.is_displayed = false;
         _activeLayers.splice( matchIndex, 1 );
       } else {
-        action.layer.is_displayed = true;
+        action.layer.map_item.is_displayed = true;
         _activeLayers.push( action.layer.map_item );
       }
       MapStore.emitChange();
       break;
 
     case "GROUP_CLICKED":
-      _activeLayers.forEach(function(layer){
-        layer.is_displayed = false;
-      });
-      var layers = action.group.layers.filter(function(layer){
-        // check if layer should be displayed by default
-        // for now we will randomly choose
-        var result = parseInt(Math.random());
-        console.log("random layer activation", result)
-        if( result ){
-          layer.is_displayed = true;
-          return true;
-        } else {
-          layer.is_displayed = false;
-          return false;
-        }
-      });
-      console.log("setting new active layers", layers);
-      _activeLayers = layers;
-      MapStore.emitChange();
+      // If we want to change map state on that event, we could so here
       break;
+
     default:
       // do nothing
   }
