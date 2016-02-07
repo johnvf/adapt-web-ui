@@ -70,8 +70,13 @@ var TagStore = assign({}, EventEmitter.prototype, {
       layerTags = layerTags.filter(function (t){ return t; });
       var mapTag = layerTags.filter(function(tag){ return tag.type == "map";})[0];
       var groupTag = layerTags.filter(function(tag){ return tag.type == "map_group";})[0];
-      var layerTag = layerTags.filter(function(tag){ return tag.type == "map_layer";})[0];
-      if( mapTag && groupTag && layerTag ){
+
+      // layerTags can be optionally have no map layer and merely serve to navigate the report as a nav item
+      // In this case, 'layer' is not really the right term for this class of objects. 
+      var layerTag = layerTags.filter(function(tag){ return tag.type == "map_layer"; })[0];
+      var navItemTag = layerTags.filter(function(tag){ return tag.type == "nav_item";})[0];
+
+      if( mapTag && groupTag && ( layerTag || navItemTag ) ){
         // add these items to the map tag tree structure
         var mapObject = _mapTagTree.filter(function(mapObj){ return mapObj.tag.text === mapTag.text; })[0];
         if( !mapObject ){
@@ -83,8 +88,16 @@ var TagStore = assign({}, EventEmitter.prototype, {
           groupObject = { text: groupTag.text, tag: groupTag, layers: [] };
           mapObject.groups.push(groupObject);
         }
-        var layerObject = { text: layer.name, tag: layerTag, map_item: layer };
-        groupObject.layers.push(layerObject);
+
+        if( layerTag ){
+          var layerObject = { text: layer.name, tag: layerTag, map_item: layer };
+          groupObject.layers.push(layerObject);
+        }
+        else{
+          var navItemObject = { text: layer.name, tag: navItemTag };
+          groupObject.layers.push( navItemObject );          
+        }
+
       } else {
         console.log("insufficient tags:", layer.name, layer.tags);
       }
