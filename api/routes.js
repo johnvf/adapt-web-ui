@@ -25,7 +25,7 @@ module.exports = function(app, passport, config) {
 
   // Log in route
   app.post('/api/login', passport.authenticate('local-login', {
-    successRedirect : '/api/login/success',
+    successRedirect : '/',
     failureRedirect : '/api/login/error',
     failureFlash : true
   }));
@@ -36,10 +36,8 @@ module.exports = function(app, passport, config) {
     res.status(200).send({user: req.user});
   });
 
-  // app.use('/api/*', function(req, res){
-    
-  // });
-  app.use('/api/*', mers({uri: config.db}, isLoggedIn, users.all).rest());
+  app.use('/api/*', isLoggedIn);
+  app.use('/api/*', mers({uri: config.db}).rest());
 };
 
 // route middleware to make sure a user is logged in
@@ -49,5 +47,5 @@ function isLoggedIn(req, res, next) {
     return next();
 
   // if they aren't redirect them to the home page
-  res.redirect('/');
+  res.redirect('/login');
 }

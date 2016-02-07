@@ -34,6 +34,15 @@ app.get('*',function(req,res,next){
   // }
 })
 
+app.get('/login', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public', 'login.html'));
+});
+
+app.get('/css/main.css', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public/css/', 'main.css'));
+});
+
+
 // Insert LiveReload snippet when in development mode only
 if(env === 'development') {
   console.log('App running in development environment');
@@ -41,7 +50,6 @@ if(env === 'development') {
   app.use(livereload({port: 35729}));
 }
 
-app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({'extended':'true'}));
@@ -95,11 +103,20 @@ if(USE_API) {
   require('./api/routes')(app, passport, config);
 }
 
-// HTML5 Pushstate mode
-app.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname, '/public', 'login.html'));
-});
+function isLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
 
+  // if they aren't redirect them to the home page
+  res.redirect('/login');
+}
+
+app.use('*', isLoggedIn);
+
+app.use(express.static(__dirname + '/public'));
+
+// HTML5 Pushstate mode
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/public', 'index.html'));
 });
