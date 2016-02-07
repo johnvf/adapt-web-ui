@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = function(app, passport) {
+var mers = require('mers');
+
+module.exports = function(app, passport, config) {
 
   var users = require('./controllers/users');
 
@@ -13,6 +15,7 @@ module.exports = function(app, passport) {
     failureRedirect : '/api/signup/error',
     failureFlash : true
   }));
+
   app.get('/api/signup/error', function(req, res) {
     res.status(401).send({error: req.flash('signupMessage')});
   });
@@ -32,7 +35,11 @@ module.exports = function(app, passport) {
   app.get('/api/login/success', function(req, res) {
     res.status(200).send({user: req.user});
   });
-  
+
+  // app.use('/api/*', function(req, res){
+    
+  // });
+  app.use('/api/*', mers({uri: config.db}, isLoggedIn, users.all).rest());
 };
 
 // route middleware to make sure a user is logged in

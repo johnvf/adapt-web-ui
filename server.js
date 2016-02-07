@@ -23,15 +23,15 @@ var USE_API = true;
 var app = express();
 
 app.get('*',function(req,res,next){
-  if (process.env.NODE_ENV === 'production') {
+  // if (process.env.NODE_ENV === 'production') {
     if(req.headers['x-forwarded-proto']!='https')
       res.redirect('https://'+ req.headers.host + req.url)
     else
       next() /* Continue to other routes if we're not redirecting */
-  }
-  else{
-    next()
-  }
+  // }
+  // else{
+  //   next()
+  // }
 })
 
 // Insert LiveReload snippet when in development mode only
@@ -89,17 +89,17 @@ if(USE_API) {
 
   
   // Setup REST routes
-  var mers = require('mers');
-  app.use('/api', mers({uri: config.db}).rest());
-
   require('./api/config/passport')(passport);
 
   // API Routes
-  require('./api/routes')(app, passport);
-
+  require('./api/routes')(app, passport, config);
 }
 
 // HTML5 Pushstate mode
+app.get('/login', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public', 'login.html'));
+});
+
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/public', 'index.html'));
 });
