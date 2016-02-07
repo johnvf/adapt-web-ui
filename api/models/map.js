@@ -4,6 +4,7 @@ var MapSchema = mongoose.Schema({
     name: String,
     index: Number,
     default: Number,
+    heading: Number,
     sources: {},
     layers: {},
     tags: [ String ]

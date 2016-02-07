@@ -8,7 +8,9 @@ var MapLayerMenuItem = React.createClass({
   onLayerClick: function (e){
     e.preventDefault();
     e.stopPropagation();
-    this.props.navigate(null, this.props.layer.tag.text);
+    if( this.props.layer.map_item.heading ){
+      this.props.navigate(null, this.props.layer.tag.text);
+    }
   },
 
   onLayerMapDisplayClick: function () {
@@ -22,7 +24,7 @@ var MapLayerMenuItem = React.createClass({
     var layer = this.props.layer;
     var status = this.props.layer.map_item.is_displayed ? "●" : "○" ;
     // check if this layer is the active layer
-    var className = "map-menu-layer";
+    var className = layer.map_item.heading ? "map-menu-layer" : "map-menu-layer disable-nav";
     return (
       <li className={ className } >
         <span className="map-menu-layer-name" onClick={ this.onLayerClick }>

@@ -16,8 +16,12 @@ var models = ['tag', 'chart', 'table', 'plantList', 'citation', 'caseStudy', 'te
 var path = process.argv.slice(2)[0]
 var root = path.split("/").slice(0,-1).join("/")
 
-function convertToSlug(Text){
-    return Text.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
+function slugify(s){
+    return s.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
+}
+
+function deslugify(s){
+    return s.split("_").map( function(string){ return string.charAt(0).toUpperCase() + string.slice(1); }).join(" ")
 }
 
 // Dumps items in main spreadsheet, skips incomplete entries
@@ -62,7 +66,7 @@ function make_charts( dump ){
         var filepath = root + item["c3 config path"]
             item.config = JSON.parse( fs.readFileSync( filepath ) );
             item.tags = get_tags(item.tags)
-            item.slug = convertToSlug(item.name)
+            item.slug = slugify(item.name)
         return item
     }), 
     function(documents){
@@ -75,7 +79,7 @@ function make_tables( dump ){
     // Load data from google drive + seed database
     driveClient.getSheetData( dump.map(function(item){
         item.tags = get_tags(item.tags)
-        item.slug = convertToSlug(item.name)
+        item.slug = slugify(item.name)
         return item
     }), 
     function(documents){
@@ -89,7 +93,7 @@ function make_plant_lists( dump ){
     // Load data from google drive + seed database
     driveClient.getSheetData( dump.map(function(item){
         item.tags = get_tags(item.tags)
-        item.slug = convertToSlug(item.name)
+        item.slug = slugify(item.name)
         return item
     }), 
     function(documents){
@@ -103,7 +107,7 @@ function make_citations( dump ){
     // Load data from google drive + seed database
     driveClient.getSheetData( dump.map(function(item){
         item.tags = get_tags(item.tags)
-        item.slug = convertToSlug(item.name)
+        item.slug = slugify(item.name)
         return item
     }), 
     function(documents){
@@ -117,7 +121,7 @@ function make_case_studies( dump ){
     // Load data from google drive + seed database
     driveClient.getSheetData( dump.map(function(item){
         item.tags = get_tags(item.tags)
-        item.slug = convertToSlug(item.name)
+        item.slug = slugify(item.name)
         return item
     }), 
     function(documents){
@@ -224,7 +228,7 @@ function make_images( dump ){
                 var public_id = item.path.split("/").reverse()[0].split(".")[0]
                 exImage = exImages[public_id]
                 exImage.name = item.name
-                exImage.slug = convertToSlug(item.name)
+                exImage.slug = slugify(item.name)
                 exImage.tags = get_tags(item.tags)
                 exImage.index = item.index
                 return exImage
@@ -242,13 +246,25 @@ function make_maps( dump ){
     var documents = []
 
     dump.forEach( function( item ){
-        var filepath = root + item.path
-        var map = JSON.parse( fs.readFileSync( filepath ) );
+        var map;
+        var tags = get_tags(item.tags);
+
+        if( item.path ){
+            var filepath = root + item.path
+            map = JSON.parse( fs.readFileSync( filepath ) );
             map = lint_map( map );
-            map.tags = get_tags(item.tags);
-            map.index = item.index;
-            map.default = item.default
-            documents.push(map)
+        }
+        else{
+            map = { 
+                name: deslugify( tags[tags.length-1] )
+            }
+        }
+
+        map.tags = tags
+        map.index = item.index;
+        map.default = item.default
+        map.heading = item.heading
+        documents.push(map)
     });
     seed_db( "map", documents )
 }
@@ -325,7 +341,7 @@ function seed_from_xlsx( path ){
                     break;
 
                 case "Maps":
-                    var required_fields = ["path", "tags"] 
+                    var required_fields = ["tags"] 
                     make_maps( dump_data( worksheet, required_fields ) )
                     break;
 

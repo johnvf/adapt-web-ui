@@ -4,6 +4,8 @@ var ViewActions = require("../actions/ViewActions");
 
 var MapLayerMenuItem = require('../components/MapLayerMenuItem');
 
+var NavMenuItem = require('../components/NavMenuItem');
+
 var MapGroupMenuItem = React.createClass({
 
   onGroupClick: function (e) {
@@ -25,9 +27,13 @@ var MapGroupMenuItem = React.createClass({
     var className = "group-menu-item" + group.is_active ? " active" : "";
 
     var layerItems = group.layers.map(function(layer, index){
-      return(
-        <MapLayerMenuItem key={index} layer={ layer } navigate={navigate}></MapLayerMenuItem>
-        )
+      if( layer.map_item ){
+        return <MapLayerMenuItem key={index} layer={ layer } navigate={navigate}></MapLayerMenuItem> 
+      }
+      else{
+        return <NavMenuItem key={index} layer={ layer } navigate={navigate}></NavMenuItem> 
+      }
+
     });
 
     return (

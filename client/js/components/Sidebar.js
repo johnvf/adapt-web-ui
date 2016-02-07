@@ -27,7 +27,8 @@ var Sidebar = React.createClass({
 
   getMapNav: function(maps){
     var self = this;
-    // loo00l .. maps.map(function(map...))
+    // loo00l .. maps.map(function(map...)) 
+    // Such l00l!!111
     var MapPanels = maps.map(function(map, index){
       var GroupPanels = map.groups.map(function(group, index){
         return (
