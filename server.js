@@ -12,7 +12,7 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var path = require('path'); 
 
-// Determin config
+// Determine config
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
@@ -21,6 +21,18 @@ var USE_API = true;
 
 // Our app
 var app = express();
+
+app.get('*',function(req,res,next){
+  if (process.env.NODE_ENV === 'production') {
+    if(req.headers['x-forwarded-proto']!='https')
+      res.redirect('https://'+ req.headers.host + req.url)
+    else
+      next() /* Continue to other routes if we're not redirecting */
+  }
+  else{
+    next()
+  }
+})
 
 // Insert LiveReload snippet when in development mode only
 if(env === 'development') {
@@ -74,6 +86,8 @@ if(USE_API) {
   // Connect to MongoDB
   console.log('Connecting to DB:', config.db);
   mongoose.connect(config.db);
+
+  
   // Setup REST routes
   var mers = require('mers');
   app.use('/api', mers({uri: config.db}).rest());
