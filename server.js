@@ -22,17 +22,18 @@ var USE_API = true;
 // Our app
 var app = express();
 
-app.get('*',function(req,res,next){
-  if (process.env.NODE_ENV === 'production') {
-    if(req.headers['x-forwarded-proto']!='https')
-      res.redirect('https://'+ req.headers.host + req.url)
-    else
-      next() /* Continue to other routes if we're not redirecting */
-  }
-  else{
-    next()
-  }
-})
+// To force https (if/when password or other user login is desired)
+// app.get('*',function(req,res,next){
+//   if (process.env.NODE_ENV === 'production') {
+//     if(req.headers['x-forwarded-proto']!='https')
+//       res.redirect('https://'+ req.headers.host + req.url)
+//     else
+//       next() /* Continue to other routes if we're not redirecting */
+//   }
+//   else{
+//     next()
+//   }
+// })
 
 // Insert LiveReload snippet when in development mode only
 if(env === 'development') {
