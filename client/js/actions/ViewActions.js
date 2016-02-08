@@ -23,6 +23,13 @@ module.exports = {
     })
   },
 
+  changeBasemapLayer: function( basemapKey ) {
+    AppDispatcher.handleViewAction({
+      type: "CHANGE_BASEMAP",
+      basemapKey: basemapKey
+    });
+  },
+
   groupClicked: function( group ) {
     AppDispatcher.handleViewAction({
       type: "GROUP_CLICKED",

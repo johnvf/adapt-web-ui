@@ -93,6 +93,7 @@ function getStateFromStores( tag , resource , slug ) {
     mapLoaded: MapStore.isLoaded(),
     tags: TagStore.getTags(),
     activeMapLayers: MapStore.getActiveLayers(),
+    currentBasemap: MapStore.getCurrentBasemap(),
     active_tags: TagStore.getActiveTags(),
     modal: modal
   };
@@ -160,6 +161,7 @@ var MapView = React.createClass({
         loaded = this.state.loaded,
         view = this.state.view,
         active_layers = this.state.activeMapLayers,
+        currentBasemap = this.state.currentBasemap,
         text = this.state.text || "",
         resources = {
           chart: this.state.charts ? this.state.charts : [],
@@ -176,7 +178,7 @@ var MapView = React.createClass({
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts
-        content.push( <Map active_layers={ active_layers } view={view}/> )
+        content.push( <Map active_layers={ active_layers } view={view} basemap={currentBasemap}/> )
         content.push( <Data tag={this.props.params.tag} view={view} toggleView={ this.toggleView} body={text}/>)
         content.push( <Resources tag={this.props.params.tag} resources={ resources }/> )
 

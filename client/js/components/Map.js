@@ -4,6 +4,7 @@ var mapboxgl = require('mapbox-gl');
 
 var MouseActions = require("../actions/MouseActions");
 var Tooltip = require('../components/MapTooltip');
+var BasemapToggle = require('../components/BasemapToggle');
 
 function styleId(layer, styleIndex){
   return layer._id + "_" + styleIndex;
@@ -18,12 +19,16 @@ function objInArrayHasId( array, id ){
 var Map = React.createClass({
 
   getInitialState: function(){
-    return { activeStyles: {}, activeSources: {}};
+    return { activeStyles: {}, activeSources: {}, currentBasemap: 'streets'};
   },
 
   componentDidMount: function(){
-    var map = this.makeMap();
-    this.setState({ map: map});
+    var basemaps = {
+      streets: 'mapbox://styles/mapbox/light-v8',
+      satellite: 'mapbox://styles/mapbox/satellite-v8'
+    };
+    var map = this.makeMap(basemaps.streets);
+    this.setState({ map: map, basemaps: basemaps});
     this.addEventListeners(map);
 
     var self = this;
@@ -32,11 +37,33 @@ var Map = React.createClass({
     }
   },
 
-  componentWillReceiveProps: function(nextProps){
-    var results = this.batchUpdateLayers(nextProps.active_layers);
-    console.log("new active layers:", nextProps.active_layers)
-    this.setState({activeStyles: results.styles, activeSources: results.sources})
-    this.resizeMap();
+  switchBasemap: function(key, loadedCallback){
+    if( key !== this.state.currentBasemap){
+      var basemapStyle = this.state.basemaps[key];
+      this.state.map.setStyle(basemapStyle);
+      this.setState({ activeStyles: {}, activeSources: {}});
+      this.state.map.style.on('load', loadedCallback);
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  componentWillReceiveProps: function(props){
+    // deal with layers from menu
+    console.log("new active layers:", props.active_layers)
+
+    var updateLayers = function(){
+      var results = this.batchUpdateLayers(props.active_layers);
+      this.setState({activeStyles: results.styles, activeSources: results.sources, currentBasemap: props.basemap});
+      this.resizeMap();
+    }.bind(this);
+
+    var switched = this.switchBasemap(props.basemap, updateLayers)
+    if( !switched ){
+      updateLayers();
+    }
+
   },
 
   addEventListeners: function(map){
@@ -51,7 +78,7 @@ var Map = React.createClass({
 
   resizeMap: function(){
     var self = this;
-    setTimeout( function() { 
+    setTimeout( function() {
       if( self.state.map ){
         self.state.map.resize();
       }
@@ -70,30 +97,30 @@ var Map = React.createClass({
 
           diff.remove.styles.map( function(layer){
 
-              try { 
+              try {
                 batch.removeLayer( layer )
               }
               catch(err) {
                 console.debug("Problem removing layer: ", layer)
                 console.debug("Message: ", err.message)
               }
-            
+
           }, batch);
 
           diff.remove.sources.map(function(source){
 
-              try { 
+              try {
                 batch.removeSource
               }
               catch(err) {
                 console.debug("Problem removing source: ", source)
                 console.debug("Message: ", err.message)
               }
-            
+
           }, batch);
 
           diff.add.sources.map(function(s){
-            try { 
+            try {
               batch.addSource(s.id, s.source);
             }
             catch(err) {
@@ -103,7 +130,7 @@ var Map = React.createClass({
           }, batch);
 
           diff.add.styles.map(function(style){
-            try { 
+            try {
               batch.addLayer(style);
             }
             catch(err){
@@ -165,7 +192,7 @@ var Map = React.createClass({
           if( removeQueue.styles.indexOf(id) == -1){
             removeQueue.styles.push(id);
           }
-          
+
         }
       }
     }
@@ -185,13 +212,13 @@ var Map = React.createClass({
   },
 
 
-  makeMap: function(){
+  makeMap: function(defaultStyle){
 
     mapboxgl.accessToken = 'pk.eyJ1IjoidXJiYW5iaW9maWx0ZXJkZXYiLCJhIjoiY2lnenZwdnNzMHdibnc3bTVrOWYzc3JraCJ9.eOfaXgitCGm4aqppPt6oHw';
 
     var map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/mapbox/light-v8', //stylesheet location
+        style: defaultStyle, // stylesheet location
         center: [ -122.2226, 37.7541], // starting position
         zoom: 11 // starting zoom
     });
@@ -199,10 +226,12 @@ var Map = React.createClass({
   },
 
   render: function() {
+    // add the toggle
     return (
       <div id="mapWrapper">
         <Tooltip></Tooltip>
         <div id="map" ref="mapElement" className="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"></div>
+        <BasemapToggle basemap={this.props.basemap}></BasemapToggle>
       </div>
     )
   }

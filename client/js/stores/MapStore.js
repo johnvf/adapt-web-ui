@@ -1,4 +1,5 @@
 var _ = require("lodash");
+var mapboxgl = require('mapbox-gl');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require("react/lib/Object.assign");
@@ -12,6 +13,7 @@ var _loading = true;
 var _activeLayers = [];
 var _activeGroup;
 var _activeLayer;
+var _currentBasemap = 'streets';
 
 var MapStore = assign({}, EventEmitter.prototype, {
 
@@ -29,6 +31,10 @@ var MapStore = assign({}, EventEmitter.prototype, {
 
   getMaps: function( tag ){
     return _maps[tag]
+  },
+
+  getCurrentBasemap: function(){
+    return _currentBasemap;
   },
 
   getActiveLayers: function(){
@@ -99,6 +105,13 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
       }
       MapStore.emitChange();
       break;
+
+    case "CHANGE_BASEMAP":
+      var key = action.basemapKey;
+      console.log("changing basemap to", key);
+      _currentBasemap = key;
+      MapStore.emitChange();
+      break
 
     case "GROUP_CLICKED":
       // If we want to change map state on that event, we could so here
