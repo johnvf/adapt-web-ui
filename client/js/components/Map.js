@@ -3,8 +3,10 @@ var React = require('react');
 var mapboxgl = require('mapbox-gl');
 
 var MouseActions = require("../actions/MouseActions");
+
 var Tooltip = require('../components/MapTooltip');
 var BasemapToggle = require('../components/BasemapToggle');
+var Legend = require('../components/MapLegend');
 
 function styleId(layer, styleIndex){
   return layer._id + "_" + styleIndex;
@@ -50,8 +52,6 @@ var Map = React.createClass({
   },
 
   componentWillReceiveProps: function(props){
-    // deal with layers from menu
-    console.log("new active layers:", props.active_layers)
 
     var updateLayers = function(){
       var results = this.batchUpdateLayers(props.active_layers);
@@ -232,6 +232,7 @@ var Map = React.createClass({
         <Tooltip></Tooltip>
         <div id="map" ref="mapElement" className="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"></div>
         <BasemapToggle basemap={this.props.basemap}></BasemapToggle>
+        <Legend active_layers={this.props.active_layers}></Legend>
       </div>
     )
   }
