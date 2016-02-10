@@ -11,82 +11,25 @@ var Dashboard = React.createClass({
       className: "layout",
       view: "data",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: (screen.height/30),
       verticalCompact: false
     };
   },
 
   getInitialState: function(){
-    return { layoutChangeCallbacks: [] , layouts: this.generateLayout( this.props.view )}
+    return { layoutChangeCallbacks: [] , layouts: this.generateLayout( this.props.view ), rowHeight: (window.innerHeight/27)}
   },
 
-  // Responsive option 1
-  // generateLayout: function ( view ) {
-  //   switch ( view ) {
-  //       case "map":
-  //         return ({
-  //           lg: [
-  //             { "w": 12, "h": 20, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 4, "h": 6, "x": 0, "y": 20, "i": "1" },
-  //             { "w": 8, "h": 6, "x": 4, "y": 20, "i": "2" }
-  //           ],
-  //           md: [
-  //             { "w": 10, "h": 20, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 4, "h": 6, "x": 0, "y": 20, "i": "1" },
-  //             { "w": 6, "h": 6, "x": 4, "y": 20, "i": "2" }
-  //           ],
-  //           sm: [
-  //             { "w": 6, "h": 20, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 3, "h": 6, "x": 0, "y": 20, "i": "1" },
-  //             { "w": 3, "h": 6, "x": 3, "y": 20, "i": "2" }
-  //           ],
-  //           xs: [
-  //             { "w": 4, "h": 24, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 4, "h": 8, "x": 0, "y": 24, "i": "1" },
-  //             { "w": 4, "h": 2, "x": 0, "y": 32, "i": "2" }
-  //           ],
-  //           xxs: [
-  //             { "w": 2, "h": 24, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 2, "h": 8, "x": 0, "y": 24, "i": "1" },
-  //             { "w": 2, "h": 2, "x": 0, "y": 32, "i": "2" }
-  //           ]
-  //         });
-  //         break
+  componentDidMount: function(){
+    window.addEventListener('resize', this.resizeGrid);
+  },
 
-  //       case "data":
-  //         return ({
-  //           lg: [
-  //             { "w": 8, "h": 26, "x": 4, "y": 0, "i": "0" },
-  //             { "w": 4, "h": 20, "x": 0, "y": 0, "i": "1" },
-  //             { "w": 4, "h": 6, "x": 0, "y": 20, "i": "2" }
-  //           ],
-  //           md: [
-  //             { "w": 7, "h": 26, "x": 3, "y": 0, "i": "0" },
-  //             { "w": 3, "h": 20, "x": 0, "y": 0, "i": "1" },
-  //             { "w": 3, "h": 6, "x": 0, "y": 20, "i": "2" }
-  //           ],
-  //           sm: [
-  //             { "w": 3, "h": 26, "x": 3, "y": 0, "i": "0" },
-  //             { "w": 3, "h": 20, "x": 0, "y": 0, "i": "1" },
-  //             { "w": 3, "h": 6, "x": 0, "y": 20, "i": "2" }
-  //           ],
-  //           xs: [
-  //             { "w": 4, "h": 16, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 4, "h": 16, "x": 0, "y": 16, "i": "1" },
-  //             { "w": 4, "h": 2, "x": 0, "y": 32, "i": "2" }
-  //           ],
-  //           xxs: [
-  //             { "w": 2, "h": 16, "x": 0, "y": 0, "i": "0" },
-  //             { "w": 2, "h": 16, "x": 0, "y": 16, "i": "1" },
-  //             { "w": 2, "h": 2, "x": 0, "y": 32, "i": "2" }
-  //           ]
-  //         });
-  //         break
+  componentWillUnmount: function(){
+    window.removeEventListener('resize', this.resizeGrid);
+  },
 
-  //       default:
-  //         break
-  //       }
-  // },
+  resizeGrid: function(event){
+    this.setState({ rowHeight: window.innerHeight/27 });
+  },
 
   generateLayout: function ( view ) {
     switch ( view ) {
@@ -199,6 +142,7 @@ var Dashboard = React.createClass({
           isDraggable={false} 
           isResizable={false}
           layouts={this.state.layouts}
+          rowHeight={this.state.rowHeight}
           onLayoutChange={this.onLayoutChange}>
           {widgets}
         </ResponsiveReactGridLayout>
