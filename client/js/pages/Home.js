@@ -68,7 +68,7 @@ var Home = React.createClass({
                       <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
                     </div>
                   </Link>
-                  <p>Adapt Oakland is a greening plan that identifies environmental hazards and pairs them with adaptation strategies to create a healthier, more sustainable urban environment.</p> 
+                  <p>With a highly diverse range of land uses, including a major port, an industrial zone, a residential neighborhood, and a ring of interstate highways, West Oakland is representative of the conditions and challenges found in many urban centers.</p> 
                 </div>
               </div>
             </div>           
