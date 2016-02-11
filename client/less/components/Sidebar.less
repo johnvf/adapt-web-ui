@@ -89,11 +89,11 @@
 
 .second-nav li {
   list-style: none;
-  line-height: 14px;
+  line-height: 16px;
   clear: left;
 }
 
-.second-nav ul>li:hover, .second-nav li>h3:hover { 
+.second-nav .map-menu-layer-name:hover, .second-nav li>h3:hover { 
   cursor: pointer;
   background-color: rgba(147, 195, 124, 0.3);
 }
@@ -123,6 +123,15 @@
   font-size: 27px;
   color: #00A535;
   transition: 0.5s ease;
+  border: solid 1px  rgba(147, 195, 124, 0.3);
+  width: 14px;
+  height: 14px;
+  border-radius: 14px;
+}
+
+
+.status-indicator.active {
+  background-color: rgba(147, 195, 124, 0.3);
 }
 
 .status-indicator:hover{

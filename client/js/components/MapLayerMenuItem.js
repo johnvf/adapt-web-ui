@@ -22,15 +22,17 @@ var MapLayerMenuItem = React.createClass({
 
   render: function() {
     var layer = this.props.layer;
-    var status = this.props.layer.map_item.is_displayed ? "●" : "○" ;
-    // check if this layer is the active layer
+    
     var className = layer.map_item.heading ? "map-menu-layer" : "map-menu-layer disable-nav";
+    // check if this layer is the active layer
+    var statusClassName = this.props.layer.map_item.is_displayed ? "status-indicator active" : "status-indicator" 
+
     return (
       <li className={ className } >
         <span className="map-menu-layer-name" onClick={ this.onLayerClick }>
         { layer.text }
         </span>
-        <span className="status-indicator" onClick={ this.onLayerMapDisplayClick() }>{ status }</span>
+        <span className={ statusClassName } onClick={ this.onLayerMapDisplayClick() }>{" "}</span>
       </li>
     )
   }
