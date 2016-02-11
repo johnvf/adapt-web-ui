@@ -108,7 +108,7 @@ var Sidebar = React.createClass({
                 </Link>
               </li>
               <li>
-                <Link to={ "/adapt/oakland/1_analyze" }>
+                <Link to={ "/adapt/oakland/introduction" }>
                   <Icon className="green-fill" symbolID="icon-icon_map"/>
                 </Link>
               </li>
