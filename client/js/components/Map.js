@@ -219,8 +219,8 @@ var Map = React.createClass({
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: defaultStyle, // stylesheet location
-        center: [ -122.2226, 37.7541], // starting position
-        zoom: 11 // starting zoom
+        center: [ -122.3000, 37.8100], // starting position
+        zoom: 12 // starting zoom
     });
     return map;
   },
