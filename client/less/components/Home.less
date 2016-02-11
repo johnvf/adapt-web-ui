@@ -9,10 +9,6 @@
   width: 100%;
 }
 
-.home-description {
-  padding: 0px 30px;
-}
-
 .options-icon {
 	vertical-align: bottom;
 	height: 75px;
@@ -39,6 +35,10 @@
   height: 100%;
 } 
 
+.home-description{
+  padding-left: 4vh;
+}
+
 .home-description > h3{
   margin:0px 0px 20px 0px;
 }
@@ -52,10 +52,16 @@
 
 .home-options{
   border-radius: 8px;
+  transition: 0.5s ease;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 300px;
-  // padding: 15px;
+  height: 38vh;
+  background: lightgray;
+  border: solid 3px #9CCE89;
+}
+
+.home-options:hover{
+  background: aliceblue;
 }
 
 .home-options > p{
@@ -64,11 +70,10 @@
 
 .home-options > div, .home-options > p {
   overflow-y: auto;
-  height: 100%;
   border-radius: 25px;
   padding: 10px;
 }
 
-.home-options:last-child{
-  margin-top: 20px;
+.home-options.last{
+  margin-top: 4vh;
 }

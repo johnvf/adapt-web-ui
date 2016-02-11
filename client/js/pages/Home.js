@@ -35,40 +35,36 @@ var Home = React.createClass({
   render: function() {
 
     var text = this.state.text
-    var bodyMarkup = text ? ( <Text className="body" body={text[0].data}/> ) : false
+    var bodyMarkup = text ? ( <Text className="text-scroll" body={text[0].data}/> ) : false
 
     return (
       
         <div className="container-fluid bg-green" >
           <Loader loaded={true}>
             <div className="row home">           
-              <div className="col-xs-6 col-md-9 home-description">
-                <div className="row home-options">
-                  <h1 className="left light-text">ADAPT:</h1>
-                  <h3 className="left light-text">AN ECOSYSTEM SERVICES MODEL</h3> 
-                </div>
-                <div className="row bg-light home-options">
-                  { bodyMarkup }
-                </div>
-              </div>
               <div className="col-xs-5 col-md-3">
+                <Link to={ "/adapt/toolbox" }>
                   <div className="row bg-light home-options">
-                   <Link to={ "/adapt/toolbox" }>
                       <div className= "home-heading">
                         <Icon className ="green-fill options-icon" symbolID="icon-icon_toolbox"/>
                         <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
                       </div>
-                    </Link>
                     <p>The Adaptation Toolbox provides tools and methodologies for community members, legislators, developers, and researchers to evaluate current conditions and design solutions for mitigating environmental hazards in cities across the country.</p> 
                   </div>
-                <div className="row bg-light home-options">
-                  <Link to={ "/adapt/oakland/1_analyze" }>
-                    <div className= "home-heading">
-                      <Icon className ="green-fill options-icon"  symbolID="icon-icon_map"/>
-                      <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
-                    </div>
-                  </Link>
-                  <p>With a highly diverse range of land uses, including a major port, an industrial zone, a residential neighborhood, and a ring of interstate highways, West Oakland is representative of the conditions and challenges found in many urban centers.</p> 
+                </Link>
+                <Link to={ "/adapt/oakland/1_analyze" }>
+                  <div className="row bg-light home-options last">
+                      <div className= "home-heading">
+                        <Icon className ="green-fill options-icon"  symbolID="icon-icon_map"/>
+                        <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
+                      </div>
+                    <p>With a highly diverse range of land uses, including a major port, an industrial zone, a residential neighborhood, and a ring of interstate highways, West Oakland is representative of the conditions and challenges found in many urban centers.</p> 
+                  </div>
+                </Link>
+              </div>
+              <div className="col-xs-6 col-md-9 home-description">
+                <div className="text-scroll-body">
+                  { bodyMarkup }
                 </div>
               </div>
             </div>           

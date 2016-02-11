@@ -35,11 +35,13 @@ var About = React.createClass({
     return (
       
       <div className="row banner" >
-        <div className="col-md-4"></div>                 
-        <div className="col-md-8">
-          <div className = "text-scroll-body"> 
-            <div className ="text-scroll">
-              { bodyMarkup }                                                               
+        <div className="bg-toolbox">
+          <div className="col-md-4"></div>                 
+          <div className="col-md-8">
+            <div className = "text-scroll-body"> 
+              <div className ="text-scroll">
+                { bodyMarkup }                                                               
+              </div>
             </div>
           </div>
         </div>
