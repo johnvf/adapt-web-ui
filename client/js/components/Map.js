@@ -26,7 +26,7 @@ var Map = React.createClass({
 
   componentDidMount: function(){
     var basemaps = {
-      streets: 'mapbox://styles/ubmaps/cikhis4gs001396kqwyet33ou',
+      streets: 'mapbox://styles/mapbox/light-v8',
       satellite: 'mapbox://styles/mapbox/satellite-v8'
     };
     var map = this.makeMap(basemaps.streets);
