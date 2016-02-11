@@ -42,7 +42,7 @@ var Home = React.createClass({
         <div className="container-fluid bg-green" >
           <Loader loaded={true}>
             <div className="row home">           
-              <div className="col-xs-5 col-md-3">
+              <div className="col-xs-3 col-md-3">
                 <Link to={ "/adapt/toolbox" }>
                   <div className="row bg-light home-options">
                       <div className= "home-heading">
@@ -62,7 +62,7 @@ var Home = React.createClass({
                   </div>
                 </Link>
               </div>
-              <div className="col-xs-6 col-md-9 home-description">
+              <div className="col-xs-9 col-md-9 home-description">
                 <div className="text-scroll-body">
                   { bodyMarkup }
                 </div>
