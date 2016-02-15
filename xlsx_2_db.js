@@ -2,7 +2,7 @@ var fs=require('fs'),
     seeder = require('mongoose-seed'),
     XLSX = require('xlsx'),
     mammoth = require("mammoth"),
-    driveClient = require("./modules/drive-client"),
+    driveClient = require("./api/modules/drive-client"),
     cloudinary = require('cloudinary');
 
 // FIXME: Need to replace FRICKLE boiler plate ENV configuration with 'dotenv' + .env file

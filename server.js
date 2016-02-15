@@ -19,7 +19,6 @@ var config = require('./api/config');
 // Do we want to use the Express API from /api ?
 var USE_API = true;
 
-// Our app
 var app = express();
 
 // To force https (if/when password or other user login is desired)
@@ -93,10 +92,9 @@ if(USE_API) {
   var mers = require('mers');
   app.use('/api', mers({uri: config.db}).rest());
 
-  require('./api/config/passport')(passport);
-
-  // API Routes
-  require('./api/routes')(app, passport);
+  // API Routes - NOT CURRENTLY USED
+  // require('./api/config/passport')(passport);
+  // require('./api/routes')(app, passport);
 
 }
 

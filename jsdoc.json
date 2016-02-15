@@ -1,0 +1,19 @@
+{
+  "source": {
+    "include": [
+      "README.md" ,
+      "./client/js/actions/MouseActions.js"
+    ]
+  },
+  "plugins": [
+    "plugins/markdown",
+    "plugins/summarize"
+  ],
+  "opts": {
+    "destination": "./public/docs/"
+  },
+  "defaultFile": "index.html",
+  "livereload": true,
+  "directoryListing": false,
+  "open": true
+}
