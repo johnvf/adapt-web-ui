@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm install",
-    "jsdoc": "node_modules/.bin/jsdoc --configure jsdoc.json",
+    "jsdoc": "node_modules/.bin/jsdoc --configure jsdoc.json; npm install -g node-static; static public/docs -p 8080 & open http://localhost:8080",
     "postinstall": "node node_modules/gulp/bin/gulp build",
     "start": "node server.js"
   },

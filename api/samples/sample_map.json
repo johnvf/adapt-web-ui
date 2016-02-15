@@ -1,0 +1,78 @@
+{
+  "name": "Land Cover",
+  "legend_text": "source:  Urban Biofilter 2014. A land classification using an ortho image of Oakland. The area was classified using sample classifications and later cleaned up manually. The land classification categorized land cover as water, canopy, impervious or pervious.",           
+  "sources": {
+    "landcover_analysis":{
+      "type": "vector",
+      "url": "mapbox://urbanbiofilterdev.8ozqg2a0"
+    }
+  },
+  "layers":  [
+      {
+      "source": "landcover_analysis",
+      "source-layer": "landcover_analysis",
+       "tool_tip_data": {
+        "fields": {  
+         "Cover": "Land Cover"
+         }
+      },      
+      "interactive": true      
+    },
+    {
+      "source": "landcover_analysis",
+      "source-layer": "landcover_analysis",
+      "interactive": true,
+       "filter": [
+        "all",
+        ["==", "Cover", "Canopy"]
+      ],
+      "type": "fill",
+      "paint": {
+        "fill-color": "#80C456",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "source": "landcover_analysis",
+      "source-layer": "landcover_analysis",
+      "interactive": true,
+       "filter": [
+        "all",
+        ["==", "Cover", "Water"]
+      ],
+      "type": "fill",
+      "paint": {
+        "fill-color": "#6fcfb5",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "source": "landcover_analysis",
+      "source-layer": "landcover_analysis",
+      "interactive": true,
+       "filter": [
+        "all",
+        ["==", "Cover", "Impervious Surface"]
+      ],
+      "type": "fill",
+      "paint": {
+        "fill-color": "#8d8d8d",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "source": "landcover_analysis",
+      "source-layer": "landcover_analysis",
+      "interactive": true,
+       "filter": [
+        "all",
+        ["==", "Cover", "Pervious Surface"]
+      ],
+      "type": "fill",
+      "paint": {
+        "fill-color": "#d2ed6b",
+        "fill-opacity": 0.7
+      }
+    }
+  ]
+}

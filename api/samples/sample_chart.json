@@ -1,0 +1,18 @@
+{
+	"data": {
+		"type": "scatter",
+		"groups": [
+
+		]
+	},
+	"axis": {
+		"x": {
+			"type": "category",
+			"categories": ["Vegetated Buffer", "PM2.5", "NO2", "SO2", "PM10", "O3", "CO2", "CO", "Constructed Wetland", "NO2", "SO2", "PM10", "O3", "Bioswale", "NO2", "SO2", "PM10", "O3", "Living Shoreline", "NO2", "SO2", "PM10", "O3", "Living Roof", "PM2.5", "NO2", "SO2", "PM10", "O3", "Vegetated Trellis", "PM2.5", "NO2", "SO2", "PM10", "O3", "CO"],
+			"label": "pollutant removed"
+		},
+		"y": {
+			"label": "kg/ft2/yr removed"
+		}
+	}
+}
