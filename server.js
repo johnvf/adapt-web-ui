@@ -33,7 +33,7 @@ var app = express();
 //     next()
 //   }
 // })
-
+  
 // Insert LiveReload snippet when in development mode only
 if(env === 'development') {
   console.log('App running in development environment');
@@ -90,6 +90,18 @@ if(USE_API) {
   
   // Setup REST routes
   var mers = require('mers');
+
+  // Filter out everything except GETs to the API
+  app.all(/^\/.*/, function (req, res, next) {
+    console.log(req.method)
+    if( req.method == 'GET' ){
+      next()
+    }
+    else{
+      res.sendStatus(403);
+    }
+  });
+
   app.use('/api', mers({uri: config.db}).rest());
 
   // API Routes - NOT CURRENTLY USED
