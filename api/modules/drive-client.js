@@ -1,8 +1,11 @@
-/*
+/**
  * Module for interacting with google drive
+ *
  * Requires service account key from https://console.developers.google.com
  * Assumes a single config.yaml in a folder shared with this service account
+ * @module api/modules/drive-client
  */
+ 
 var fs=require('fs'),
     https=require('https'),
     mkdirp=require('mkdirp'),
@@ -27,6 +30,9 @@ var private_key,
  * Private
  */
 
+/**
+ * Returns a promise that Auths with the Google Drive API
+ */
 function auth( ){
     return new Promise( function(resolve,reject){
 
@@ -54,7 +60,10 @@ function auth( ){
     })
 }
 
-// Loads data from a spreadsheet
+/**
+ * @param {Object} items - An array of Google Sheet items from Drive to load
+ *   Returns a promise that loads data from a Google Sheet
+ */
 function getDriveSheetData( items ){
     return new Promise( function(resolve,reject){
         
@@ -91,6 +100,10 @@ function getDriveSheetData( items ){
     });
 }
 
+/**
+ * @param {string} folderId - ID of the folder to download
+ * @param {string} targetFolder - the destination filepath for the download
+ */
 function downloadFolderContents( folderId , targetFolder ){
     return new Promise( function(resolve,reject){
 
@@ -132,6 +145,10 @@ function downloadFolderContents( folderId , targetFolder ){
 /*
  * Public
  */
+
+/**
+ * loads one or more google sheets
+ */
 function getSheetData( items, callback ){
     auth()
     .then( getDriveSheetData.bind( null, items ))
@@ -142,6 +159,9 @@ function getSheetData( items, callback ){
     })
 }
 
+/**
+ * Downloads a google drive folder - WIP
+ */
 function downloadFolder( folderId, targetFolder, callback ){
     auth()
     .then( downloadFolderContents.bind( null, folderId, targetFolder ))

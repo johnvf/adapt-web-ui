@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * Node Express Server that provides access to MongoDB via MERS 
+ * & statically serves the client side app and assets.
+ *
+ * @module server
+ */
+
 var fs = require('fs');
 var express  = require('express');
 var mongoose = require('mongoose');

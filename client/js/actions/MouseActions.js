@@ -1,20 +1,17 @@
 /**
- * Mouse Actions
- *
- * Description....
- * client/js/actions/MouseActions.js
- * @module client/actions
+ * @module client/js/actions/MouseActions
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {
 
-  /** Hover event from Map.
+  /**
+   * Updates UserActionStore with hovered map features
    * @fires FEATURE_HOVER
    * @param {e} e - the native hover event
    * @param {features} e - the hovered features
-   * @see  module:client/stores.receiveHover
+   * @see  module:client/stores/UserActionStore
    */
   featureHover: function( e, features ) {
     AppDispatcher.handleViewAction({

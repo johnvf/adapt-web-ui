@@ -1,14 +1,15 @@
 {
   "source": {
     "include": [
-      "README.md" ,
-      "./client/js/actions/MouseActions.js"
-    ]
+      "README.md",
+      "server.js",  
+      "seed_db.js",
+      "xlsx_2_db.js",
+      "client",
+      "api"
+    ],
+    "exclude": [ "node_modules" ]
   },
-  "plugins": [
-    "plugins/markdown",
-    "plugins/summarize"
-  ],
   "opts": {
     "destination": "./public/docs/"
   },

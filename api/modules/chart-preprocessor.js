@@ -1,3 +1,8 @@
+/**
+ * Utilities for cleanup of google sheets data
+ *
+ * @module api/modules/chart-preprocessor
+ */
 
 function coerceNum( candidate ){
     if( typeof candidate === "string"){

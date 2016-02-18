@@ -1,3 +1,7 @@
+/**
+ * @module client/js/actions/ViewActions
+ */
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {

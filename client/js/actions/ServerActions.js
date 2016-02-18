@@ -1,7 +1,16 @@
+/**
+ * @module client/js/actions/ServerActions
+ */
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {
 
+  /**
+   * Receive tags from the API
+   * @fires FEATURE_HOVER
+   * @see  module:client/stores.receiveTags
+   */
   receiveTags: function( tags ) {
     AppDispatcher.handleServerAction({
       type: "RECEIVE_TAGS",
