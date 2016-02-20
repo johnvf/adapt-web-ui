@@ -1,5 +1,8 @@
 var React = require('react');
 
+var ga = require('react-google-analytics');
+var GAInitiailizer = ga.Initializer;
+
 var routerModule = require('react-router');
 var Router = routerModule.Router;
 var Route = routerModule.Route;
@@ -49,6 +52,7 @@ var App = React.createClass({
   componentDidMount: function() {
     TagStore.addChangeListener(this._onChange);
     TitleStore.addChangeListener(this._onChange);
+    ga('create', 'UA-74074287-1', 'auto');
   },
 
   componentWillUnmount: function() {
@@ -91,11 +95,13 @@ const history = useBasename(createBrowserHistory)({
 
 function urlChanged( nextRoute ){
   ViewActions.urlChanged( nextRoute.location.pathname + nextRoute.location.hash );
+  ga('send', 'pageview', nextRoute.location.pathname + nextRoute.location.hash);
 }
 // React-Router route configuration
 // Essentially a mini-sitemap used to direct users to different pages
 React.render((
   <Router history={ history } >
+    <GAInitiailizer />
     <Route path="adapt" component={App}>
       <IndexRoute component={Home} onEnter={ urlChanged }/>
       <Route path="oakland" component={MapView}>

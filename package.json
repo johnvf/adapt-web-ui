@@ -65,6 +65,7 @@
     "promise": "^7.0.4",
     "react": "^0.13.3",
     "react-bootstrap": "0.26.x",
+    "react-google-analytics": "^0.2.0",
     "react-grid-layout": "^0.8.5",
     "react-loader": "^1.4.0",
     "react-loaders": "^1.2.3",
@@ -76,7 +77,7 @@
     "vinyl-source-stream": "^1.0.0",
     "xlsx": "^0.8.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "jsdoc": "^3.4.0"
   }
 }
