@@ -119,11 +119,13 @@ var Sidebar = React.createClass({
                   <Icon className="green-fill" symbolID="icon-icon_about"/>
                 </Link>
               </li>
-              <li>
-                <Link to={ "/adapt/share" }>
-                  <Icon className="green-fill" symbolID="icon-icon_share"/>
-                </Link>
-              </li>
+              {
+              // <li>
+              //   <Link to={ "/adapt/share" }>
+              //     <Icon className="green-fill" symbolID="icon-icon_share"/>
+              //   </Link>
+              // </li>     
+              }
           </ul>
           {mapNav}
         </div>

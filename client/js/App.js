@@ -12,13 +12,15 @@ var Redirect = routerModule.Redirect;
 var ViewActions = require('./actions/ViewActions');
 
 var createBrowserHistory = require('history/lib/createBrowserHistory');
-var useBasename = require('history/lib/useBasename')
+var useBasename = require('history/lib/useBasename');
 
-var TitleStore = require('./stores/TitleStore')
-var TagStore = require('./stores/TagStore')
-var MapStore = require('./stores/MapStore')
-var Sidebar = require( './components/Sidebar')
-var Header = require( './lib_components/Header')
+var TitleStore = require('./stores/TitleStore');
+var TagStore = require('./stores/TagStore');
+var MapStore = require('./stores/MapStore');
+var Sidebar = require( './components/Sidebar');
+var Header = require( './lib_components/Header');
+
+var webglDetect = require('./utils/Utils').webglDetect;
 
 // Pages
 var Landing = require('./pages/Landing'),
@@ -53,6 +55,8 @@ var App = React.createClass({
     TagStore.addChangeListener(this._onChange);
     TitleStore.addChangeListener(this._onChange);
     ga('create', 'UA-74074287-1', 'auto');
+
+    this.setState( {webglEnabled: webglDetect()} );
   },
 
   componentWillUnmount: function() {
@@ -75,13 +79,23 @@ var App = React.createClass({
 
     // FIXME: Not the most reliable test, but hey....
     var sidebarActive = title == "Adapt Oakland" ? true : false
-    
+    var content;
+
+    if ( this.state.webglEnabled ){
+      content = this.props.children
+    } 
+    else{
+      content = [
+      (<h1> WebGL is not enabled or not available.</h1>),
+      (<h3> Please use the latest version of Google Chrome or enable WebGL in in your browser settings </h3>)
+      ]
+    }
     return (
       <div className= "app-loggedin">
         <Header pageTitle={title} pageIcon={icon}/>
         <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
         <div className="container-fluid main centered">
-          {this.props.children}
+          { content }
         </div>
       </div>
     );
