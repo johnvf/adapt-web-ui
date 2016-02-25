@@ -59,7 +59,7 @@ gulp.task('browserify', function() {
   }))
   .pipe(sourcemaps.init({loadMaps: true}))
   .pipe(concat('main.js'))
-  .pipe(uglify({mangle: true}))
+  .pipe(uglify({mangle: false}))
   .pipe(rename({ suffix: '.min'}))
   .pipe(sourcemaps.write('./'))
   .pipe( gulp.dest('./public/js') )
