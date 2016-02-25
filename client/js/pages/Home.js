@@ -37,7 +37,9 @@ var Home = React.createClass({
   render: function() {
 
     var text = this.state.text
-    var bodyMarkup = text ? ( <Text className="text-scroll" body={text[0].data}/> ) : false
+
+    var bodyText = text ? text[0].data : null
+    var bodyMarkup = <Text className="text-scroll" body={ bodyText }/>
 
     return (
       

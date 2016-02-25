@@ -89,9 +89,10 @@ var Text = React.createClass({
     },
 
     render: function(){
+      var html = !!this.props.body ? marked(this.props.body, {renderer: renderer}) : ""
       return(
         <Loader loaded={!!this.props.body}>
-          <div ref="text" id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
+          <div ref="text" id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: html } }/>
         </Loader>
       )
     }

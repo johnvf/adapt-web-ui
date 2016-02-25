@@ -30,9 +30,10 @@ var Toolbox = React.createClass({
   },
 
   render: function() {
-
     var text = this.state.text
-    var bodyMarkup = text ? ( <Text className="body" body={text[0].data}/> ) : false
+
+    var bodyText = text ? text[0].data : null
+    var bodyMarkup = <Text className="text-scroll" body={ bodyText }/>
     
     return (
       <div className="row bg-toolbox" >
