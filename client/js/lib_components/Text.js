@@ -36,7 +36,7 @@ var Text = React.createClass({
       // for navigating hashtag URLS w/ react router
       if( url.split("#").length > 1 ){
         setTimeout(function(){
-          window.location.assign(url) 
+          window.location = (url) 
         },500)
       }
 

@@ -66,6 +66,7 @@ var Map = React.createClass({
 
   },
 
+
   addEventListeners: function(map){
     var self = this;
     map.on('mousemove', function( e ){

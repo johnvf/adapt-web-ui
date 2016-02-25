@@ -38,13 +38,11 @@ function getStateFromStores( tag , resource , slug ) {
     switch ( resource) {
       case "chart":
         item = ChartStore.getCharts( slug )
-        console.log(item)
         content = <Chart key={slug} item={ item } id={slug}/>
         break;
 
       case "table":
         item = TableStore.getTables( slug )
-        console.log(item)
         content = <Table key={slug} item={ item }/>
         break;
 
@@ -56,7 +54,6 @@ function getStateFromStores( tag , resource , slug ) {
 
       case "citation":
         item = CitationStore.getCitations( slug )
-        console.log(item)
         content = <Table key={slug} item={ item }/>
         break;
 
@@ -68,7 +65,6 @@ function getStateFromStores( tag , resource , slug ) {
 
       case "image":
         item = ImageStore.getImages( slug )
-        console.log(item)
         content = <Image key={slug} item={ item }/>
         break;
 
