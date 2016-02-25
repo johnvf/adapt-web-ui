@@ -71,16 +71,16 @@ var Sidebar = React.createClass({
     if(tag){
       url = url.split("#")[0] + "#" + tag;
     }
-    // FIXME: For some reason, this works for navigating tags 
-    // but not for the unadorned URL
-    if( url.split("#").length > 1 ){
-      window.location.assign(url) 
-    }
-    else{
-      // While this works for the unadorned URL, but not for tags
-      this.history.pushState(null, url);  
-    }
 
+      // FIXME: For some reason, this is needed 
+      // for navigating hashtag URLS w/ react router
+      if( url.split("#").length > 1 ){
+        setTimeout(function(){
+          window.location.assign(url) 
+        },500)
+      }
+
+      this.history.pushState(null, url);
   },
 
   contact: function(){

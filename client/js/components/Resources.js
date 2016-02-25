@@ -72,6 +72,7 @@ var Resources = React.createClass({
 
       return (
         <Grid id="resources" fluid={true}>
+          <h3>Resources</h3>
           { resourceMarkup }
         </Grid>
       )

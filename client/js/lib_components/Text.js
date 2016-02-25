@@ -28,44 +28,58 @@ var Text = React.createClass({
       if(!url){
         url = window.location.pathname;
       }
-      if(tag){
+      if(!!tag){
         url = url.split("#")[0] + "#" + tag;
       }
-      // FIXME: For some reason, this works for navigating tags 
-      // but not for the unadorned URL
+
+      // FIXME: For some reason, this is needed 
+      // for navigating hashtag URLS w/ react router
       if( url.split("#").length > 1 ){
-        window.location.assign(url) 
+        setTimeout(function(){
+          window.location.assign(url) 
+        },500)
       }
-      else{
-        // While this works for the unadorned URL, but not for tags
-        this.history.pushState(null, url);  
-      }
+
+      this.history.pushState(null, url);
+    },
+
+    componentDidMount: function(){
+      var self = this;
+      setTimeout( function(){
+        self.processLinks();
+      },50)
     },
 
     componentDidUpdate: function(){
+      this.processLinks();
+    },
+
+    processLinks: function(){
       var markup = React.findDOMNode(this.refs.text);
 
-      var links = markup.querySelectorAll('[href]')
-      var self = this;
+      if( markup ){
+        var links = markup.querySelectorAll('[href]')
+        var self = this;
 
-      // Intercept navigation and use history instead
-      for( var i=0; i < links.length; i++){
-        var link = links[i]
-        link.addEventListener("click", function(e){
-          if( !!e.target.href ){
-            e.preventDefault();
-            self.navigate(e.target.pathname)
-          }
-        });
+        // Intercept navigation and use history instead
+        for( var i=0; i < links.length; i++){
+          var link = links[i]
+          link.addEventListener("click", function(e){
+            if( !!e.target.href ){
+              e.preventDefault();
+              var target = (e.target.pathname + e.target.hash).toLowerCase();
+              self.navigate(target)
+            }
+          });
+        }
       }
-
 
     },
 
     render: function(){
       return(
         <Loader loaded={!!this.props.body}>
-          <div ref='text' id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
+          <div ref="text" id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
         </Loader>
       )
     }

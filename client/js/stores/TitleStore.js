@@ -31,8 +31,8 @@ function updateIconAndTitle( url ){
   // Determine title and icon by looking up url
   var key = url.split("/")[2] || 'adapt'
 
-  _title = _titlesIcons[key].title
-  _icon = _titlesIcons[key].icon
+  _title = _titlesIcons[key] ? _titlesIcons[key].title : "Adapt"
+  _icon = _titlesIcons[key] ? _titlesIcons[key].icon : "icon-icon_logo" 
 }
 
 var TitleStore = assign({}, EventEmitter.prototype, {
