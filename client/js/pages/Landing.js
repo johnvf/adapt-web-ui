@@ -1,12 +1,9 @@
 var React = require('react');
 
-var Loader = require('react-loader');
-
 // var Icon = require('../lib_components/Icon');
 var BigIcon = require('../lib_components/BigIcon');
 
 var Landing = React.createClass({
-
   /**
    * State Boilerplate 
    */

@@ -83,6 +83,18 @@ var Sidebar = React.createClass({
 
   },
 
+  contact: function(){
+    // info@urbanbiofilter.org
+
+    var emailTo = "info@urbanbiofilter.org",
+        emailCC = "",
+        emailSub = "Adapt Oakland";
+
+    // This option doesn't make a blockable popup, but it does harass the user when it tries to navigate them away from the page
+    location.href = "mailto:"+emailTo+'?cc='+emailCC+'&subject='+emailSub;
+    // window.open("mailto:"+emailTo+'?cc='+emailCC+'&subject='+emailSub+'&body='+emailBody);
+  },
+
   render: function() {
 
     var loggedIn = this.props.loggedIn;
@@ -119,13 +131,11 @@ var Sidebar = React.createClass({
                   <Icon className="green-fill" symbolID="icon-icon_about"/>
                 </Link>
               </li>
-              {
-              // <li>
-              //   <Link to={ "/adapt/share" }>
-              //     <Icon className="green-fill" symbolID="icon-icon_share"/>
-              //   </Link>
-              // </li>     
-              }
+              <li>
+                <a onClick={ this.contact }>
+                  <Icon className="green-fill" symbolID="icon-icon_share"/>
+                </a>
+              </li>     
           </ul>
           {mapNav}
         </div>

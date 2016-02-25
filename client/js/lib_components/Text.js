@@ -2,6 +2,7 @@ var React = require('react');
 var marked = require('marked');
 
 var History = require('react-router').History;
+var Loader = require('react-loader');
 
 var renderer = new marked.Renderer();
 
@@ -62,7 +63,11 @@ var Text = React.createClass({
     },
 
     render: function(){
-        return <div ref='text' id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
+      return(
+        <Loader loaded={!!this.props.body}>
+          <div ref='text' id={this.props.id} className={this.props.className} dangerouslySetInnerHTML={ { __html: marked(this.props.body, {renderer: renderer}) } }/>
+        </Loader>
+      )
     }
 });
 

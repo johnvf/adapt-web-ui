@@ -56,4 +56,5 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 WebAPIUtils.getText();
+
 module.exports = TextStore;

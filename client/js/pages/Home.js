@@ -6,6 +6,8 @@ var Link = require('react-router').Link;
 
 var Text = require('../lib_components/Text')
 
+var WebAPIUtils = require('../utils/WebAPIUtils');
+
 function getStateFromStores() {
   return {
     text: TextStore.getText( "home" ),
@@ -27,6 +29,11 @@ var Home = React.createClass({
   },
   componentDidMount: function() {
     TextStore.addChangeListener(this._onChange);
+    // FIXME: Quick hack to improve performance on load
+    // need to avoid hardcoding content stuff in the UI
+    WebAPIUtils.getText("introduction")
+    WebAPIUtils.getText("home")
+    WebAPIUtils.getText("toolbox")
   },
   componentWillUnmount: function() {
     TextStore.removeChangeListener(this._onChange);
