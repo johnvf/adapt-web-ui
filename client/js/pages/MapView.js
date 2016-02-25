@@ -27,56 +27,10 @@ var Resources = require('../components/Resources');
 var camelCaseToRegular = require('../utils/Utils').camelCaseToRegular
 
 function getStateFromStores( tag , resource , slug ) {
-  console.log(tag)
-  var modal,
-      item,
-      content;
-
-  if( resource && slug ){
-    console.log("resource", resource)
-    console.log("slug", slug)
-    switch ( resource) {
-      case "chart":
-        item = ChartStore.getCharts( slug )
-        content = <Chart key={slug} item={ item } id={slug}/>
-        break;
-
-      case "table":
-        item = TableStore.getTables( slug )
-        content = <Table key={slug} item={ item }/>
-        break;
-
-      case "plantList":
-        item = PlantListStore.getPlantLists( slug )
-        console.log(item)
-        content = <Table key={slug} item={ item }/>
-        break;
-
-      case "citation":
-        item = CitationStore.getCitations( slug )
-        content = <Table key={slug} item={ item }/>
-        break;
-
-      case "caseStudy":
-        item = CaseStudyStore.getCaseStudies( slug )
-        console.log(item)
-        content = <Table key={slug} item={ item }/>
-        break;
-
-      case "image":
-        item = ImageStore.getImages( slug )
-        content = <Image key={slug} item={ item }/>
-        break;
-
-      default:
-    }
-    // var caption = item.caption ? <label className="caption">{item.caption}</label> : null
-    if( item && content ){
-      modal = <Modal show={true} content={ content } caption={item.caption} title={ camelCaseToRegular(resource) + " | " + item.name }/>
-    }
-  }
-
   return {
+    tag: tag,
+    resource: resource,
+    slug: slug,
     map_list: MapStore.getMaps( tag),
     text: TextStore.getText( tag ),
     charts: ChartStore.getCharts( tag ),
@@ -91,7 +45,6 @@ function getStateFromStores( tag , resource , slug ) {
     activeMapLayers: MapStore.getActiveLayers(),
     currentBasemap: MapStore.getCurrentBasemap(),
     active_tags: TagStore.getActiveTags(),
-    modal: modal
   };
 }
 
@@ -151,6 +104,62 @@ var MapView = React.createClass({
     }
   },
 
+  renderModal: function(){
+    var tag = this.state.tag,
+        resource = this.state.resource,
+        slug = this.state.slug;
+
+    // console.log(tag)
+    var modal,
+        item,
+        content;
+
+    if( resource && slug ){
+      // console.log("resource", resource)
+      // console.log("slug", slug)
+      switch ( resource) {
+        case "chart":
+          item = ChartStore.getCharts( slug )
+          content = <Chart key={slug} item={ item } id={slug}/>
+          break;
+
+        case "table":
+          item = TableStore.getTables( slug )
+          content = <Table key={slug} item={ item }/>
+          break;
+
+        case "plantList":
+          item = PlantListStore.getPlantLists( slug )
+          console.log(item)
+          content = <Table key={slug} item={ item }/>
+          break;
+
+        case "citation":
+          item = CitationStore.getCitations( slug )
+          content = <Table key={slug} item={ item }/>
+          break;
+
+        case "caseStudy":
+          item = CaseStudyStore.getCaseStudies( slug )
+          console.log(item)
+          content = <Table key={slug} item={ item }/>
+          break;
+
+        case "image":
+          item = ImageStore.getImages( slug )
+          content = <Image key={slug} item={ item }/>
+          break;
+
+        default:
+      }
+      // var caption = item.caption ? <label className="caption">{item.caption}</label> : null
+      if( item && content ){
+        modal = <Modal show={true} content={ content } caption={item.caption} title={ camelCaseToRegular(resource) + " | " + item.name }/>
+      }
+    }
+    return modal
+  },
+
   render: function() {
 
     var content = [],
@@ -170,7 +179,7 @@ var MapView = React.createClass({
         tags = this.state.tags,
         active_tags = this.state.active_tags;
 
-        var modal = this.state.modal;
+        var modal = this.renderModal();
         // These will become widgets in the dashboard
         // Note: currently the widget layouts are hardcoded.
         // don't change this without updating the layouts

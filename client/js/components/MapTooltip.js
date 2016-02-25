@@ -38,6 +38,10 @@ var MapTooltip = React.createClass({
     UserActionStore.addChangeListener(this._onChange);
   },
 
+  componentWillUnmount: function(){
+    UserActionStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
     var map = this.props.map;
     var display = this.state.display;

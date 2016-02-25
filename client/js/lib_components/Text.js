@@ -50,6 +50,10 @@ var Text = React.createClass({
       },50)
     },
 
+    shouldComponentUpdate: function(nextProps){
+      return this.props.body != nextProps.body
+    },
+
     componentDidUpdate: function(){
       this.processLinks();
     },
@@ -66,9 +70,17 @@ var Text = React.createClass({
           var link = links[i]
           link.addEventListener("click", function(e){
             if( !!e.target.href ){
-              e.preventDefault();
-              var target = (e.target.pathname + e.target.hash).toLowerCase();
-              self.navigate(target)
+              // If navigation is local to the site, handle with react router
+              // Else, set window location
+              if ( e.target.hostname == window.location.hostname ){
+                e.preventDefault();
+                var target = (e.target.pathname + e.target.hash).toLowerCase();
+                self.navigate(target)
+              }
+              else{
+                window.location.assign(e.target.href)
+              }
+
             }
           });
         }

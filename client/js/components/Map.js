@@ -32,11 +32,10 @@ var Map = React.createClass({
     var map = this.makeMap(basemaps.streets);
     this.setState({ map: map, basemaps: basemaps});
     this.addEventListeners(map);
+  },
 
-    var self = this;
-    window.onresize = function(){
-      self.resizeMap();
-    }
+  componentWillUnmount: function(){
+
   },
 
   switchBasemap: function(key, loadedCallback){
@@ -68,12 +67,19 @@ var Map = React.createClass({
 
 
   addEventListeners: function(map){
-    var self = this;
-    map.on('mousemove', function( e ){
-      map.featuresAt(e.point, {radius:5}, function( err, features ){
-        if (err) throw err;
-        MouseActions.featureHover(e, features);
-      });
+    map.on('mousemove', this.handleMouseMove.bind(null, map));
+    window.onresize = this.resizeMap;
+  },
+
+  removeEventListeners: function(map){
+    map.removeEventListener('mousemove', this.handleMouseMove);
+    window.onresize = null;
+  },
+
+  handleMouseMove: function(map, e){
+    map.featuresAt(e.point, {radius:5}, function( err, features ){
+      if (err) throw err;
+      MouseActions.featureHover(e, features);
     });
   },
 
