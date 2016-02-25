@@ -92,6 +92,7 @@ var App = React.createClass({
     }
     return (
       <div className= "app-loggedin">
+        <GAInitiailizer />
         <Header pageTitle={title} pageIcon={icon}/>
         <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
         <div className="container-fluid main centered">
@@ -115,7 +116,6 @@ function urlChanged( nextRoute ){
 // Essentially a mini-sitemap used to direct users to different pages
 React.render((
   <Router history={ history } >
-    <GAInitiailizer />
     <Route path="adapt" component={App}>
       <IndexRoute component={Home} onEnter={ urlChanged }/>
       <Route path="oakland" component={MapView}>
