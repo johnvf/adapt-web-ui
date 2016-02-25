@@ -215,13 +215,20 @@ var Map = React.createClass({
   makeMap: function(defaultStyle){
 
     mapboxgl.accessToken = 'pk.eyJ1IjoidXJiYW5iaW9maWx0ZXJkZXYiLCJhIjoiY2lnenZwdnNzMHdibnc3bTVrOWYzc3JraCJ9.eOfaXgitCGm4aqppPt6oHw';
+    var map;
 
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: defaultStyle, // stylesheet location
-        center: [ -122.3000, 37.8100], // starting position
-        zoom: 12 // starting zoom
-    });
+    try {
+      map = new mapboxgl.Map({
+          container: 'map', // container id
+          style: defaultStyle, // stylesheet location
+          center: [ -122.3000, 37.8100], // starting position
+          zoom: 12 // starting zoom
+      });
+    }
+    catch(e){
+      alert( "Unable to display map correctly in your browser. WebGL is needed. Please install Google Chrome and come back!")
+    }
+
     return map;
   },
 
