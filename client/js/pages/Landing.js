@@ -16,7 +16,6 @@ var Landing = React.createClass({
 
     return (
       <div className="row banner" >
-        <GAInitiailizer />
         <a href ='/adapt'>
           <BigIcon className ="landing_icon Adapt" symbolID="Adapt"/>
           <BigIcon className ="landing_icon Evaluate" symbolID="Evaluate"/>
