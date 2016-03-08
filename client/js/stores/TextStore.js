@@ -23,7 +23,10 @@ var TextStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getText: function(tag){    
+  getText: function(tag){
+    if( !_text[tag] ){
+      WebAPIUtils.getText(tag);
+    }
     return _text[tag]
   },
 
@@ -54,7 +57,5 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
   }
 
 });
-
-WebAPIUtils.getText();
 
 module.exports = TextStore;
