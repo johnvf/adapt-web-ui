@@ -8,6 +8,7 @@
  */
 
 var fs = require('fs');
+var compress = require('compression');
 var express  = require('express');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
@@ -48,6 +49,7 @@ if(env === 'development') {
   app.use(livereload({port: 35729}));
 }
 
+app.use(compress());
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(cookieParser());
