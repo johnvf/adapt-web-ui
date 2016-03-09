@@ -50,13 +50,12 @@ var Sidebar = React.createClass({
 
     return(
       <div className="second-nav">
-        <div className="responsive-hints">
-          <span> {"<show menu"}</span>
-          <span style={{float: "right"}}>{"hide menu >"}</span>
-        </div>
         <Accordion>
           { MapPanels }
         </Accordion>
+        <div className="responsive-hints">
+          <p>Touch the sidebar to show this menu, touch outside the sidebar to hide it.</p>
+        </div>
       </div>
     )
   },

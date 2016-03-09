@@ -46,9 +46,9 @@ var Home = React.createClass({
         <div className="container-fluid bg-green" >
           <Loader loaded={true}>
             <div className="row home">           
-              <div className="col-xs-3 col-md-3">
+              <div className="col-xs-12 col-sm-3">
                 <Link to={ "/adapt/toolbox" }>
-                  <div className="row bg-light home-options">
+                  <div className="bg-light home-options">
                       <div className= "home-heading">
                         <Icon className ="green-fill options-icon" symbolID="icon-icon_toolbox"/>
                         <h3 className ="options-heading"> ADAPT <br /> TOOLBOX</h3>
@@ -57,7 +57,7 @@ var Home = React.createClass({
                   </div>
                 </Link>
                 <Link to={ "/adapt/oakland/introduction" }>
-                  <div className="row bg-light home-options last">
+                  <div className="bg-light home-options last">
                       <div className= "home-heading">
                         <Icon className ="green-fill options-icon"  symbolID="icon-icon_map"/>
                         <h3 className ="options-heading" > ADAPT <br /> OAKLAND</h3>
@@ -66,7 +66,7 @@ var Home = React.createClass({
                   </div>
                 </Link>
               </div>
-              <div className="col-xs-9 col-md-9 home-description">
+              <div className="col-xs-12 col-sm-9 home-description">
                 <div className="text-scroll-body">
                   { bodyMarkup }
                 </div>
