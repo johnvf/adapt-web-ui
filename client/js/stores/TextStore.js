@@ -7,7 +7,9 @@ var WebAPIUtils = require('../utils/WebAPIUtils');
 var CHANGE_EVENT = 'change';
 
 var _text = {};
+var _textLoading = {};
 var _loading = true;
+
 
 var TextStore = assign({}, EventEmitter.prototype, {
 
@@ -24,7 +26,8 @@ var TextStore = assign({}, EventEmitter.prototype, {
   },
 
   getText: function(tag){
-    if( !_text[tag] ){
+    if( !_text[tag] && !_textLoading[tag]){
+      _textLoading[tag] = true;
       WebAPIUtils.getText(tag);
     }
     return _text[tag]
@@ -44,6 +47,7 @@ TextStore.dispatchToken = AppDispatcher.register(function(payload) {
     case "RECEIVE_TEXT":
       action.text.forEach( function(text){
         text.tags.forEach( function(tag){
+          _textLoading[tag] = false;
           !_text[tag] ? _text[tag] = [text] : _text[tag].push(text)
         })
       })
