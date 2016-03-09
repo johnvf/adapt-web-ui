@@ -32,7 +32,7 @@ var Text = React.createClass({
         url = url.split("#")[0] + "#" + tag;
       }
 
-      // FIXME: For some reason, this is needed 
+      // FIXME: For some reason, this is needed  
       // for navigating hashtag URLS w/ react router
       if( url.split("#").length > 1 ){
         setTimeout(function(){

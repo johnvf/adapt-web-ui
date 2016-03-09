@@ -66,21 +66,24 @@ var Sidebar = React.createClass({
   // FIXME: This code is also copy/pasted into the text widget
   navigate: function(url, tag){
     if(!url){
-      url = window.location.pathname;
+      // url = window.location.pathname;
+      // ASSERTION: Hardcoded assumption about URLs here - '/adapt/oakland/1_analyze' etc..
+      url = window.location.pathname.split("/").slice(0, 4).join("/");
     }
     if(tag){
       url = url.split("#")[0] + "#" + tag;
     }
 
-      // FIXME: For some reason, this is needed 
-      // for navigating hashtag URLS w/ react router
-      if( url.split("#").length > 1 ){
-        setTimeout(function(){
-          window.location.assign(url) 
-        },500)
-      }
+    // FIXME: For some reason, this is needed 
+    // for navigating hashtag URLS w/ react router
+    if( url.split("#").length > 1 ){
+      setTimeout(function(){
+        // window.location.assign(url) 
+        window.location = (url) 
+      },500)
+    }
 
-      this.history.pushState(null, url);
+    this.history.pushState(null, url);
   },
 
   contact: function(){
