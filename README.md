@@ -85,13 +85,26 @@ The importer uses several different libraries/readers to consume content. These 
 
 - These URLs should be entered in the report text in Google Drive
 - Hyperlinks in the report text are processed with the following substitutions: 'http://www.adaptoakland.org' -> '/' and '~' -> '#', to produce a relative URL while still permitting testing/debugging the text in Word. For some reason, MS Word strips the '#' off of URLs, and won't allow the user to set relative urls.EG:
-  - http://www.adaptoakland.org/adapt/oakland/analyze/chart/direct_removal_of_air_pollution_by_trees_in_wind_tunnel_study
-  - http://adaptoakland.org/toolbox~my_heading_title
+
+Charts:
+  - http://adaptoakland.org/adapt/oakland/1_analyze/chart/direct_removal_of_air_pollution_by_trees_in_wind_tunnel_study
+Link to another header in oakland (the plan): 
+  - http://adaptoakland.org/adapt/oakland/4_Monitor~1_bioblitz
+Link to another header in the toolbox: 
+  - http://adaptoakland.org/adapt/toolbox~my_heading_title
+  
+
+Please use the following numbering convention (not the one from google docs) 
+1_analyze
+2_design 
+3_implement 
+4_monitor 
+5_evaluate
+6_adapt 
+
 - For some reason, a .docx dumped out by google drive initially causes the importer to error out. The workaround is:
   1. Open in MS Word.
-  2. 'Select All' and then 'Cut' the entire report.
-  3. Paste the entire report.
-  4. Save the file.
+  2. Save the file.
 
 ### Images
 
