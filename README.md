@@ -88,8 +88,10 @@ The importer uses several different libraries/readers to consume content. These 
 
 Charts:
   - http://adaptoakland.org/adapt/oakland/1_analyze/chart/direct_removal_of_air_pollution_by_trees_in_wind_tunnel_study
+
 Link to another header in oakland (the plan): 
   - http://adaptoakland.org/adapt/oakland/4_Monitor~1_bioblitz
+
 Link to another header in the toolbox: 
   - http://adaptoakland.org/adapt/toolbox~my_heading_title
   
