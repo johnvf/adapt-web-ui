@@ -8,6 +8,12 @@ var Tooltip = require('../components/MapTooltip');
 var BasemapToggle = require('../components/BasemapToggle');
 var Legend = require('../components/MapLegend');
 
+// It seems that this value may vary in different devices 
+// w/ different zoom settings
+// Not crazy about changing a global like this, but
+// this should standardize things a bit...
+window.devicePixelRatio=1
+
 // array.find polyfill
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
