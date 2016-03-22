@@ -15,6 +15,7 @@ var ModalWrapper = React.createClass({
   },
 
   close: function() {
+    window.history.back();
     this.setState({ showModal: false });
   },
 

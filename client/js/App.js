@@ -81,6 +81,8 @@ var App = React.createClass({
     var sidebarActive = title == "Adapt Oakland" ? true : false
     var content;
 
+    var map = window.location.pathname.split("/")[3]
+
     if ( this.state.webglEnabled ){
       content = this.props.children
     } 
@@ -94,7 +96,7 @@ var App = React.createClass({
       <div className= "app-loggedin">
         <GAInitiailizer />
         <Header pageTitle={title} pageIcon={icon}/>
-        <Sidebar tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
+        <Sidebar map={map} tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
         <div className="container-fluid main centered">
           { content }
         </div>

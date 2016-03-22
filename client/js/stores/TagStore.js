@@ -14,13 +14,13 @@ var _tags = {},
     _mapTagTree = [],
     _activeGroup,
     _activeLayer,
-    _activeMap,
-    _URLTag;
+    _activeMap;
+    // _URLTag;
 
-window.onpopstate = function(event) {
-  // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-  console.debug ("location: " + document.location + ", state: " + JSON.stringify(event.state));
-};
+// window.onpopstate = function(event) {
+//   // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+//   console.debug ("location: " + document.location + ", state: " + JSON.stringify(event.state));
+// };
 
 var TagStore = assign({}, EventEmitter.prototype, {
 
@@ -113,9 +113,9 @@ var TagStore = assign({}, EventEmitter.prototype, {
     return _active_tags
   },
 
-  getURLTag: function(){
-    return _URLTag
-  },
+  // getURLTag: function(){
+  //   return _URLTag
+  // },
 
   getMapTagTree: function(){
     return _mapTagTree;
@@ -128,12 +128,12 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "URL_CHANGED":
-      // FIXME: Looks like only a single tag is supported by MERS filtering
-      _URLTag = action.url.split("/").reverse()[0];
-      console.log(action.url);
-      TagStore.emitChange();
-      break;
+    // case "URL_CHANGED":
+    //   // FIXME: Looks like only a single tag is supported by MERS filtering
+    //   _URLTag = action.url.split("/").reverse()[0];
+    //   console.log(action.url);
+    //   TagStore.emitChange();
+    //   break;
 
     // FIXME: Are these used?
     // case "TOGGLE_TAGS":
