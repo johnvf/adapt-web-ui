@@ -25,19 +25,30 @@ var Sidebar = React.createClass({
 
   mixins: [ History ],
 
-  getMapNav: function(maps){
+  getMapNav: function(maps, urlMap){
     var self = this;
+    var defaultActiveKey;
     // loo00l .. maps.map(function(map...)) 
     // Such l00l!!111
     var MapPanels = maps.map(function(map, index){
+
+      // Expand this item if this is the currently active map
+      if(  map.text === urlMap ){
+        defaultActiveKey = index
+      }
+
       var GroupPanels = map.groups.map(function(group, index){
         return (
           <MapGroupMenuItem group={group} navigate={self.navigate}></MapGroupMenuItem>
           )
       });
 
+
       return(
-        <Panel key={index} header={ displayCase(map.text) } eventKey={ index } onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
+        <Panel  key={index} 
+                header={ displayCase(map.text) }
+                eventKey={ index }
+                onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
           <div className="map-header"> 
             <h3>section</h3>
             <h3>map layer</h3>
@@ -50,7 +61,7 @@ var Sidebar = React.createClass({
 
     return(
       <div className="second-nav">
-        <Accordion>
+        <Accordion activeKey={defaultActiveKey}>
           { MapPanels }
         </Accordion>
         <div className="responsive-hints">
@@ -105,7 +116,7 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var mapNav = this.props.active ? this.getMapNav( this.props.mapTagTree ) : false;
+    var mapNav = this.props.active ? this.getMapNav( this.props.mapTagTree, this.props.map ) : false;
 
     return (
       <div id="sidebar-wrapper">
