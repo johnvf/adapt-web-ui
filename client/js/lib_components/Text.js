@@ -69,6 +69,7 @@ var Text = React.createClass({
         for( var i=0; i < links.length; i++){
           var link = links[i]
           link.addEventListener("click", function(e){
+            e.preventDefault();
             if( !!e.target.href ){
               // If navigation is local to the site, handle with react router
               // Else, set window location
@@ -78,7 +79,8 @@ var Text = React.createClass({
                 self.navigate(target)
               }
               else{
-                window.location.assign(e.target.href)
+                // window.location.assign(e.target.href)
+                window.open( e.target.href,'_blank');
               }
 
             }

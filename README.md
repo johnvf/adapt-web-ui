@@ -47,6 +47,7 @@ Place a .env file in your folder that contains the following keys
 - GAPI_CLIENT_EMAIL
 - GAPI_CLIENT_ID
 - GAPI_TYPE
+- CLOUDINARY_URL
 
 Add the following to your .bashrc, changing paths as needed:
 
