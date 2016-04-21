@@ -72,12 +72,18 @@ var Text = React.createClass({
           var link = links[i]
           link.addEventListener("click", function(e){
             e.preventDefault();
-            if( !!e.target.href ){
+
+            // Sometimes, Mammoth.js nests embeds a STRONG tag 
+            // which receives the click event. 
+            // This should reliably get the clicked anchor tag
+            el = e.target.href ? e.target : e.target.parentElement
+
+            if( !!el.href ){
               // If navigation is local to the site, handle with react router
               // Else, set window location
-              if ( e.target.hostname == window.location.hostname ){
+              if ( el.hostname == window.location.hostname ){
                 e.preventDefault();
-                var target = (e.target.pathname + e.target.hash).toLowerCase();
+                var target = (el.pathname + el.hash).toLowerCase();
                 self.navigate(target)
               }
               else{
