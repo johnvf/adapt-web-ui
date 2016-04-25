@@ -15,11 +15,7 @@ var History = require('react-router').History;
 var MapStore = require('../stores/MapStore');
 var Icon = require('../lib_components/Icon');
 var MapGroupMenuItem = require('../components/MapGroupMenuItem');
-
-
-function displayCase( snakeString ){
-  return snakeString.split("_").map(function(w){ return w[0].toUpperCase() + w.slice(1); }).join(" ")
-}
+var Utils = require('../utils/Utils');
 
 var Sidebar = React.createClass({
 
@@ -46,7 +42,7 @@ var Sidebar = React.createClass({
 
       return(
         <Panel  key={index} 
-                header={ displayCase(map.text) }
+                header={ Utils.snakeCaseToDisplayCase(map.text) }
                 eventKey={ index }
                 onClick={ function(e){ self.navigate('/adapt/oakland/' + map.tag.text)} } >
           <div className="map-header"> 

@@ -6,6 +6,8 @@ var MapLayerMenuItem = require('../components/MapLayerMenuItem');
 
 var NavMenuItem = require('../components/NavMenuItem');
 
+var Utils = require('../utils/Utils');
+
 var MapGroupMenuItem = React.createClass({
 
   onGroupClick: function (e) {
@@ -39,7 +41,7 @@ var MapGroupMenuItem = React.createClass({
     return (
       <li className={ className } >
         <h3 className="group-menu-item-header" onClick={ this.onGroupClick }>
-        { groupName }
+        {  Utils.snakeCaseToDisplayCase(groupName) }
         </h3>
         <ul className="map-layer-menu">
             { layerItems }
