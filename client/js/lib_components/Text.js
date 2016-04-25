@@ -9,7 +9,7 @@ var renderer = new marked.Renderer();
 // FIXME: This sort of attribute processing should really be done by the importer, not live in the client.
 renderer.heading = function (text, level) {
 
-  var escapedText =  text.replace(/<(?:.|\n)*?>/gm, '').toLowerCase().split(/[^\w]+/g).join('_');
+  var escapedText =  text.replace(/<(?:.|\n)*?>/gm, '').toLowerCase().trim().split(/[^\w]+/g).join('_');
 
   return '<h' + level + '><a name="' +
                 escapedText +
