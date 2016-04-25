@@ -52,7 +52,14 @@ function dump_data( worksheet, required_fields ){
 
 // Tags go straight in
 function make_tags( dump ){
+
+    dump.forEach( function(tag){
+        tag.text = tag.text.trim()
+        tag.type = tag.type.trim()
+    })
+
     seed_db( "tag", dump )
+    // seed_db( "tag", dump )
 }
 
 // .XLSX table data w/ c3.js configuration
