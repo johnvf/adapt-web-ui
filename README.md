@@ -74,6 +74,10 @@ Every tab in the master spreadsheet contains a 'tags' column that is used to cre
 
 The importer uses several different libraries/readers to consume content. These libraries/readers have some quirks that should be noted.
 
+### Tags
+
+All tags must be unique. Multiple map layers or report sections cannot have the same name/tag.
+
 ### Charts/Tables
 
 - A Google Drive API key is needed (server key). To import data on Google Drive, the App needs to be given access to the relevant google sheets (through the e-mail address assigned when the API key is assigned).
