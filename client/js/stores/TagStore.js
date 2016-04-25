@@ -12,6 +12,39 @@ var _tags = {},
     _map_list,
     _active_tags = {},
     _mapTagTree = [],
+    _toolboxTagTree = [
+      {
+        "text": "tool kit A",
+        "tag": { "text": "tool_kit_a"},
+        "tools": [
+          {
+            "text": "tool A-1",
+            "tag": { "text": "tool_a-1"},
+          },
+          {
+            "text": "tool A-2",
+            "tag": { "text": "tool_a-2"},
+          },
+          {
+            "text": "tool A-3",
+            "tag": { "text": "tool_a-1"},
+          },
+        ]
+      },{
+        "text": "tool kit B",
+        "tag": { "text": "tool_kit_b"},
+        "tools": [
+          {
+            "text": "tool B-1",
+            "tag": { "text": "tool_b-1"},
+          },
+          {
+            "text": "tool B-2",
+            "tag": { "text": "tool_b-2"},
+          }
+        ]
+      },
+    ],
     _activeGroup,
     _activeLayer,
     _activeMap;
@@ -119,6 +152,10 @@ var TagStore = assign({}, EventEmitter.prototype, {
 
   getMapTagTree: function(){
     return _mapTagTree;
+  },
+
+  getToolboxTagTree: function(){
+    return _toolboxTagTree
   }
 
 });
@@ -152,6 +189,7 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       if( _tagLookup && _map_list){
         TagStore.makeMapTagTree();
       }
+
       console.debug(_tags)
       console.debug(_active_tags)
       TagStore.emitChange();
