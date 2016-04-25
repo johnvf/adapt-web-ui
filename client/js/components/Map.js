@@ -209,17 +209,19 @@ var Map = React.createClass({
           }
         }
       }
-      layer.layers.forEach(function(style, i){
-        var id = styleId(layer, i);
-        newStyles[id] = style;
-        if(!activeStyles.hasOwnProperty(id)){
+      if ( layer.layers ){
+        layer.layers.forEach(function(style, i){
+          var id = styleId(layer, i);
+          newStyles[id] = style;
+          if(!activeStyles.hasOwnProperty(id)){
 
-          if( !objInArrayHasId( addQueue.styles, id) ){
-            style.id = id;
-            addQueue.styles.push(style);
+            if( !objInArrayHasId( addQueue.styles, id) ){
+              style.id = id;
+              addQueue.styles.push(style);
+            }
           }
-        }
-      });
+        });
+      }
     });
 
     for(id in activeStyles){
