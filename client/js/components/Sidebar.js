@@ -67,6 +67,49 @@ var Sidebar = React.createClass({
     )
   },
 
+  getToolboxNav: function(tools){
+    var self = this;
+
+    var ToolPanels = tools.map(function(toolkit, index){
+
+      var ToolkitPanels = toolkit.tools.map(function(tool, index){
+        // FIXME: Placeholder - make this div clickable/styled
+        return (
+          <h3 className="group-menu-item-header"
+              onClick={ function(e){ 
+                e.stopPropagation();
+                self.navigate('/adapt/toolbox', tool.text)} }>
+              {Utils.snakeCaseToDisplayCase(tool.text)}
+          </h3>
+          )
+      });
+
+
+      return(
+        <Panel  key={index} 
+                header={ Utils.snakeCaseToDisplayCase(toolkit.text) } 
+                eventKey={ index } 
+                onClick={ function(e){ 
+                  e.stopPropagation()
+                  self.navigate('/adapt/toolbox', toolkit.text)} }>
+          <hr/>
+          { ToolkitPanels }
+        </Panel>
+      )
+    })
+
+    return(
+      <div className="second-nav">
+        <Accordion>
+          { ToolPanels }
+        </Accordion>
+        <div className="responsive-hints">
+          <p>Touch the sidebar to show this menu, touch outside the sidebar to hide it.</p>
+        </div>
+      </div>
+    )
+  },
+
   // This function has become hacky - 
   // need to find a better way to have react-router handle navigation.
   // FIXME: This code is also copy/pasted into the text widget
@@ -112,7 +155,8 @@ var Sidebar = React.createClass({
     var navbarClassName;
     var brandClassName;
 
-    var mapNav = this.props.active ? this.getMapNav( this.props.mapTagTree, this.props.map ) : false;
+    var mapNav = this.props.mapActive ? this.getMapNav( this.props.mapTagTree, this.props.map ) : false;
+    var toolboxNav = this.props.toolboxActive ? this.getToolboxNav( this.props.toolboxTagTree ) : false;
 
     return (
       <div id="sidebar-wrapper">
@@ -147,6 +191,7 @@ var Sidebar = React.createClass({
               </li>     
           </ul>
           {mapNav}
+          {toolboxNav}
         </div>
       </div>
     )

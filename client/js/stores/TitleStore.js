@@ -29,7 +29,7 @@ var _titlesIcons = {
 
 function updateIconAndTitle( url ){
   // Determine title and icon by looking up url
-  var key = url.split("/")[2] || 'adapt'
+  var key = url.split("#")[0].split("/")[2] || 'adapt'
 
   _title = _titlesIcons[key] ? _titlesIcons[key].title : "Adapt"
   _icon = _titlesIcons[key] ? _titlesIcons[key].icon : "icon-icon_logo" 

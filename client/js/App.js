@@ -17,6 +17,7 @@ var useBasename = require('history/lib/useBasename');
 var TitleStore = require('./stores/TitleStore');
 var TagStore = require('./stores/TagStore');
 var MapStore = require('./stores/MapStore');
+var ToolStore = require('./stores/ToolStore');
 var Sidebar = require( './components/Sidebar');
 var Header = require( './lib_components/Header');
 
@@ -37,6 +38,7 @@ function getStateFromStores() {
     tags: TagStore.getTags(),
     maps: MapStore.getMaps(),
     mapTagTree: TagStore.getMapTagTree(),
+    toolboxTagTree: TagStore.getToolboxTagTree(),
     active_tags: TagStore.getActiveTags()
   };
 }
@@ -75,10 +77,15 @@ var App = React.createClass({
     var tags = this.state.tags;
     var active_tags = this.state.active_tags;
     var mapTagTree = this.state.mapTagTree;
+    var toolboxTagTree = this.state.toolboxTagTree;
     // console.debug( active_tags );
 
-    // FIXME: Not the most reliable test, but hey....
-    var sidebarActive = title == "Adapt Oakland" ? true : false
+    // FIXME: Not the most reliable tests, but hey....
+    var mapActive = title == "Adapt Oakland" ? true : false
+    var toolboxActive = title == "Toolbox" ? true : false
+
+    console.log("toolboxActive?", toolboxActive)
+
     var content;
 
     var map = window.location.pathname.split("/")[3]
@@ -96,7 +103,13 @@ var App = React.createClass({
       <div className= "app-loggedin">
         <GAInitiailizer />
         <Header pageTitle={title} pageIcon={icon}/>
-        <Sidebar map={map} tags={tags} active_tags={active_tags} mapTagTree={mapTagTree} active={sidebarActive} />
+        <Sidebar  map={map} 
+                  tags={tags} 
+                  active_tags={active_tags} 
+                  mapTagTree={mapTagTree}
+                  toolboxTagTree={toolboxTagTree}
+                  mapActive={mapActive} 
+                  toolboxActive={toolboxActive}/>
         <div className="container-fluid main centered">
           { content }
         </div>

@@ -10,8 +10,10 @@ var CHANGE_EVENT = 'change';
 var _tags = {},
     _tagLookup,
     _map_list,
+    _tools,
     _active_tags = {},
     _mapTagTree = [],
+    _toolboxTagTree = [],
     _activeGroup,
     _activeLayer,
     _activeMap;
@@ -105,6 +107,38 @@ var TagStore = assign({}, EventEmitter.prototype, {
     console.log("built mapTagTree", _mapTagTree);
   },
 
+  makeToolTagTree: function(){
+    console.log("making tool tag tree")
+
+    _tools.forEach( function(tool){
+
+      var toolTags = tool.tags.map(function(tagText){ return _tagLookup[tagText]; });
+
+      var toolkitTag = toolTags.filter(function(tag){ return tag.type == "toolkit";})[0];
+      var toolTag = toolTags.filter(function(tag){ return tag.type == "tool"; })[0];
+
+      if( toolkitTag && toolTag ){
+        // FIXME: Quick workaround to allow duplicate tags - should actually switch to UUIDs for tags
+        var toolkitText = toolkitTag.text.replace("toolkit_", "")
+
+        var toolkitObject = _toolboxTagTree.filter(function(toolkitObj){ return toolkitText === toolkitObj.text; })[0];
+        if( !toolkitObject ){
+          toolkitObject = { text: toolkitText, tag: toolkitTag, tools: [] };
+          _toolboxTagTree.push(toolkitObject);
+        }
+        // FIXME: Quick workaround to allow duplicate tags - should actually switch to UUIDs for tags
+        var toolText = toolTag.text.replace("tool_", "")
+        
+        var toolObject = { text: toolText, tag: toolTag };
+        toolkitObject.tools.push(toolObject);
+
+      } else {
+        console.log("insufficient tags:", layer.name, layer.tags);
+      }
+    });
+    console.log("built toolkitTagTree", _toolboxTagTree);
+  },
+
   getTags: function(){
     return _tags
   },
@@ -119,6 +153,10 @@ var TagStore = assign({}, EventEmitter.prototype, {
 
   getMapTagTree: function(){
     return _mapTagTree;
+  },
+
+  getToolboxTagTree: function(){
+    return _toolboxTagTree
   }
 
 });
@@ -152,6 +190,11 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       if( _tagLookup && _map_list){
         TagStore.makeMapTagTree();
       }
+
+      if( _tagLookup && _tools){
+        TagStore.makeToolTagTree();
+      }
+
       console.debug(_tags)
       console.debug(_active_tags)
       TagStore.emitChange();
@@ -166,6 +209,17 @@ TagStore.dispatchToken = AppDispatcher.register(function(payload) {
       // but should only generate the tage tree when _tagLookup exists
       if( _tagLookup && _map_list){
         TagStore.makeMapTagTree();
+      }
+
+      _loading = false
+      TagStore.emitChange();
+      break;
+
+    case "RECEIVE_TOOLS":
+      _tools = action.tools;
+
+      if( _tagLookup && _tools){
+        TagStore.makeToolTagTree();
       }
 
       _loading = false
