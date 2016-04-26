@@ -13,39 +13,6 @@ var _tags = {},
     _tools,
     _active_tags = {},
     _mapTagTree = [],
-    // _toolboxTagTree = [
-    //   {
-    //     "text": "tool kit A",
-    //     "tag": { "text": "tool_kit_a"},
-    //     "tools": [
-    //       {
-    //         "text": "tool A-1",
-    //         "tag": { "text": "tool_a-1"},
-    //       },
-    //       {
-    //         "text": "tool A-2",
-    //         "tag": { "text": "tool_a-2"},
-    //       },
-    //       {
-    //         "text": "tool A-3",
-    //         "tag": { "text": "tool_a-1"},
-    //       },
-    //     ]
-    //   },{
-    //     "text": "tool kit B",
-    //     "tag": { "text": "tool_kit_b"},
-    //     "tools": [
-    //       {
-    //         "text": "tool B-1",
-    //         "tag": { "text": "tool_b-1"},
-    //       },
-    //       {
-    //         "text": "tool B-2",
-    //         "tag": { "text": "tool_b-2"},
-    //       }
-    //     ]
-    //   },
-    // ],
     _toolboxTagTree = [],
     _activeGroup,
     _activeLayer,
