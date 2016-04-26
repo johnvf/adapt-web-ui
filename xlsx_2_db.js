@@ -162,13 +162,18 @@ function make_text( dump ){
             mammoth.convertToMarkdown({ path: filepath }, options)            
             .then(function(result){
                 // var data = result.value.replace(/id=.*"/g, "").replace(/~/g, "#"); // The generated HTML, with ids regexed out
-                var data = result.value.replace(/id=.*"/g, "")
+                // Why are there so many different "~"??!
+                var data = result.value
+                    .replace(/˜/g, "#")
+                    .replace(/∼/g, "#")
+                    .replace(/∽/g, "#")
+                    .replace(/~/g, "#")
+                    .replace(/id=.*"/g, "")
                     .replace(/http:\/\/adaptoakland.org/g, "")
                     .replace(/http:\/\/www.adaptoakland.org/g, "")
                     .replace(/http:\/\/plan.adaptoakland.org/g, "")
-                    .replace(/http:\/\/www.plan.adaptoakland.org/g, "")
-                    .replace(/~/g, "#");
-                    
+                    .replace(/http:\/\/www.plan.adaptoakland.org/g, "");
+
                 var name = item.name
                 var tags = get_tags(item.tags)
                 resolve( { name: name, data: data, tags: tags, index: item.index } )
