@@ -53,6 +53,13 @@ module.exports = {
     });
   },
 
+  receiveTools: function( tools ) {
+    AppDispatcher.handleServerAction({
+      type: "RECEIVE_TOOLS",
+      tools: tools
+    });
+  },
+
   receiveCitations: function( citations ) {
     AppDispatcher.handleServerAction({
       type: "RECEIVE_CITATIONS",

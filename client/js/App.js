@@ -17,6 +17,7 @@ var useBasename = require('history/lib/useBasename');
 var TitleStore = require('./stores/TitleStore');
 var TagStore = require('./stores/TagStore');
 var MapStore = require('./stores/MapStore');
+var ToolStore = require('./stores/ToolStore');
 var Sidebar = require( './components/Sidebar');
 var Header = require( './lib_components/Header');
 

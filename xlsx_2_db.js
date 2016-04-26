@@ -10,7 +10,7 @@ require('dotenv').load();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./api/config');
 
-var models = ['tag', 'chart', 'table', 'plantList', 'citation', 'caseStudy', 'text', 'image', 'map']
+var models = ['tag', 'chart', 'table', 'plantList', 'citation', 'caseStudy', 'text', 'image', 'map', 'tool']
 
 // Call this script with a path to an xlsx file.
 var path = process.argv.slice(2)[0]
@@ -253,6 +253,18 @@ function make_images( dump ){
     });
 }
 
+function make_tools( dump ){
+
+    tools = dump.map(function(item){
+        item.tags = get_tags(item.tags)
+        item.name = deslugify( item.tags[item.tags.length-1] )
+        item.slug = slugify(item.name)
+        return item
+    })
+
+    seed_db( "tool", tools )
+}
+
 // Map JSON for mapbox.gl
 function make_maps( dump ){
 
@@ -356,6 +368,11 @@ function seed_from_xlsx( path ){
                 case "Maps":
                     var required_fields = ["tags"] 
                     make_maps( dump_data( worksheet, required_fields ) )
+                    break;
+
+                case "Tools":
+                    var required_fields = ["tags"] 
+                    make_tools( dump_data( worksheet, required_fields ) )
                     break;
 
                 default:

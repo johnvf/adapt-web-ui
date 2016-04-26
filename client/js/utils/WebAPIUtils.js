@@ -113,6 +113,22 @@ module.exports = {
         });
     },
 
+    getTools: function( tags ){
+        // If tags, concatenate and append to URL
+        var url = tags ?  "/api/tool?sort=index:1&filter[tags]="+tags : "/api/tool?sort=index:1"
+        request.get( url )
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+
+          if (err == null) {
+            ServerActions.receiveTools(JSON.parse(res.text).payload); 
+          } else {
+            handleError(res.text);
+          }
+
+        });
+    },
+
     getCitations: function( tags ){
         // If tags, concatenate and append to URL
         var url = tags ?  "/api/citation?sort=index:1&filter[tags]="+tags : "/api/citation?sort=index:1"

@@ -36,9 +36,9 @@ var Toolbox = React.createClass({
     var bodyMarkup = <Text className="text-scroll" body={ bodyText }/>
     
     return (
-      <div className="row bg-toolbox" >
-        <div className="col-md-4"></div>                 
-        <div className="col-md-8">
+      <div className="row bg-toolbox layout" >
+        <div className="col-xs-0 col-sm-2"></div>                 
+        <div className="col-xs-12 col-sm-10">
           <div className = "text-scroll-body">             
             { bodyMarkup }
           </div>

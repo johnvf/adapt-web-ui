@@ -78,7 +78,7 @@ var Sidebar = React.createClass({
           <h3 className="group-menu-item-header"
               onClick={ function(e){ 
                 e.stopPropagation();
-                self.navigate('/adapt/toolbox', tool.tag.text)} }>
+                self.navigate('/adapt/toolbox', tool.text)} }>
               {Utils.snakeCaseToDisplayCase(tool.text)}
           </h3>
           )
@@ -91,7 +91,7 @@ var Sidebar = React.createClass({
                 eventKey={ index } 
                 onClick={ function(e){ 
                   e.stopPropagation()
-                  self.navigate('/adapt/toolbox', toolkit.tag.text)} }>
+                  self.navigate('/adapt/toolbox', toolkit.text)} }>
           <hr/>
           { ToolkitPanels }
         </Panel>
