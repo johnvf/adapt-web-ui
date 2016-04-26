@@ -62,6 +62,8 @@ var Map = React.createClass({
     var map = this.makeMap(basemaps.streets);
     this.setState({ map: map, basemaps: basemaps});
     this.addEventListeners(map);
+    var self = this;
+    setTimeout(self.updateLayers.bind(null, self.props), 500)
   },
 
   componentWillUnmount: function(){
@@ -82,17 +84,18 @@ var Map = React.createClass({
 
   componentWillReceiveProps: function(props){
 
-    var updateLayers = function(){
-      var results = this.batchUpdateLayers(props.active_layers);
-      this.setState({activeStyles: results.styles, activeSources: results.sources, currentBasemap: props.basemap});
-      this.resizeMap();
-    }.bind(this);
-
-    var switched = this.switchBasemap(props.basemap, updateLayers)
+    var switched = this.switchBasemap(props.basemap, this.updateLayers.bind(null, props))
     if( !switched ){
-      updateLayers();
+      var self = this;
+      setTimeout(self.updateLayers.bind(null, props), 500)
     }
 
+  },
+
+  updateLayers: function(props){
+    var results = this.batchUpdateLayers(props.active_layers);
+    this.setState({activeStyles: results.styles, activeSources: results.sources, currentBasemap: props.basemap});
+    this.resizeMap();
   },
 
 

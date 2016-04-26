@@ -15,6 +15,34 @@ var _activeGroup;
 var _activeLayer;
 var _currentBasemap = 'streets';
 
+function handleURLChange(url){
+  var urlParts = url.split("/"),
+    tag = urlParts[ urlParts.length - 1]
+
+  var layers = _maps[tag];
+
+  if( !!layers ){
+
+    _activeLayers.forEach(function(layer){
+      layer.is_displayed = false;
+    });
+
+    var layers = layers.filter(function(layer){
+      // check if layer should be displayed by default
+      if( layer.default == 1 ){
+        layer.is_displayed = true;
+        return true;
+      } else {
+        layer.is_displayed = false;
+        return false;
+      }
+    });
+
+    console.log("setting new active layers", layers);
+    _activeLayers = layers;
+  }
+}
+
 var MapStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -52,31 +80,7 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
     case "URL_CHANGED":
-      var urlParts = action.url.split("/"),
-          tag = urlParts[ urlParts.length - 1]
-
-      var layers = _maps[tag];
-
-      if( layers ){
-
-        _activeLayers.forEach(function(layer){
-          layer.is_displayed = false;
-        });
-
-        var layers = layers.filter(function(layer){
-          // check if layer should be displayed by default
-          if( layer.default == 1 ){
-            layer.is_displayed = true;
-            return true;
-          } else {
-            layer.is_displayed = false;
-            return false;
-          }
-        });
-
-        console.log("setting new active layers", layers);
-        _activeLayers = layers;
-      }
+      handleURLChange(action.url)
       MapStore.emitChange();
       break;
 
@@ -87,6 +91,7 @@ MapStore.dispatchToken = AppDispatcher.register(function(payload) {
         })
       })
       _loading = false
+      handleURLChange(window.location.pathname)
       MapStore.emitChange();
       break;
 
