@@ -1,9 +1,8 @@
-# Adapt Oakland Web
-Adapt Oakland Web UI
+# Adapt Oakland Web UI
 
 ## Description
 
-Minimal React app built for Urban Biofilter's Adapt Oakland project. The aim is to present several years of urban design/environmental research through an interactive map that integrates with a varierty of charts, tables, case studies, and other information.
+Minimal React app built for Urban Biofilter's Adapt Oakland project. See it live here: [http://plan.adaptoakland.org/](http://plan.adaptoakland.org/).The aim is to present several years of urban design/environmental research through an interactive map that integrates with a varierty of charts, tables, case studies, and other information.
 
 This data is grouped into many overlapping categories, so a system of 'tagging' is being used to arbitrarily relate the data. These tags are activated and deactivated by the UI menus to selectively query the content shown. 
 
