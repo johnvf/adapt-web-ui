@@ -52,7 +52,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('browserify', function() {
-  return gulp.src('./client/js/App.js')
+  return gulp.src('./client/js/App.jsx')
   .pipe(browserify({
     debug: true,
     transform: 'reactify'
@@ -88,7 +88,7 @@ gulp.task('watch', ['serve', 'lint'], function() {
   refresh.listen();
 
   // Watch our scripts, and when they change run lint and browserify
-  gulp.watch(['./client/js/*.js', './client/js/**/*.js'],[
+  gulp.watch(['./client/js/*.js', './client/js/**/*.js', './client/js/*.jsx', './client/js/**/*.jsx'],[
     'lint',
     'browserify'
   ]);

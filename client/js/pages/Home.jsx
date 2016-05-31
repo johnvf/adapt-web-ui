@@ -4,7 +4,8 @@ var Loader = require('react-loader');
 var TextStore = require('../stores/TextStore');
 var Link = require('react-router').Link;
 
-var Text = require('../lib_components/Text')
+var Text = require('../lib_components/Text.jsx')
+var Icon = require('../lib_components/Icon.jsx');
 
 var WebAPIUtils = require('../utils/WebAPIUtils');
 
@@ -13,8 +14,6 @@ function getStateFromStores() {
     text: TextStore.getText( "home" ),
   };
 }
-
-var Icon = require('../lib_components/Icon');
 
 var Home = React.createClass({
 

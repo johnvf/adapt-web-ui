@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Text = require('../lib_components/Text')
+var Text = require('../lib_components/Text.jsx')
 
 var Grid = require('react-bootstrap/lib/Grid');
 var Row = require('react-bootstrap/lib/Row');

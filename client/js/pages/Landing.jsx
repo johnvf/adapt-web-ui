@@ -1,7 +1,7 @@
 var React = require('react');
 
 // var Icon = require('../lib_components/Icon');
-var BigIcon = require('../lib_components/BigIcon');
+var BigIcon = require('../lib_components/BigIcon.jsx');
 
 var Landing = React.createClass({
   /**

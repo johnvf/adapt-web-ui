@@ -14,15 +14,15 @@ var CitationStore = require('../stores/CitationStore')
 var CaseStudyStore = require('../stores/CaseStudyStore')
 var ImageStore = require('../stores/ImageStore')
 
-var Dashboard = require('../components/Dashboard');
-var Modal = require('../lib_components/Modal');
-var Chart = require('../lib_components/Chart');
-var Table = require('../lib_components/Table');
-var Image = require('../lib_components/Image');
+var Dashboard = require('../components/Dashboard.jsx');
+var Modal = require('../lib_components/Modal.jsx');
+var Chart = require('../lib_components/Chart.jsx');
+var Table = require('../lib_components/Table.jsx');
+var Image = require('../lib_components/Image.jsx');
 
-var Map = require('../components/Map');
-var Data = require('../components/Data');
-var Resources = require('../components/Resources');
+var Map = require('../components/Map.jsx');
+var Data = require('../components/Data.jsx');
+var Resources = require('../components/Resources.jsx');
 
 var camelCaseToRegular = require('../utils/Utils').camelCaseToRegular
 

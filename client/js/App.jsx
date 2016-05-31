@@ -18,17 +18,18 @@ var TitleStore = require('./stores/TitleStore');
 var TagStore = require('./stores/TagStore');
 var MapStore = require('./stores/MapStore');
 var ToolStore = require('./stores/ToolStore');
-var Sidebar = require( './components/Sidebar');
-var Header = require( './lib_components/Header');
+
+var Sidebar = require( './components/Sidebar.jsx');
+var Header = require( './lib_components/Header.jsx');
 
 var webglDetect = require('./utils/Utils').webglDetect;
 
 // Pages
-var Landing = require('./pages/Landing'),
-    Home = require('./pages/Home'),
-    Toolbox = require('./pages/Toolbox'),
-    MapView = require('./pages/MapView'),
-    About = require('./pages/About');
+var Landing = require('./pages/Landing.jsx'),
+    Home = require('./pages/Home.jsx'),
+    Toolbox = require('./pages/Toolbox.jsx'),
+    MapView = require('./pages/MapView.jsx'),
+    About = require('./pages/About.jsx');
 
 
 function getStateFromStores() {

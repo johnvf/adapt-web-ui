@@ -1,7 +1,7 @@
 var React = require('react');
 
 // NOTE: Depends on addthis widget being included in script tag in index.html
-var Icon = require('../lib_components/Icon');
+var Icon = require('../lib_components/Icon.jsx');
 var Header = React.createClass({
 
 	componentDidMount: function(){

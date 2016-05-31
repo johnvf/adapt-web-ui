@@ -13,8 +13,9 @@ var Link = require('react-router').Link;
 var History = require('react-router').History;
 
 var MapStore = require('../stores/MapStore');
-var Icon = require('../lib_components/Icon');
-var MapGroupMenuItem = require('../components/MapGroupMenuItem');
+
+var Icon = require('../lib_components/Icon.jsx');
+var MapGroupMenuItem = require('../components/MapGroupMenuItem.jsx');
 var Utils = require('../utils/Utils');
 
 var Sidebar = React.createClass({

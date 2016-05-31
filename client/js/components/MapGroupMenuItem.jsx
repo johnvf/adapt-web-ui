@@ -2,9 +2,9 @@
 var React = require('react');
 var ViewActions = require("../actions/ViewActions");
 
-var MapLayerMenuItem = require('../components/MapLayerMenuItem');
+var MapLayerMenuItem = require('../components/MapLayerMenuItem.jsx');
 
-var NavMenuItem = require('../components/NavMenuItem');
+var NavMenuItem = require('../components/NavMenuItem.jsx');
 
 var Utils = require('../utils/Utils');
 

@@ -4,9 +4,9 @@ var mapboxgl = require('mapbox-gl');
 
 var MouseActions = require("../actions/MouseActions");
 
-var Tooltip = require('../components/MapTooltip');
-var BasemapToggle = require('../components/BasemapToggle');
-var Legend = require('../components/MapLegend');
+var Tooltip = require('../components/MapTooltip.jsx');
+var BasemapToggle = require('../components/BasemapToggle.jsx');
+var Legend = require('../components/MapLegend.jsx');
 
 // It seems that this value may vary in different devices 
 // w/ different zoom settings

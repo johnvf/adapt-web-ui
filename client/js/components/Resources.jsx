@@ -1,5 +1,6 @@
 var React = require('react');
-var Icon = require('../lib_components/Icon');
+
+var Icon = require('../lib_components/Icon.jsx');
 
 var Grid = require('react-bootstrap/lib/Grid');
 var Row = require('react-bootstrap/lib/Row');

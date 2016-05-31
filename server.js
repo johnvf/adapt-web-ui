@@ -113,10 +113,6 @@ if(USE_API) {
 
   app.use('/api', mers({uri: config.db}).rest());
 
-  // API Routes - NOT CURRENTLY USED
-  // require('./api/config/passport')(passport);
-  // require('./api/routes')(app, passport);
-
 }
 
 // HTML5 Pushstate mode

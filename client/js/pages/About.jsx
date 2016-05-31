@@ -3,7 +3,7 @@ var React = require('react');
 var Loader = require('react-loader');
 var TextStore = require('../stores/TextStore')
 
-var Text = require('../lib_components/Text')
+var Text = require('../lib_components/Text.jsx')
 
 function getStateFromStores() {
   return {
