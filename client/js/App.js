@@ -102,7 +102,7 @@ var App = React.createClass({
     return (
       <div className= "app-loggedin">
         <GAInitiailizer />
-        <Header pageTitle={title} pageIcon={icon}/>
+        {/*<Header pageTitle={title} pageIcon={icon}/>*/}
         <Sidebar  map={map} 
                   tags={tags} 
                   active_tags={active_tags} 
