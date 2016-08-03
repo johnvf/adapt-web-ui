@@ -43,7 +43,7 @@ var Home = React.createClass({
 
     return (
       
-        <div className="container-fluid bg-green" >
+        <div className="container-fluid bg-white" >
           <Loader loaded={true}>
             <div className="row home">           
               <div className="col-xs-12 col-sm-3">
@@ -67,9 +67,7 @@ var Home = React.createClass({
                 </Link>
               </div>
               <div className="col-xs-12 col-sm-9 home-description">
-                <div className="text-scroll-body">
-                  { bodyMarkup }
-                </div>
+                { bodyMarkup }
               </div>
             </div>           
           </Loader>

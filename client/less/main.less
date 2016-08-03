@@ -13,7 +13,7 @@
 @brand-warning:         #F36B4B; // RED
 @brand-danger:          #101C29; // DARK BLUE
 
-@background:            #ECECEC;
+@background:            #FFF;
 
 @adapt-green: #78BB57;
 
@@ -41,6 +41,7 @@ body {
   font-weight: 200;
   background-color: @background;
   color: @text-color;
+  text-align: left;
 }
 
 a{
@@ -168,23 +169,27 @@ h3.special {
 h1 {
   font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
   color: rgba(100, 100, 100, 0.5);
-  font-size: 30px;
+  margin-top: 0px;
+  font-size: 25px;
 }
 
 h2 {
   font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
-  font-size: 25px;
+  font-size: 22px;
 }
 
 h3 {
   font-family: 'Arial Rounded MT Bold', 'Helvetica', Arial, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+h4 {
+  font-size: @font-size-base;
 }
 
 p {
   // color: white;
   color: rgba(0, 0, 0, 0.5);
-  text-align: left;
 }
 
 a, a svg{
@@ -223,7 +228,15 @@ a:hover , a:hover svg {
     background-color: @adapt-green;
     background-repeat: no-repeat;
     background-size: cover;
-    text-align: center;
+    padding-left: 30px;
+    margin-left: -15px;
+    height: auto;
+}
+
+.bg-white{
+    background-color: #FFF;
+    background-repeat: no-repeat;
+    background-size: cover;
     padding-left: 30px;
     margin-left: -15px;
     height: auto;
@@ -233,7 +246,6 @@ a:hover , a:hover svg {
     background-color: inherit;
     background-repeat: no-repeat;
     background-size: cover;
-    text-align: center;
     padding-right: 30px;
     margin-top: 100px;
 }
@@ -249,7 +261,7 @@ a:hover , a:hover svg {
 .text-scroll-body{
     // background-color: rgba(255,255,255,.9);
     background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
+    border-radius: 3px;
     height: 80vh;
     overflow: hidden;
     font-weight: 300;
